@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->string('name');
-            $table->string('phone')->unique();
-            $table->string('country');
-            $table->string('state');
-            $table->string('city')->nullable();
-            $table->string('password');
-            $table->string('code')->nullable();
-            $table->boolean('phone_verified')->default(0);
-            $table->rememberToken();
+            $table->integer('phonecode');
             $table->timestamps();
         });
     }
@@ -31,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('countries');
     }
 };

@@ -35,9 +35,15 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        $code_phone = $request->code_phone;
+        $phone = $request->phone;
+
         $user = User::create([
-            'name' => $request->get('name'),
-            'phone' => $request->get('phone'),
+            'name'     =>$request->get('name'),
+            'phone'    =>'+'.$code_phone.$phone,
+            'country'  =>$request->get('country'),
+            'state'    =>$request->get('state'),
+            'city'     =>$request->get('city'),
             'password' => Hash::make($request->get('password')),
         ] + $request->validated());
 

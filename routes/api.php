@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 /*
@@ -23,7 +24,14 @@ use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 Route::middleware(['api'])->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    // Register Details
+    Route::get('/countries',[RegisterDetailController::class,'getCountries']);
+    Route::get('/states/{country_id}',[RegisterDetailController::class,'getStates']);
+    Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
+
+
     Route::get('/getaccount', [AuthController::class, 'getaccount']);
+
 });
 
 
