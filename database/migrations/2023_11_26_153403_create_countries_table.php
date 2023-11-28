@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->integer('phonecode');
+            $table->string('currency')->nullable();
             $table->timestamps();
         });
     }
