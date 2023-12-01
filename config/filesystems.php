@@ -30,11 +30,19 @@ return [
 
     'disks' => [
 
+        'ads' => [
+            'driver' => 'local',
+            'root' => storage_path('ads'),
+            'url'=>env('APP_URL').'/ads',
+        ],
+
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
             'throw' => false,
         ],
+
 
         'public' => [
             'driver' => 'local',

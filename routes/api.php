@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Ads\AdsController;
 use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Category\CategoryController;
+use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,12 @@ use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 Route::middleware(['api'])->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/getaccount', [AuthController::class, 'getaccount']);
+
     // Register Details
     Route::get('/countries',[RegisterDetailController::class,'getCountries']);
     Route::get('/states/{country_id}',[RegisterDetailController::class,'getStates']);
     Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
-
-
-    Route::get('/getaccount', [AuthController::class, 'getaccount']);
-
 });
 
 
@@ -53,10 +52,14 @@ Route::middleware(['auth:api'])->controller(SubCategoryController::class)->group
     Route::delete('/subcategories/{subcategory}','destroy');
 });
 
-// // Category
-// Route::middleware(['api'])->controller(CategoryController::class)->group(function () {
-
-// });
+// Ads
+Route::middleware(['auth:api'])->controller(AdsController::class)->group(function () {
+    Route::get('/ads','index');
+    Route::get('/ads/{ad}','show');
+    Route::post('/ads','store');
+    Route::put('/ads/{ad}','update');
+    Route::delete('/ads/{ad}','destroy');
+});
 
 // // Category
 // Route::middleware(['api'])->controller(CategoryController::class)->group(function () {

@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price',8,2);
-            $table->string('image');
             $table->text('description')->nullable();
             $table->text('feature')->nullable();
+            $table->string('country');
+            $table->string('state');
+            $table->string('city')->nullable();
             $table->string('location')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->foreignId('subcategory_id')->constrained('subcategories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

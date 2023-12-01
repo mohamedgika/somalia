@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->string('brand')->nullable();
             $table->string('color')->nullable();
-            $table->string('authenticity')->nullable();
+            $table->enum('authenticity',['used','new'])->nullable();
             $table->foreignId('ad_id')->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
