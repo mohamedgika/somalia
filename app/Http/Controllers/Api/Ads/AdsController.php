@@ -50,7 +50,7 @@ class AdsController extends Controller
             if ($request->hasFile('image')) {
                 $fileAdders = $ads->addMultipleMediaFromRequest(['image'])
                     ->each(function ($fileAdder) {
-                        $fileAdder->toMediaCollection('ads');
+                        $fileAdder->toMediaCollection('ads','ads');
                     });
             }
 
@@ -95,7 +95,7 @@ class AdsController extends Controller
             // Add the new images to the media library
             $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
             ->each(function ($fileAdder) {
-                $fileAdder->toMediaCollection('ads');
+                $fileAdder->toMediaCollection('ads','ads');
             });
         }
 
@@ -110,7 +110,7 @@ class AdsController extends Controller
         if(! $ad)
             return responseErrorMessage('الاعلان غير موجود');
 
-        $ad->clearMediaCollection('ads');
+        $ad->clearMediaCollection('ads','ads');
         $ad->delete();
         return responseSuccessMessage('تم حذف الاعلان بنجاح');
     }

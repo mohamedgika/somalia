@@ -36,6 +36,18 @@ return [
             'url'=>env('APP_URL').'/ads',
         ],
 
+        'category' => [
+            'driver' => 'local',
+            'root' => storage_path('category'),
+            'url'=>env('APP_URL').'/category',
+        ],
+
+        'subcategory' => [
+            'driver' => 'local',
+            'root' => storage_path('subcategory'),
+            'url'=>env('APP_URL').'/subcategory',
+        ],
+
 
         'local' => [
             'driver' => 'local',

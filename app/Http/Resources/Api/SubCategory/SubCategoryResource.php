@@ -18,7 +18,7 @@ class SubCategoryResource extends JsonResource
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            // 'category_id'=>$this->category_id,
+            'image'=>$this->getMedia('subcategory'),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
             'category' => CategoryResource::make($this->whenLoaded('category')),

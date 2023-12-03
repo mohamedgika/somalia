@@ -22,7 +22,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       =>'required|unique:subcategories,name,except,id',
+            'name'       => 'required|unique:subcategories,name,except,id',
+            'image'      => 'required',
             'category_id'=> 'required'
         ];
     }

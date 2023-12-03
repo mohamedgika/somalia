@@ -35,6 +35,8 @@ class CategoryController extends Controller
     {
         $category = Category::create($request->validated());
 
+        $category->addMediaFromRequest('image')->toMediaCollection('category','category');
+
         return responseSuccessData(CategoryResource::make($category),'تم اضافة الصنف بنجاح');
     }
 
@@ -66,6 +68,12 @@ class CategoryController extends Controller
             return responseErrorMessage('الصنف غير موجود');
 
        $category->update($request->validated());
+
+       if($request->hasFile('image'))
+            $category->clearMediaCollection('category','category');
+            $category->addMediaFromRequest('image')->toMediaCollection('category','category');
+            // Add the new images to the media library
+
        return responseSuccessData(CategoryResource::make($category),'تم تحديث الصنف بنجاح');
     }
 
@@ -77,6 +85,7 @@ class CategoryController extends Controller
         if(! $category)
             return responseErrorMessage('الصنف غير موجود');
 
+        $category->clearMediaCollection('category','category');
         $category->delete();
         return responseSuccessMessage('تم حذف الصنف بنجاح');
     }

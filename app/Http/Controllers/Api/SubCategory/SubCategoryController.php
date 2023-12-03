@@ -34,6 +34,9 @@ class SubCategoryController extends Controller
     public function store(StoreRequest $request)
     {
         $subcategory = SubCategory::create($request->validated());
+
+        $subcategory->addMediaFromRequest('image')->toMediaCollection('subcategory','subcategory');
+
         return responseSuccessData(SubCategoryResource::make($subcategory),'تم اضافة الصنف الفرعي بنجاح');
     }
 
@@ -64,7 +67,13 @@ class SubCategoryController extends Controller
         if(! $subcategory)
             return responseErrorMessage('الصنف الفرعي غير موجود');
 
+        if($request->hasFile('image'))
+            $subcategory->clearMediaCollection('subcategory','subcategory');
+            $subcategory->addMediaFromRequest('image')->toMediaCollection('subcategory','subcategory');
+            // Add the new images to the media library
+
         $subcategory->update($request->validated());
+
         return responseSuccessData(SubCategoryResource::make($subcategory),'تم تحديث الصنف الفرعي بنجاح');
     }
 
@@ -76,6 +85,7 @@ class SubCategoryController extends Controller
         if(! $subcategory)
             return responseErrorMessage('الصنف الفرعي غير موجود');
 
+        $subcategory->clearMediaCollection('subcategory','subcategory');
         $subcategory->delete();
         return responseSuccessMessage('تم حذف الصنف الفرعي بنجاح');
     }

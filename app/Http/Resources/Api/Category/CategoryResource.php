@@ -18,6 +18,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name ,
+            'image'=> $this->getMedia('category'),
             'created_at' => $this->created_at->format('Y m d'),
             'updated_at' => $this->updated_at->format('Y m d'),
             'subcategory' => SubCategoryResource::collection($this->whenLoaded('subcategories')),
