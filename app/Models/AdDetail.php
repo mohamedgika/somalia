@@ -11,12 +11,12 @@ class AdDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'condition',
-        'model',
-        'brand',
-        'color',
-        'authenticity',
+        'ad_detail',
         'ad_id'
+    ];
+
+    protected $casts = [
+        'ad_detail' => 'array'
     ];
 
     public function ads(){

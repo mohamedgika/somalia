@@ -28,7 +28,7 @@ class AuthController extends Controller
         if (! $token = auth()->guard('api')->attempt(['phone'=> $request->phone , 'password'=>$request->password]))
             return response()->json(['error' => 'الرجاء التأكد من البيانات الصحيحة'], 401);
 
-        $token =  [ 'token' =>  $token , 'expire_at' => auth()->guard('api')->factory()->getTTL() * 60 ];
+        $token =  [ 'token' =>  $token , 'expire_at' => auth()->guard('api')->factory()->getTTL() * 100 ];
         return responseSuccessData(LoginResource::make($token),'تم تسجيل الدخول بنجاح');
 
     }
@@ -40,6 +40,7 @@ class AuthController extends Controller
 
         $user = User::create([
             'name'     =>$request->get('name'),
+            'image'    =>$request->get('image'),
             'phone'    =>'+'.$code_phone.$phone,
             'country'  =>$request->get('country'),
             'state'    =>$request->get('state'),

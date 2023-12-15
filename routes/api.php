@@ -3,10 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Ads\AdsController;
+use App\Http\Controllers\Api\Fav\FavController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Shop\ShopController;
+use App\Http\Controllers\Api\input\InputController;
+use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
+use App\Http\Controllers\Api\Auth\Profile\ProfileController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +39,23 @@ Route::middleware(['api'])->group(function() {
     Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
 });
 
+//Profile
+Route::middleware(['auth:api'])->controller(ProfileController::class)->group(function () {
+    Route::get('/account','getAccount');
+    Route::get('/myads','getMyAds');
+    Route::put('/updateprofile','update_profile');
+});
+
+
+// Input
+Route::middleware(['auth:api'])->controller(InputController::class)->group(function () {
+    Route::get('/inputs','index');
+    Route::get('/inputs/{input}','show');
+    Route::post('/inputs','store');
+    Route::put('/inputs/{input}','update');
+    Route::delete('/inputs/{input}','destroy');
+});
+
 
 // Category
 Route::middleware(['auth:api'])->controller(CategoryController::class)->group(function () {
@@ -54,12 +77,41 @@ Route::middleware(['auth:api'])->controller(SubCategoryController::class)->group
 
 // Ads
 Route::middleware(['auth:api'])->controller(AdsController::class)->group(function () {
+    Route::post('/ads/{category}/{subcategory}','adsFilter');
     Route::get('/ads','index');
     Route::get('/ads/{ad}','show');
     Route::post('/ads','store');
     Route::put('/ads/{ad}','update');
     Route::delete('/ads/{ad}','destroy');
 });
+
+//Fav
+Route::middleware(['auth:api'])->controller(FavController::class)->group(function () {
+    Route::get('/favs','getFav');
+    Route::post('/favs','fav');
+    Route::delete('/favs/{ad_id}','destroyFav');
+});
+
+
+// Shop
+Route::middleware(['auth:api'])->controller(ShopController::class)->group(function () {
+    Route::get('/shops','index');
+    Route::get('/shops/{shop}','show');
+    Route::post('/shops','store');
+    Route::put('/shops/{shop}','update');
+    Route::delete('/shops/{shop}','destroy');
+});
+
+
+// Shop Ads
+Route::middleware(['auth:api'])->controller(ShopAdsController::class)->group(function () {
+    Route::get('/shopads','index');
+    Route::get('/shopads/{shopad}','show');
+    Route::post('/shopads','store');
+    Route::put('/shopads/{shopad}','update');
+    Route::delete('/shopads/{shopad}','destroy');
+});
+
 
 // // Category
 // Route::middleware(['api'])->controller(CategoryController::class)->group(function () {

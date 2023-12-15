@@ -23,6 +23,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name'     => ['required', 'min:3'],
+            'image'    => ['nullable','image'],
             'phone'     => ['required', 'unique:users', 'max:255'],
             'code_phone' => ['required'],
             'country'   => ['required'],

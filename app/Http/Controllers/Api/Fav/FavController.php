@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Http\Controllers\Api\Fav;
+
+use App\Models\Fav;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\Fav\FavResource;
+
+class FavController extends Controller
+{
+    public function getFav(){
+        $favs = Fav::where('user_id',auth()->user()->id)->get();
+        // dd($favs->ads);
+        return responseSuccessData(FavResource::collection($favs));
+    }
+
+    public function fav(Request $request)
+    {
+        $favorites = Fav::create([
+            'user_id' => auth()->user()->id,
+            'ad_id' => $request->ad_id,
+        ]);
+
+        return responseSuccessMessage('Done');
+    }
+
+    public function destroyFav($ad_id){
+        $fav = Fav::where('user_id',auth()->user()->id)->where('ad_id',$ad_id);
+        $fav->delete();
+        return responseSuccessMessage('Deleted Successfully');
+    }
+}

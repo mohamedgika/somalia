@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('code')->nullable();
             $table->boolean('phone_verified')->default(0);
+            // $table->enum('status_ads',['owner','visit'])->default('visit');
+            // $table->enum('status_store',['owner','visit'])->default('visit');
             $table->rememberToken();
             $table->timestamps();
         });

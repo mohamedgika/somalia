@@ -40,11 +40,7 @@ class StoreRequest extends FormRequest
             'user_id'=>'nullable|exists:users,id',
 
             //AdDetail
-            'condition'=>'nullable|string',
-            'model'=>'nullable|string',
-            'brand'=>'nullable|string',
-            'color'=>'nullable|string',
-            'authenticity'=>'nullable|string',
+            'ad_detail'=>'nullable|json',
             'ad_id'=>'nullable|exists:ads,id'
         ];
     }

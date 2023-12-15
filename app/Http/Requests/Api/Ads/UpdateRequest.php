@@ -30,13 +30,10 @@ class UpdateRequest extends FormRequest
                         'description'=>'nullable|string|max:500',
                         'feature'=>'nullable|string|max:500',
                         'location'=>'nullable|string',
+                        'subcategory_id'=>'nullable|exists:subcategories,id',
 
                         //AdDetail
-                        'condition'=>'nullable|string',
-                        'model'=>'nullable|string',
-                        'brand'=>'nullable|string',
-                        'color'=>'nullable|string',
-                        'authenticity'=>'nullable|string',
+                        'ad_detail'=>'nullable|json',
         ];
     }
 }

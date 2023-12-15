@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('ad_details', function (Blueprint $table) {
             $table->id();
-            $table->string('condition')->nullable();
-            $table->string('model')->nullable();
-            $table->string('brand')->nullable();
-            $table->string('color')->nullable();
-            $table->enum('authenticity',['used','new'])->nullable();
+            $table->json('ad_detail');
             $table->foreignId('ad_id')->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

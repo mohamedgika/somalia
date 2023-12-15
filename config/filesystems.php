@@ -15,20 +15,15 @@ return [
 
     'default' => env('FILESYSTEM_DISK', 'local'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Filesystem Disks
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure as many filesystem "disks" as you wish, and you
-    | may even configure multiple disks of the same driver. Defaults have
-    | been set up for each driver as an example of the required values.
-    |
-    | Supported Drivers: "local", "ftp", "sftp", "s3"
-    |
-    */
+
 
     'disks' => [
+
+        'profileauth' => [
+            'driver' => 'local',
+            'root' => storage_path('profileauth'),
+            'url'=>env('APP_URL').'/profileauth',
+        ],
 
         'ads' => [
             'driver' => 'local',
@@ -48,6 +43,17 @@ return [
             'url'=>env('APP_URL').'/subcategory',
         ],
 
+        'shop' => [
+            'driver' => 'local',
+            'root' => storage_path('shop'),
+            'url'=>env('APP_URL').'/shop',
+        ],
+
+        'shopads' => [
+            'driver' => 'local',
+            'root' => storage_path('shopads'),
+            'url'=>env('APP_URL').'/shopads',
+        ],
 
         'local' => [
             'driver' => 'local',

@@ -18,7 +18,7 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::where('is_active',0)->get();
         return responseSuccessData(AdsResource::collection($ads->load('adDetail','subCategory','user')));
 
     }
@@ -54,7 +54,7 @@ class AdsController extends Controller
                     });
             }
 
-        if (!empty($request->condition || $request->model || $request->brand || $request->color || $request->authenticity))
+        if (!empty($request->ad_detail))
                 $adDetail = AdDetail::create(["ad_id"=>$ads->id]+$request->validated());
 
         $ads->load('adDetail');
@@ -91,13 +91,17 @@ class AdsController extends Controller
         $ad->update($request->validated());
 
         if($request->hasFile('image')){
-            $ad->clearMediaCollection('ads');
+            $ad->clearMediaCollection('ads','ads');
             // Add the new images to the media library
             $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
             ->each(function ($fileAdder) {
                 $fileAdder->toMediaCollection('ads','ads');
             });
         }
+
+        if (!empty($request->ad_detail))
+             $adDetail = $ad->adDetail->update($request->validated());
+
 
         return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
     }

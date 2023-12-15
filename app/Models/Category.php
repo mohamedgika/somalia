@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Input;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model implements HasMedia
 {
@@ -18,4 +19,13 @@ class Category extends Model implements HasMedia
     public function subCategories(){
         return $this->hasMany(SubCategory::class);
     }
+
+    public function shop(){
+        return $this->hasMany(Shop::class);
+    }
+
+    public function inputs(){
+        return $this->hasMany(Input::class);
+    }
+
 }

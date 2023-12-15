@@ -24,7 +24,7 @@ class Ads extends Model implements HasMedia
         'city',
         'is_active',
         'subcategory_id',
-        'user_id'
+        'user_id',
     ];
 
     // public function registerMediaCollections(): void
@@ -44,4 +44,12 @@ class Ads extends Model implements HasMedia
     public function adDetail(){
         return $this->hasOne(AdDetail::class,'ad_id');
     }
+
+    public function fav(){
+        return $this->hasMany(Fav::class);
+    }
+
+    // public function shop(){
+    //     return $this->belongsTo(Shop::class, 'shop_id');
+    // }
 }
