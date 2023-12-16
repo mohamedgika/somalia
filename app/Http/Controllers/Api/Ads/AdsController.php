@@ -85,25 +85,29 @@ class AdsController extends Controller
      */
     public function update(UpdateRequest $request, Ads $ad)
     {
-        if(! $ad)
-            return responseErrorMessage('الاعلان غير موجود');
+        if ($ad->where('user_id',auth()->user()->id)){
+            if(! $ad)
+                return responseErrorMessage('الاعلان غير موجود');
 
-        $ad->update($request->validated());
+            $ad->update($request->validated());
 
-        if($request->hasFile('image')){
-            $ad->clearMediaCollection('ads','ads');
-            // Add the new images to the media library
-            $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
-            ->each(function ($fileAdder) {
-                $fileAdder->toMediaCollection('ads','ads');
-            });
+            if($request->hasFile('image')){
+                $ad->clearMediaCollection('ads','ads');
+                // Add the new images to the media library
+                $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('ads','ads');
+                });
+            }
+
+            if (!empty($request->ad_detail))
+                $adDetail = $ad->adDetail->update($request->validated());
+
+
+            return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
         }
-
-        if (!empty($request->ad_detail))
-             $adDetail = $ad->adDetail->update($request->validated());
-
-
-        return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
     }
 
     /**
@@ -111,11 +115,16 @@ class AdsController extends Controller
      */
     public function destroy(Ads $ad)
     {
-        if(! $ad)
-            return responseErrorMessage('الاعلان غير موجود');
+        if ($ad->where('user_id',auth()->user()->id)){
+            if(! $ad)
+                return responseErrorMessage('الاعلان غير موجود');
 
-        $ad->clearMediaCollection('ads','ads');
-        $ad->delete();
-        return responseSuccessMessage('تم حذف الاعلان بنجاح');
+            $ad->clearMediaCollection('ads','ads');
+            $ad->delete();
+            return responseSuccessMessage('تم حذف الاعلان بنجاح');
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
+        }
+
     }
 }

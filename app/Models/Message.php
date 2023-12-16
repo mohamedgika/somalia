@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'chat_id','content'
+    ];
+
+    public function chat(){
+        return $this->belongsTo(Chat::class,'chat_id');
+    }
+    
 }

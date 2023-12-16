@@ -82,24 +82,32 @@ class ShopAdsController extends Controller
      */
     public function update(UpdateRequest $request, ShopAds $shopad)
     {
-        if(! $shopad)
-             return responseErrorMessage('اعلان المتجر غير موجود');
+        $user = $shopad->whereHas('shop' , function($q){
+          return  $q->where('user_id', auth()->user()->id);
+        });
 
-        $shopad->update($request->validated());
+        if (isset($user)){
+            if(! $shopad)
+                return responseErrorMessage('اعلان المتجر غير موجود');
 
-        if($request->hasFile('image')){
-            $shopad->clearMediaCollection('shopads','shopads');
-            // Add the new images to the media library
-            $fileAdders = $shopad->addMultipleMediaFromRequest(['image'])
-            ->each(function ($fileAdder) {
-                $fileAdder->toMediaCollection('shopads','shopads');
-            });
+            $shopad->update($request->validated());
+
+            if($request->hasFile('image')){
+                $shopad->clearMediaCollection('shopads','shopads');
+                // Add the new images to the media library
+                $fileAdders = $shopad->addMultipleMediaFromRequest(['image'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('shopads','shopads');
+                });
+            }
+
+            if (!empty($request->shop_ad_detail))
+                    $shopad_detail = $shopad->shopAdsDetail->update($request->validated());
+
+            return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail','shop')));
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
         }
-
-        if (!empty($request->shop_ad_detail))
-                $shopad_detail = $shopad->shopAdsDetail->update($request->validated());
-
-        return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail','shop')));
 
     }
 
@@ -108,11 +116,19 @@ class ShopAdsController extends Controller
      */
     public function destroy(ShopAds $shopad)
     {
-        if(! $shopad)
-            return responseErrorMessage('اعلان المتجر غير موجود');
+        $user = $shopad->whereHas('shop' , function($q){
+            return  $q->where('user_id', auth()->user()->id);
+          });
 
-        $shopad->clearMediaCollection('shopads','shopads');
-        $shopad->delete();
-        return responseSuccessMessage('تم حذف اعلان المتجر بنجاح');
+        if(isset($user)){
+            if(! $shopad)
+                return responseErrorMessage('اعلان المتجر غير موجود');
+
+            $shopad->clearMediaCollection('shopads','shopads');
+            $shopad->delete();
+            return responseSuccessMessage('تم حذف اعلان المتجر بنجاح');
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
+        }
     }
 }

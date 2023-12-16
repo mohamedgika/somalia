@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Chat;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -16,7 +17,7 @@ class User extends Authenticatable implements JWTSubject , HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable , InteractsWithMedia;
 
-    
+
     protected $fillable = [
         'name',
         'phone',
@@ -55,6 +56,10 @@ class User extends Authenticatable implements JWTSubject , HasMedia
 
     public function shop(){
         return $this->hasOne(Shop::class);
+    }
+
+    public function chat(){
+        return $this->hasMany(Chat::class);
     }
 
 

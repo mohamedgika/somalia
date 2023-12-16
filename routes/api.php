@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
+use App\Http\Controllers\Api\Public\PublicController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 
 /*
@@ -37,6 +38,13 @@ Route::middleware(['api'])->group(function() {
     Route::get('/countries',[RegisterDetailController::class,'getCountries']);
     Route::get('/states/{country_id}',[RegisterDetailController::class,'getStates']);
     Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
+
+    //Main Page
+    Route::get('/public/ads', [PublicController::class, 'public_ads']);
+    Route::get('/public/ads/{category}', [PublicController::class, 'public_ads_by_category']);
+    Route::get('/public/ads/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
+    Route::get('/public/category', [PublicController::class, 'public_category']);
+    Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
 });
 
 //Profile

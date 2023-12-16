@@ -67,19 +67,23 @@ class ShopController extends Controller
      */
     public function update(UpdateRequest $request, Shop $shop)
     {
-        if(! $shop)
-            return responseErrorMessage('المتجر غير موجود');
+        if ($shop->where('user_id',auth()->user()->id)){
 
-        $shop->update($request->validated());
+            if(! $shop)
+                return responseErrorMessage('المتجر غير موجود');
 
-        if($request->hasFile('image')){
-            $shop->clearMediaCollection('shop','shop');
-            // Add the new images to the media library
-            $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
+            $shop->update($request->validated());
+
+            if($request->hasFile('image')){
+                $shop->clearMediaCollection('shop','shop');
+                // Add the new images to the media library
+                $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
+            }
+
+            return responseSuccessData(ShopResource::make($shop->load('categories','user')),'تم تحديث المتجر بنجاح');
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
         }
-
-        return responseSuccessData(ShopResource::make($shop->load('categories','user')),'تم تحديث المتجر بنجاح');
-
     }
 
     /**
@@ -87,11 +91,15 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-    if(! $shop)
-        return responseErrorMessage('المتجر غير موجود');
+        if ($shop->where('user_id',auth()->user()->id)){
+            if(! $shop)
+                return responseErrorMessage('المتجر غير موجود');
 
-    $shop->clearMediaCollection('shop','shop');
-    $shop->delete();
-    return responseSuccessMessage('تم حذف المتجر بنجاح');
+            $shop->clearMediaCollection('shop','shop');
+            $shop->delete();
+            return responseSuccessMessage('تم حذف المتجر بنجاح');
+        }else{
+            return responseErrorMessage("You don't have permission to perform this action");
+        }
     }
 }
