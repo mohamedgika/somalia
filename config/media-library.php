@@ -1,5 +1,8 @@
 <?php
 
+use Spatie\MediaLibraryPro\Models\TemporaryUpload;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 return [
 
     /*
@@ -34,7 +37,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model' => Spatie\MediaLibrary\MediaCollections\Models\Media::class,
+    'media_model' => Media::class,
 
     /*
      * When enabled, media collections will be serialised using the default
@@ -49,7 +52,7 @@ return [
      *
      * This model is only used in Media Library Pro (https://medialibrary.pro)
      */
-    'temporary_upload_model' => Spatie\MediaLibraryPro\Models\TemporaryUpload::class,
+    'temporary_upload_model' => TemporaryUpload::class,
 
     /*
      * When enabled, Media Library Pro will only process temporary uploads that were uploaded

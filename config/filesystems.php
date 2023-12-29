@@ -21,38 +21,50 @@ return [
 
         'profileauth' => [
             'driver' => 'local',
-            'root' => storage_path('profileauth'),
+            'root' => public_path('profileauth'),
             'url'=>env('APP_URL').'/profileauth',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'ads' => [
             'driver' => 'local',
-            'root' => storage_path('ads'),
+            'root' => public_path('ads'),
             'url'=>env('APP_URL').'/ads',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'category' => [
             'driver' => 'local',
-            'root' => storage_path('category'),
+            'root' => public_path('category'),
             'url'=>env('APP_URL').'/category',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'subcategory' => [
             'driver' => 'local',
-            'root' => storage_path('subcategory'),
+            'root' => public_path('subcategory'),
             'url'=>env('APP_URL').'/subcategory',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'shop' => [
             'driver' => 'local',
-            'root' => storage_path('shop'),
+            'root' => public_path('shop'),
             'url'=>env('APP_URL').'/shop',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'shopads' => [
             'driver' => 'local',
-            'root' => storage_path('shopads'),
+            'root' => public_path('shopads'),
             'url'=>env('APP_URL').'/shopads',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         'local' => [
