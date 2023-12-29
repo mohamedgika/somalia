@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('country');
             $table->string('state');
             $table->string('city')->nullable();
             $table->string('password');
             $table->string('code')->nullable();
             $table->boolean('phone_verified')->default(0);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('status')->default(0);
             // $table->enum('status_ads',['owner','visit'])->default('visit');
             // $table->enum('status_store',['owner','visit'])->default('visit');
             $table->rememberToken();

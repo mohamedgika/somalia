@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Chat;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
+use App\Models\GoogleProviderLogin;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -21,12 +22,14 @@ class User extends Authenticatable implements JWTSubject , HasMedia
     protected $fillable = [
         'name',
         'phone',
+        'email',
         'country',
         'state',
         'city',
         'password',
         'code',
-        'phone_verified'
+        'phone_verified',
+        'status'
     ];
 
     /**
@@ -60,6 +63,11 @@ class User extends Authenticatable implements JWTSubject , HasMedia
 
     public function chat(){
         return $this->hasMany(Chat::class);
+    }
+
+    public function googles()
+    {
+        return $this->hasMany(GoogleProviderLogin::class,'user_id','id');
     }
 
 

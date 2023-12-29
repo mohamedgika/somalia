@@ -34,6 +34,11 @@ Route::middleware(['api'])->group(function() {
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/getaccount', [AuthController::class, 'getaccount']);
 
+
+    //Google Login
+    Route::get('/login/{google}', [AuthController::class,'redirectToGoogle']);
+    Route::get('/login/google/callback', [AuthController::class,'handleGoogleCallback']);
+
     // Register Details
     Route::get('/countries',[RegisterDetailController::class,'getCountries']);
     Route::get('/states/{country_id}',[RegisterDetailController::class,'getStates']);
@@ -43,6 +48,7 @@ Route::middleware(['api'])->group(function() {
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
     Route::get('/public/ads/{category}', [PublicController::class, 'public_ads_by_category']);
     Route::get('/public/ads/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
+    Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
     Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
 });

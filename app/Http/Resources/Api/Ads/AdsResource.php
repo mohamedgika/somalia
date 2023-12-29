@@ -29,6 +29,8 @@ class AdsResource extends JsonResource
             'city'              => $this->city,
             'location'          => $this->location,
             'is_active'         => $this->is_active,
+            'created_at'        => $this->created_at,
+            'updated_at'        => $this->updated_at,
             'adDetail'          => AdDetailResource::make($this->whenLoaded('adDetail')),
             'subcategory'       => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
             'user'              => RegisterResource::make($this->whenLoaded('user')),
