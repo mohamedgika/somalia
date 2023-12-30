@@ -18,9 +18,12 @@ class RegisterResource extends JsonResource
             'id'      => $this->id,
             'name'    => $this->name,
             'phone'   => $this->phone,
+            'email'   => $this->email,
             'country' => $this->country,
             'state'   => $this->state,
             'city'    => $this->city,
+            'phone_verified' =>$this->phone_verified,
+            'email_verified_at'=>$this->email_verified_at,
         ];
     }
 }

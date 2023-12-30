@@ -26,6 +26,8 @@ class ShopResource extends JsonResource
             'phone'         =>$this->phone,
             'description'   =>$this->description,
             'is_active'     =>$this->is_active,
+            'created_at'    =>$this->created_at,
+            'updated_at'    =>$this->updated_at,
             'shopAd'        =>ShopAdsResource::make($this->whenLoaded('shopAds')),
             'category'      =>CategoryResource::make($this->whenLoaded('categories')),
             'user'          =>RegisterResource::make($this->whenLoaded('user')),

@@ -4,9 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Chat;
+use App\Models\Google;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
-use App\Models\GoogleProviderLogin;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -22,14 +22,13 @@ class User extends Authenticatable implements JWTSubject , HasMedia
     protected $fillable = [
         'name',
         'phone',
-        'email',
         'country',
         'state',
         'city',
         'password',
         'code',
         'phone_verified',
-        'status'
+        'email'
     ];
 
     /**
@@ -67,7 +66,7 @@ class User extends Authenticatable implements JWTSubject , HasMedia
 
     public function googles()
     {
-        return $this->hasMany(GoogleProviderLogin::class,'user_id','id');
+        return $this->hasMany(Google::class);
     }
 
 

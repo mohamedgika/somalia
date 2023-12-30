@@ -50,12 +50,12 @@ class PublicController extends Controller
     public function public_category()
     {
         $category = Category::get();
-        return responseSuccessData(CategoryResource::collection($category));
+        return responseSuccessData(CategoryResource::collection($category->load('subcategories')));
     }
 
     public function public_subcategory()
     {
         $subcategory = SubCategory::get();
-        return responseSuccessData(SubCategoryResource::collection($subcategory));
+        return responseSuccessData(SubCategoryResource::collection($subcategory->load('category')));
     }
 }

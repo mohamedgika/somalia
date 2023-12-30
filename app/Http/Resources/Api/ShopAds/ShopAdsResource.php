@@ -29,6 +29,8 @@ class ShopAdsResource extends JsonResource
             'city'              => $this->city,
             'location'          => $this->location,
             'is_active'         => $this->is_active,
+            'created_at'        =>$this->created_at,
+            'updated_at'        =>$this->updated_at,
             'shopAdDetail'      => ShopAdsDetailResource::make($this->whenLoaded('shopAdsDetail')),
             'shop'              => ShopResource::make($this->whenLoaded('shop')),
         ];

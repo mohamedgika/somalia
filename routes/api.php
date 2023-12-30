@@ -25,11 +25,9 @@ use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::middleware(['api'])->group(function() {
+
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/getaccount', [AuthController::class, 'getaccount']);
@@ -48,7 +46,7 @@ Route::middleware(['api'])->group(function() {
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
     Route::get('/public/ads/{category}', [PublicController::class, 'public_ads_by_category']);
     Route::get('/public/ads/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
-    Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
+    Route::get('/public/ads/{name}', [PublicController::class, 'public_ads_by_name']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
     Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
 });

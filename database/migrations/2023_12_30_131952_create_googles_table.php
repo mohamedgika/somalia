@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('google_provider_logins', function (Blueprint $table) {
+        Schema::create('googles', function (Blueprint $table) {
             $table->id();
             $table->string('google');
             $table->string('google_id');
             $table->string('avatar')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('google_provider_logins');
+        Schema::dropIfExists('googles');
     }
 };

@@ -20,7 +20,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api'); // login, register methods won't go through the api guard
+        $this->middleware('auth:api', ['except' => ['login', 'register']]); // login, register methods won't go through the api guard
     }
 
     public function redirectToGoole($google)
@@ -52,7 +52,6 @@ class AuthController extends Controller
             [
                 'email_verified_at' => now(),
                 'name' => $user->getName(),
-                'status' => true,
             ]
         );
         $userCreated->googles()->updateOrCreate(
