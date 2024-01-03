@@ -34,7 +34,7 @@ Route::middleware(['api'])->group(function() {
 
 
     //Google Login
-    Route::get('/login/{google}', [AuthController::class,'redirectToGoogle']);
+    Route::get('/login/google', [AuthController::class,'redirectToGoogle']);
     Route::get('/login/google/callback', [AuthController::class,'handleGoogleCallback']);
 
     // Register Details
@@ -70,7 +70,7 @@ Route::middleware(['auth:api'])->controller(InputController::class)->group(funct
 
 
 // Category
-Route::middleware(['auth:api'])->controller(CategoryController::class)->group(function () {
+Route::middleware(['auth:api','auth:sanctum'])->controller(CategoryController::class)->group(function () {
     Route::get('/categories','index');
     Route::get('/categories/{category}','show');
     Route::post('/categories','store');

@@ -22,13 +22,16 @@ class User extends Authenticatable implements JWTSubject , HasMedia
     protected $fillable = [
         'name',
         'phone',
+        'status',
         'country',
         'state',
         'city',
         'password',
         'code',
         'phone_verified',
-        'email'
+        'email',
+        'google_id',
+        'avatar'
     ];
 
     /**
@@ -62,11 +65,6 @@ class User extends Authenticatable implements JWTSubject , HasMedia
 
     public function chat(){
         return $this->hasMany(Chat::class);
-    }
-
-    public function googles()
-    {
-        return $this->hasMany(Google::class);
     }
 
 

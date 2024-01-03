@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Notifications\OtpNotificate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Laravel\Socialite\Facades\Socialite;
@@ -20,58 +21,36 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]); // login, register methods won't go through the api guard
+        $this->middleware('auth:api', ['except' => ['login', 'register','redirectToGoogle','handleGoogleCallback']]); // login, register methods won't go through the api guard
     }
 
-    public function redirectToGoole($google)
+    public function redirectToGoogle()
     {
-        $validated = $this->validateGoogle($google);
-        if (!is_null($validated)) {
-            return $validated;
-        }
-
-        return Socialite::driver($google)->stateless()->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
-    public function handleGoogleCallback($google)
+    public function handleGoogleCallback()
     {
-        $validated = $this->validateGoogle($google);
-        if (!is_null($validated)) {
-            return $validated;
-        }
         try {
-            $user = Socialite::driver($google)->stateless()->user();
+            $user = Socialite::driver('google')->user();
+            $userCreated = User::updateOrCreate(
+                [
+                    'google_id' => $user->getId(),
+                ],
+                [
+                    'email' => $user->getEmail(),
+                    'email_verified_at' => now(),
+                    'name' => $user->getName(),
+                ]
+            );
+
+
+        // Generate a token manually
+        $token = $userCreated->createToken('token-name')->plainTextToken;
+        return response()->json(['token' => $token]);
+
         } catch (ClientException $exception) {
             return response()->json(['error' => 'Invalid credentials provided.'], 422);
-        }
-
-        $userCreated = User::firstOrCreate(
-            [
-                'email' => $user->getEmail()
-            ],
-            [
-                'email_verified_at' => now(),
-                'name' => $user->getName(),
-            ]
-        );
-        $userCreated->googles()->updateOrCreate(
-            [
-                'google' => $google,
-                'google_id' => $user->getId(),
-            ],
-            [
-                'avatar' => $user->getAvatar()
-            ]
-        );
-        $token = $userCreated->createToken('token-name')->plainTextToken;
-
-        return response()->json($userCreated, 200, ['Access-Token' => $token]);
-    }
-
-    protected function validateGoogle($google)
-    {
-        if (!in_array($google, ['google'])) {
-            return response()->json(['error' => 'Please login using google'], 422);
         }
     }
 
