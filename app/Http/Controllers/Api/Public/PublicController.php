@@ -28,7 +28,7 @@ class PublicController extends Controller
             })
             ->get();
 
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail')));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail','subCategory','user')));
     }
 
     public function public_ads_by_price($min, $max)
