@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
-class User extends Authenticatable implements JWTSubject , HasMedia
+class User extends Authenticatable implements HasMedia ,  JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable , InteractsWithMedia;
 
