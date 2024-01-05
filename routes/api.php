@@ -44,6 +44,7 @@ Route::middleware(['api'])->group(function() {
 
     //Main Page
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
+    Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
     Route::get('/public/filterads', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
     Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);

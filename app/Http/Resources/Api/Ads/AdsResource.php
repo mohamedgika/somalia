@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources\Api\Ads;
 
 use App\Models\Fav;
@@ -14,26 +13,29 @@ class AdsResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-        $fav = Fav::where('ad_id',$this->id)->where('user_id',auth()->user()->id)->exists();
+        // Check if $this is not null and has an 'id' property
+        $fav = $this && property_exists($this, 'id')
+            ? Fav::where('ad_id', $this->id)->where('user_id', auth()->user()->id)->exists()
+            : false;
 
         return [
-            'id'                => $this->id,
-            'name'              => $this->name,
-            'price'             => $this->price,
-            'image'             => $this->getMedia('ads'),
-            'description'       => $this->description,
-            'feature'           => $this->feature,
-            'country'           => $this->country,
-            'state'             => $this->state,
-            'city'              => $this->city,
-            'location'          => $this->location,
-            'is_active'         => $this->is_active,
-            'created_at'        => $this->created_at,
-            'updated_at'        => $this->updated_at,
-            'fav'               => $fav,
-            'adDetail'          => AdDetailResource::make($this->whenLoaded('adDetail')),
-            'subcategory'       => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
-            'user'              => RegisterResource::make($this->whenLoaded('user')),
+            'id'            => $this->id,
+            'name'          => $this->name,
+            'price'         => $this->price,
+            'image'         => $this->getMedia('ads'),
+            'description'   => $this->description,
+            'feature'       => $this->feature,
+            'country'       => $this->country,
+            'state'         => $this->state,
+            'city'          => $this->city,
+            'location'      => $this->location,
+            'is_active'     => $this->is_active,
+            'created_at'    => $this->created_at,
+            'updated_at'    => $this->updated_at,
+            'fav'           => $fav ?? false,
+            'adDetail'      => AdDetailResource::make($this->whenLoaded('adDetail')),
+            'subcategory'   => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
+            'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
     }
 }

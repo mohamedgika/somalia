@@ -19,6 +19,14 @@ class PublicController extends Controller
         return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
     }
 
+    public function show(Ads $ad)
+    {
+        if(! $ad)
+            return responseErrorMessage('الاعلان غير موجود');
+
+        return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
+    }
+
     public function public_ads_by_category($category)
     {
 
