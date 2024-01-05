@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Api\Ads\AdsResource;
+use App\Http\Resources\Api\Auth\RegisterResource;
 
 class ProfileController extends Controller
 {
@@ -16,14 +17,16 @@ class ProfileController extends Controller
         if (!auth()->user())
             return response()->json(['error' => 'Unauthorized Access']);
 
-        return response()->json(auth()->user());
+        $user = User::where('id',auth()->user()->id)->first();
+
+        return responseSuccessData(RegisterResource::make($user));
     }
 
     public function getMyAds()
     {
         $ads = Ads::where('user_id', auth()->user()->id)->get();
         $ads->load('adDetail');
-        return responseSuccessData(AdsResource::make($ads));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail','subCategory','user')));
     }
 
     public function update_profile(Request $request)

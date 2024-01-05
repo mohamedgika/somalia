@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Fav;
 use App\Models\Chat;
 use App\Models\Google;
 use Laravel\Sanctum\HasApiTokens;
@@ -65,6 +66,10 @@ class User extends Authenticatable implements HasMedia ,  JWTSubject
 
     public function chat(){
         return $this->hasMany(Chat::class);
+    }
+
+    public function favs(){
+        return $this->hasMany(Fav::class);
     }
 
 

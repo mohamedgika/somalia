@@ -24,6 +24,7 @@ class RegisterResource extends JsonResource
             'city'    => $this->city,
             'phone_verified' =>$this->phone_verified,
             'email_verified_at'=>$this->email_verified_at,
+            'image'            => $this->getMedia('profileauth')
         ];
     }
 }

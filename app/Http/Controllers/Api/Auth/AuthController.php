@@ -93,9 +93,10 @@ class AuthController extends Controller
     {
         if( ! auth()->user() )
             return response()->json(['error' => 'Unauthorized Access']);
+            $user = User::where('id',auth()->user()->id)->first();
 
-        return response()->json(auth()->user());
-    }
+            return responseSuccessData(RegisterResource::make($user));
+        }
 
     public function logout()
     {

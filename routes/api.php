@@ -44,9 +44,11 @@ Route::middleware(['api'])->group(function() {
 
     //Main Page
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
-    Route::get('/public/ads/{category}', [PublicController::class, 'public_ads_by_category']);
-    Route::get('/public/ads/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
-    Route::get('/public/ads/{name}', [PublicController::class, 'public_ads_by_name']);
+    Route::get('/public/filterads', [PublicController::class, 'filterAds']);
+    Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
+    Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
+    Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
+    Route::get('/public/filterads', [PublicController::class,'filterAds']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
     Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
 });
@@ -89,7 +91,6 @@ Route::middleware(['auth:api'])->controller(SubCategoryController::class)->group
 
 // Ads
 Route::middleware(['auth:api'])->controller(AdsController::class)->group(function () {
-    Route::post('/ads/{category}/{subcategory}','adsFilter');
     Route::get('/ads','index');
     Route::get('/ads/{ad}','show');
     Route::post('/ads','store');
