@@ -13,6 +13,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class User extends Authenticatable implements HasMedia ,  JWTSubject
@@ -64,8 +65,9 @@ class User extends Authenticatable implements HasMedia ,  JWTSubject
         return $this->hasOne(Shop::class);
     }
 
-    public function chat(){
-        return $this->hasMany(Chat::class);
+    public function chats(): BelongsToMany
+    {
+        return $this->belongsToMany(Chat::class);
     }
 
     public function favs(){

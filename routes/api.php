@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
+use App\Http\Controllers\Api\Chat\ChatController;
 use App\Http\Controllers\Api\Public\PublicController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 
@@ -124,6 +125,16 @@ Route::middleware(['auth:api'])->controller(ShopAdsController::class)->group(fun
     Route::post('/shopads','store');
     Route::put('/shopads/{shopad}','update');
     Route::delete('/shopads/{shopad}','destroy');
+});
+
+// Chat
+Route::middleware(['auth:api'])->controller(ChatController::class)->group(function () {
+    Route::get('/chat/get-chats','getChats');
+    Route::post('/chat/create-chat','createChat');
+    Route::get('/chat/get-chat-by-id/{chat}','getChatById');
+    Route::post('/chat/send-text-message','sendTextMessage');
+    Route::post('/chat/search-user','searchUsers');
+    Route::get('/chat/message-status/{message}','messageStatus');
 });
 
 

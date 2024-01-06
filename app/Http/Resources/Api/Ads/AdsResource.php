@@ -14,9 +14,8 @@ class AdsResource extends JsonResource
     public function toArray(Request $request): array
     {
         // Check if $this is not null and has an 'id' property
-        $fav = $this && property_exists($this, 'id')
-            ? Fav::where('ad_id', $this->id)->where('user_id', auth()->user()->id)->exists()
-            : false;
+        if(auth()->user())
+            $fav = Fav::where('ad_id', $this->id)->where('user_id', auth()->user()->id)->exists();
 
         return [
             'id'            => $this->id,
