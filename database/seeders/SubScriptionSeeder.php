@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class PackageSeeder extends Seeder
+class SubScriptionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,15 +19,15 @@ class PackageSeeder extends Seeder
         $sub = SubScription::create([
             "name"=>"BASIC",
             "desc"=>"Lorem ipsum dolor sit consectetur.
-                      - Lorem ipsum dolor sit consectetur.
-                      - Lorem ipsum dolor sit consectetur.",
+                       Lorem ipsum dolor sit consectetur.
+                       Lorem ipsum dolor sit consectetur.",
             "price"=>"5",
         ]);
         $sub = SubScription::create([
             "name"=>"GOLD",
             "desc"=>"Lorem ipsum dolor sit consectetur.
-                      - Lorem ipsum dolor sit consectetur.
-                      - Lorem ipsum dolor sit consectetur.",
+                       Lorem ipsum dolor sit consectetur.
+                       Lorem ipsum dolor sit consectetur.",
             "price"=>"8",
         ]);
     }
