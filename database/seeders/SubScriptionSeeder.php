@@ -16,19 +16,24 @@ class SubScriptionSeeder extends Seeder
     {
         DB::table('subscriptions')->delete();
 
-        $sub = SubScription::create([
-            "name"=>"BASIC",
-            "desc"=>"Lorem ipsum dolor sit consectetur.
+        $sub = array(
+            array(
+                "name" => "BASIC",
+                "desc" => "Lorem ipsum dolor sit consectetur.
                        Lorem ipsum dolor sit consectetur.
                        Lorem ipsum dolor sit consectetur.",
-            "price"=>"5",
-        ]);
-        $sub = SubScription::create([
-            "name"=>"GOLD",
-            "desc"=>"Lorem ipsum dolor sit consectetur.
+                "price" => "5",
+            ),
+            array(
+                "name" => "GOLD",
+                "desc" => "Lorem ipsum dolor sit consectetur.
                        Lorem ipsum dolor sit consectetur.
                        Lorem ipsum dolor sit consectetur.",
-            "price"=>"8",
-        ]);
+                "price" => "8",
+            ),
+
+        );
+
+        DB::table('subscriptions')->insert($sub);
     }
 }
