@@ -1,19 +1,22 @@
 <?php
 
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Ads\AdsController;
 use App\Http\Controllers\Api\Fav\FavController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Chat\ChatController;
 use App\Http\Controllers\Api\Shop\ShopController;
 use App\Http\Controllers\Api\input\InputController;
+use App\Http\Controllers\Api\Public\PublicController;
+use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
-use App\Http\Controllers\Api\Chat\ChatController;
-use App\Http\Controllers\Api\Public\PublicController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
+use App\Http\Controllers\Api\SubScription\SubScriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +47,9 @@ Route::middleware(['api'])->group(function() {
     Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
 
     //Main Page
-    Route::get('/public/ads', [PublicController::class, 'public_ads']);
-    Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
     Route::get('/public/filterads', [PublicController::class, 'filterAds']);
+    Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
+    Route::get('/public/ads', [PublicController::class, 'public_ads']);
     Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
     Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
     Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
@@ -129,26 +132,22 @@ Route::middleware(['auth:api'])->controller(ShopAdsController::class)->group(fun
 
 // Chat
 Route::middleware(['auth:api'])->controller(ChatController::class)->group(function () {
-    Route::get('/chat/get-chats','getChats');
-    Route::post('/chat/create-chat','createChat');
-    Route::get('/chat/get-chat-by-id/{chat}','getChatById');
-    Route::post('/chat/send-text-message','sendTextMessage');
-    Route::post('/chat/search-user','searchUsers');
-    Route::get('/chat/message-status/{message}','messageStatus');
+    Route::get('/chats','getChats');
+    Route::get('/chat/{chat}','getChatById');
+    Route::post('/chat/create','createChat');
+    Route::post('/chat/send','sendTextMessage');
+    Route::get('/chat/search/phone/{phone}','searchUsers');
+    Route::post('/chat/messagestatus/{message}','messageStatus');
 });
 
+Route::middleware(['auth:api'])->controller(PaymentController::class)->group(function(){
+    Route::get('/payment/{package_id}', 'payment');
+    Route::get('/payment/cancel', 'cancel')->name('payment.cancel');
+    Route::get('/payment/success', 'success')->name('payment.success');
+});
 
-// // Category
-// Route::middleware(['api'])->controller(CategoryController::class)->group(function () {
+// SubScription
+Route::middleware(['api'])->controller(SubScriptionController::class)->group(function () {
+    Route::get('/packages', 'index');
+});
 
-// });
-
-// // Category
-// Route::middleware(['api'])->controller(CategoryController::class)->group(function () {
-
-// });
-
-// // Category
-// Route::middleware(['api'])->controller(CategoryController::class)->group(function () {
-
-// });

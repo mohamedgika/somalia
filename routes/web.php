@@ -19,11 +19,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 |
 */
 
-Route::middleware('guest')->group(function () {
+// Route::middleware('guest')->group(function () {
 
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
-});
+//     Route::get('/', [AuthenticatedSessionController::class, 'create'])
+//                 ->name('login');
+// });
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

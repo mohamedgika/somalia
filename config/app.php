@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use Srmklive\PayPal\Providers\PayPalServiceProvider;
 
 return [
 
@@ -169,6 +170,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        PayPalServiceProvider::class
+
     ])->toArray(),
 
     /*
@@ -187,6 +190,7 @@ return [
         'Jwt' => Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+
     ])->toArray(),
 
 ];

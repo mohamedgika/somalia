@@ -6,6 +6,8 @@ namespace App\Models;
 use App\Models\Fav;
 use App\Models\Chat;
 use App\Models\Google;
+use App\Models\Payment;
+use App\Models\SubScription;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -74,6 +76,13 @@ class User extends Authenticatable implements HasMedia ,  JWTSubject
         return $this->hasMany(Fav::class);
     }
 
+    public function subScriptions(){
+        return $this->hasMany(SubScription::class);
+    }
+
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
 
     public function getJWTIdentifier()
     {

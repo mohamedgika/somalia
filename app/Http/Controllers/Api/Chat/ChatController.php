@@ -71,7 +71,7 @@ class ChatController extends Controller
             //         $participant->notify(new NewMessage($message));
             //     }
             // }
-            
+
             return response()->json([
                 "message" => $message,
                 "success" => $success
@@ -127,9 +127,9 @@ class ChatController extends Controller
         }
     }
 
-    public function searchUsers(Request $request)
+    public function searchUsers($phone)
     {
-        $users = User::where('email', 'like', "%{$request->email}%")->limit(3)->get();
+        $users = User::where('phone', 'like', "%{$phone}%")->limit(3)->get();
         return response()->json([
             'users' => $users,
         ], 200);

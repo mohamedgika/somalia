@@ -7,6 +7,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\CitySeeder;
+use Database\Seeders\PackageSeeder;
 use Database\Seeders\SubCategorySeeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,7 +28,8 @@ class DatabaseSeeder extends Seeder
         StateSeeder::class,
         CitySeeder::class,
         CategorySeeder::class,
-        SubCategorySeeder::class
+        SubCategorySeeder::class,
+        PackageSeeder::class,
     ]);
     }
 }

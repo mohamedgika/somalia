@@ -19,7 +19,7 @@ class ChatResource extends JsonResource
             'private' => $this->private,
             'direct_message' => $this->direct_message,
             'created_at' => $this->created_at,
-            'participants' => $this->participants,
+            'users' => $this->users,
         ];
     }
 }
