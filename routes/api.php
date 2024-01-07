@@ -18,16 +18,6 @@ use App\Http\Controllers\Api\Auth\Profile\ProfileController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 use App\Http\Controllers\Api\SubScription\SubScriptionController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 
 Route::middleware(['api'])->group(function() {
@@ -47,7 +37,6 @@ Route::middleware(['api'])->group(function() {
     Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
 
     //Main Page
-    Route::get('/public/filterads', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
     Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
@@ -101,6 +90,9 @@ Route::middleware(['auth:api'])->controller(AdsController::class)->group(functio
     Route::post('/ads','store');
     Route::put('/ads/{ad}','update');
     Route::delete('/ads/{ad}','destroy');
+    Route::get('/ads/category/{category}','ads_by_category');
+    Route::get('/ads/price/{min}/{max}','ads_by_price');
+    Route::get('/ads/filterads','filterAds');
 });
 
 //Fav
