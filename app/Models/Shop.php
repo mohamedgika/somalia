@@ -16,7 +16,8 @@ class Shop extends Model implements HasMedia
 
     protected $fillable = [
         'name',
-        'location',
+        'lang',
+        'late',
         'phone',
         'description',
         'user_id',

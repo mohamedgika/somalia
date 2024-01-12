@@ -24,7 +24,8 @@ class UpdateRequest extends FormRequest
         return [
             'name'        => 'required|string|unique:shops,name,except,id',
             // 'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location'    => 'required|string',
+            'lang'    => 'required|string',
+            'late'    => 'required|string',
             'phone'       => 'required',
             'description' => 'nullable|string|max:500',
         ];

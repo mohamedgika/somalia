@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Payment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Ads\AdsController;
 use App\Http\Controllers\Api\Fav\FavController;
@@ -18,9 +16,7 @@ use App\Http\Controllers\Api\Auth\Profile\ProfileController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 use App\Http\Controllers\Api\SubScription\SubScriptionController;
 
-
-
-Route::middleware(['api'])->group(function() {
+Route::middleware(['api'])->group(function () {
 
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -28,118 +24,122 @@ Route::middleware(['api'])->group(function() {
 
 
     //Google Login
-    Route::get('/login/google', [AuthController::class,'redirectToGoogle']);
-    Route::get('/login/google/callback', [AuthController::class,'handleGoogleCallback']);
+    Route::get('/login/google', [AuthController::class, 'redirectToGoogle']);
+    Route::get('/login/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
     // Register Details
-    Route::get('/countries',[RegisterDetailController::class,'getCountries']);
-    Route::get('/states/{country_id}',[RegisterDetailController::class,'getStates']);
-    Route::get('/cities/{state_id}',[RegisterDetailController::class,'getCities']);
+    Route::get('/countries', [RegisterDetailController::class, 'getCountries']);
+    Route::get('/states/{country_id}', [RegisterDetailController::class, 'getStates']);
+    Route::get('/cities/{state_id}', [RegisterDetailController::class, 'getCities']);
+
+    // Package
+    Route::get('/packages', [SubScriptionController::class,'index']);
 
     //Main Page
-    Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
+    Route::get('/public/shops', [PublicController::class, 'public_shops']);
+    Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
+    Route::get('/public/shops/{shop}', [PublicController::class, 'show_shop']);
     Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
+    Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
     Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
     Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
-    Route::get('/public/filterads', [PublicController::class,'filterAds']);
+    Route::post('/public/ads/filteration', [PublicController::class, 'filterAds']);
+    Route::get('/public/ads/filter/date', [PublicController::class, 'filterAdsByDate']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
-    Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
 });
 
-//Profile
+
+// //Profile
 Route::middleware(['auth:api'])->controller(ProfileController::class)->group(function () {
-    Route::get('/account','getAccount');
-    Route::get('/myads','getMyAds');
-    Route::put('/updateprofile','update_profile');
+    Route::get('/account', 'getAccount');
+    Route::get('/myads', 'getMyAds');
+    Route::get('/myshop', 'getMyShop');
+    Route::get('/countMyAds', 'count_of_my_ads');
+    Route::get('/favscount', 'fav_ads');
+    Route::get('/view_ad/{ad}', 'get_view_one_ad');
+    Route::get('/views_ads', 'get_view_ads');
+    Route::put('/updateprofile', 'update_profile');
 });
 
 
 // Input
 Route::middleware(['auth:api'])->controller(InputController::class)->group(function () {
-    Route::get('/inputs','index');
-    Route::get('/inputs/{input}','show');
-    Route::post('/inputs','store');
-    Route::put('/inputs/{input}','update');
-    Route::delete('/inputs/{input}','destroy');
+    Route::get('/inputs', 'index');
+    Route::get('/inputs/{input}', 'show');
+    Route::post('/inputs', 'store');
+    Route::put('/inputs/{input}', 'update');
+    Route::delete('/inputs/{input}', 'destroy');
 });
 
 
 // Category
-Route::middleware(['auth:api','auth:sanctum'])->controller(CategoryController::class)->group(function () {
-    Route::get('/categories','index');
-    Route::get('/categories/{category}','show');
-    Route::post('/categories','store');
-    Route::put('/categories/{category}','update');
-    Route::delete('/categories/{category}','destroy');
+Route::middleware(['auth:api'])->controller(CategoryController::class)->group(function () {
+    Route::get('/categories', 'index');
+    Route::get('/categories/{category}', 'show');
+    Route::post('/categories', 'store');
+    Route::put('/categories/{category}', 'update');
+    Route::delete('/categories/{category}', 'destroy');
 });
 
 // SubCategory
 Route::middleware(['auth:api'])->controller(SubCategoryController::class)->group(function () {
-    Route::get('/subcategories','index');
-    Route::get('/subcategories/{subcategory}','show');
-    Route::post('/subcategories','store');
-    Route::put('/subcategories/{subcategory}','update');
-    Route::delete('/subcategories/{subcategory}','destroy');
+    Route::get('/subcategories', 'index');
+    Route::get('/subcategories/{subcategory}', 'show');
+    Route::post('/subcategories', 'store');
+    Route::put('/subcategories/{subcategory}', 'update');
+    Route::delete('/subcategories/{subcategory}', 'destroy');
 });
 
 // Ads
 Route::middleware(['auth:api'])->controller(AdsController::class)->group(function () {
-    Route::get('/ads','index');
-    Route::get('/ads/{ad}','show');
-    Route::post('/ads','store');
-    Route::put('/ads/{ad}','update');
-    Route::delete('/ads/{ad}','destroy');
-    Route::get('/ads/category/{category}','ads_by_category');
-    Route::get('/ads/price/{min}/{max}','ads_by_price');
-    Route::get('/ads/filterads','filterAds');
+    Route::get('/ads', 'index');
+    Route::get('/ads/{ad}', 'show');
+    Route::post('/ads', 'store');
+    Route::put('/ads/{ad}', 'update');
+    Route::delete('/ads/{ad}', 'destroy');
 });
 
 //Fav
 Route::middleware(['auth:api'])->controller(FavController::class)->group(function () {
-    Route::get('/favs','getFav');
-    Route::post('/favs','fav');
-    Route::delete('/favs/{ad_id}','destroyFav');
+    Route::get('/favs', 'getFav');
+    Route::post('/favs', 'fav');
+    Route::delete('/favs/{ad_id}', 'destroyFav');
 });
 
 
 // Shop
 Route::middleware(['auth:api'])->controller(ShopController::class)->group(function () {
-    Route::get('/shops','index');
-    Route::get('/shops/{shop}','show');
-    Route::post('/shops','store');
-    Route::put('/shops/{shop}','update');
-    Route::delete('/shops/{shop}','destroy');
+    Route::get('/shops', 'index');
+    Route::get('/shops/{shop}', 'show');
+    Route::post('/shops', 'store');
+    Route::put('/shops/{shop}', 'update');
+    Route::delete('/shops/{shop}', 'destroy');
 });
 
 
 // Shop Ads
 Route::middleware(['auth:api'])->controller(ShopAdsController::class)->group(function () {
-    Route::get('/shopads','index');
-    Route::get('/shopads/{shopad}','show');
-    Route::post('/shopads','store');
-    Route::put('/shopads/{shopad}','update');
-    Route::delete('/shopads/{shopad}','destroy');
+    Route::get('/shopads', 'index');
+    Route::get('/shopads/{shopad}', 'show');
+    Route::post('/shopads', 'store');
+    Route::put('/shopads/{shopad}', 'update');
+    Route::delete('/shopads/{shopad}', 'destroy');
 });
 
 // Chat
 Route::middleware(['auth:api'])->controller(ChatController::class)->group(function () {
-    Route::get('/chats','getChats');
-    Route::get('/chat/{chat}','getChatById');
-    Route::post('/chat/create','createChat');
-    Route::post('/chat/send','sendTextMessage');
-    Route::get('/chat/search/phone/{phone}','searchUsers');
-    Route::post('/chat/messagestatus/{message}','messageStatus');
+    Route::get('/chats', 'getChats');
+    Route::get('/chat/{chat}', 'getChatById');
+    Route::post('/chat/create', 'createChat');
+    Route::post('/chat/send', 'sendTextMessage');
+    Route::get('/chat/search/phone/{phone}', 'searchUsers');
+    Route::post('/chat/messagestatus/{message}', 'messageStatus');
 });
 
-Route::middleware(['auth:api'])->controller(PaymentController::class)->group(function(){
+Route::middleware(['auth:api'])->controller(PaymentController::class)->group(function () {
     Route::get('/payment/{package_id}', 'payment');
     Route::get('/payment/cancel', 'cancel')->name('payment.cancel');
     Route::get('/payment/success', 'success')->name('payment.success');
-});
-
-// SubScription
-Route::middleware(['api'])->controller(SubScriptionController::class)->group(function () {
-    Route::get('/packages', 'index');
 });
 

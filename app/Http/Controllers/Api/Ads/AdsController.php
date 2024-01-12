@@ -19,9 +19,8 @@ class AdsController extends Controller
      */
     public function index()
     {
-        $ads = Ads::where('is_active',0)->get();
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail','subCategory','user')));
-
+        $ads = Ads::where('is_active', 0)->get();
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
     }
 
     /**
@@ -40,37 +39,41 @@ class AdsController extends Controller
         // dd($request->file('image'));
 
         $ads = Ads::create([
-            "user_id"=>auth()->user()->id,
-            "country"=>auth()->user()->country,
-            "state"=>auth()->user()->state,
-            "city"=>auth()->user()->city,
-            ]+$request->validated());
+            "user_id" => auth()->user()->id,
+            "country" => auth()->user()->country,
+            "state" => auth()->user()->state,
+            "city" => auth()->user()->city,
+        ] + $request->validated());
 
-            // $ads->addMediaFromRequest('image')->toMediaCollection('ads');
+        // $ads->addMediaFromRequest('image')->toMediaCollection('ads');
 
-            if ($request->hasFile('image')) {
-                $fileAdders = $ads->addMultipleMediaFromRequest(['image'])
-                    ->each(function ($fileAdder) {
-                        $fileAdder->toMediaCollection('ads','ads');
-                    });
-            }
+        if ($request->hasFile('image')) {
+            $fileAdders = $ads->addMultipleMediaFromRequest(['image'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('ads', 'ads');
+                });
+        }
 
         if (!empty($request->ad_detail))
-                $adDetail = AdDetail::create(["ad_id"=>$ads->id]+$request->validated());
+            $adDetail = AdDetail::create(["ad_id" => $ads->id] + $request->validated());
 
         $ads->load('adDetail');
-        return responseSuccessData(AdsResource::make($ads->load('user','subCategory')),'تم اضافة الاعلان بنجاح');
+        return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory')), 'تم اضافة الاعلان بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Ads $ad)
     {
-        if(! $ad)
+        // Find the ad by its ID
+        $ad = Ads::find($ad->id);
+
+        if (!$ad)
             return responseErrorMessage('الاعلان غير موجود');
 
-        return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
+        $ad->increment('view');
+
+
+        return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
     }
 
     /**
@@ -86,47 +89,44 @@ class AdsController extends Controller
      */
     public function update(UpdateRequest $request, Ads $ad)
     {
-        if ($ad->where('user_id',auth()->user()->id)){
-            if(! $ad)
+        if ($ad->where('user_id', auth()->user()->id)) {
+            if (!$ad)
                 return responseErrorMessage('الاعلان غير موجود');
 
             $ad->update($request->validated());
 
-            if($request->hasFile('image')){
-                $ad->clearMediaCollection('ads','ads');
+            if ($request->hasFile('image')) {
+                $ad->clearMediaCollection('ads', 'ads');
                 // Add the new images to the media library
                 $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
-                ->each(function ($fileAdder) {
-                    $fileAdder->toMediaCollection('ads','ads');
-                });
+                    ->each(function ($fileAdder) {
+                        $fileAdder->toMediaCollection('ads', 'ads');
+                    });
             }
 
             if (!empty($request->ad_detail))
                 $adDetail = $ad->adDetail->update($request->validated());
 
 
-            return responseSuccessData(AdsResource::make($ad->load('adDetail','subCategory','user')));
-        }else{
+            return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Ads $ad)
     {
-        if ($ad->where('user_id',auth()->user()->id)){
-            if(! $ad)
+        if ($ad->where('user_id', auth()->user()->id)) {
+            if (!$ad)
                 return responseErrorMessage('الاعلان غير موجود');
 
-            $ad->clearMediaCollection('ads','ads');
+            $ad->clearMediaCollection('ads', 'ads');
             $ad->delete();
             return responseSuccessMessage('تم حذف الاعلان بنجاح');
-        }else{
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
-
     }
 
     public function ads_by_category($category)
@@ -148,10 +148,9 @@ class AdsController extends Controller
         return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
     }
 
-
     public function filterAds(Request $request)
     {
-        $query = Ads::query();
+        $query = Ads::with(['adDetail', 'subCategory', 'user']);
 
         if ($request->has('category_id')) {
             $category = $request->input('category_id');
@@ -171,8 +170,20 @@ class AdsController extends Controller
             $query->where('name', 'like', '%' . $name . '%');
         }
 
+        // Order the results by the latest date
+        $query->orderBy('created_at', 'desc');
+
+
         $ads = $query->get();
 
+        return responseSuccessData(AdsResource::collection(
+            $ads->load('adDetail', 'subCategory', 'user')
+        ));
+    }
+
+    public function filterAdsByDate()
+    {
+        $ads = Ads::latest('created_at')->get();
         return responseSuccessData(AdsResource::collection(
             $ads->load('adDetail', 'subCategory', 'user')
         ));

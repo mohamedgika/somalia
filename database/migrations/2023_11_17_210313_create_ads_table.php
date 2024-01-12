@@ -20,7 +20,9 @@ return new class extends Migration
             $table->string('country');
             $table->string('state');
             $table->string('city')->nullable();
-            $table->string('location')->nullable();
+            $table->string('lang')->nullable();
+            $table->string('late')->nullable();
+            $table->integer('view')->nullable();
             $table->boolean('is_active')->default(false);
             $table->foreignId('subcategory_id')->constrained('subcategories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();

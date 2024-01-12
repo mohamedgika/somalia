@@ -19,16 +19,12 @@ class SubScriptionSeeder extends Seeder
         $sub = array(
             array(
                 "name" => "BASIC",
-                "desc" => "Lorem ipsum dolor sit consectetur.
-                       Lorem ipsum dolor sit consectetur.
-                       Lorem ipsum dolor sit consectetur.",
+                "desc" => json_encode(['desc1' => 'Lorem ipsum dolor sit consectetur.', 'desc2' => '- Lorem ipsum dolor sit consectetur.','desc3' => '- Lorem ipsum dolor sit consectetur.']),
                 "price" => "5",
             ),
             array(
                 "name" => "GOLD",
-                "desc" => "Lorem ipsum dolor sit consectetur.
-                       Lorem ipsum dolor sit consectetur.
-                       Lorem ipsum dolor sit consectetur.",
+                "desc" => json_encode(['desc1' => 'Lorem ipsum dolor sit consectetur.', 'desc2' => '- Lorem ipsum dolor sit consectetur.','desc3' => '- Lorem ipsum dolor sit consectetur.']),
                 "price" => "8",
             ),
 

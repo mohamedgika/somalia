@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dashboard', function () {
             return view('dashboard');
-            })->name('dashboard');
+})->name('dashboard');
         //User
         Route::get('/dashboard/user',[UserController::class,'index'])->name('user.index');
         Route::post('/dashboard/user/store',[UserController::class,'store'])->name('user.store');

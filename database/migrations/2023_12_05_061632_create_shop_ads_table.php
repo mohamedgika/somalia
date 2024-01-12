@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('country');
             $table->string('state');
             $table->string('city')->nullable();
-            $table->string('location')->nullable();
+            $table->string('lang')->nullable();
+            $table->string('late')->nullable();
             $table->boolean('is_active')->default(false);
             $table->foreignId('shop_id')->constrained('shops')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

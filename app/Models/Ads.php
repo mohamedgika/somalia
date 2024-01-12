@@ -18,7 +18,9 @@ class Ads extends Model implements HasMedia
         'price',
         'description',
         'feature',
-        'location',
+        'lang',
+        'late',
+        'view',
         'country',
         'state',
         'city',
@@ -46,7 +48,7 @@ class Ads extends Model implements HasMedia
     }
 
     public function fav(){
-        return $this->hasMany(Fav::class);
+        return $this->hasMany(Fav::class,'ad_id');
     }
 
     // public function shop(){

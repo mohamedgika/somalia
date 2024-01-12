@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('location');
-            $table->string('phone');
+            $table->string('lang')->nullable();
+            $table->string('late')->nullable();            $table->string('phone');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(false);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();

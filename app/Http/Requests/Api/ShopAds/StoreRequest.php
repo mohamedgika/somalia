@@ -34,8 +34,8 @@ class StoreRequest extends FormRequest
             // 'country'=>'required|string',
             // 'state'=>'required|string',
             'city'=>'nullable|string',
-            'location'=>'nullable|string',
-
+            'lang'    => 'required|string',
+            'late'    => 'required|string',
             //ShopAdDetail
             'shop_ad_detail'=>'nullable|json',
             ];

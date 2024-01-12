@@ -29,8 +29,8 @@ class UpdateRequest extends FormRequest
             'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description'=>'nullable|string|max:500',
             'feature'=>'nullable|string|max:500',
-            'location'=>'nullable|string',
-
+            'lang'    => 'required|string',
+            'late'    => 'required|string',
             //AdDetail
             'shop_ad_detail'=>'nullable|json',
 

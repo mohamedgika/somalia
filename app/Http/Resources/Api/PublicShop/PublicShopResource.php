@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Resources\Api\Shop;
+namespace App\Http\Resources\Api\PublicShop;
 
-use App\Http\Resources\Api\Auth\RegisterResource;
-use App\Http\Resources\Api\Category\CategoryResource;
-use App\Http\Resources\Api\ShopAds\ShopAdsResource;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\Auth\RegisterResource;
+use App\Http\Resources\Api\ShopAds\ShopAdsResource;
+use App\Http\Resources\Api\Category\CategoryResource;
 
-class ShopResource extends JsonResource
+class PublicShopResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -29,7 +28,7 @@ class ShopResource extends JsonResource
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'shopAd'        => ShopAdsResource::make($this->whenLoaded('shopAds')),
+            'shopAd'        => ShopAdsResource::collection($this->whenLoaded('shopAds')),
             'category'      => CategoryResource::make($this->whenLoaded('categories')),
             'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];

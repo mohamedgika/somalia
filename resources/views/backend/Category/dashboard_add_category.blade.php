@@ -19,7 +19,6 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
-        @include('backend.Category.dashboard_category_massage')
         <!-- Default box -->
         <div class="card card-cyan">
             <div class="card-header">
@@ -66,11 +65,12 @@
                                 <label for="image">Category Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input name="image_category" type="file" class="custom-file-input" id="image">
+                                        <input name="image_category" type="file" class="custom-file-input"
+                                            id="image">
                                         <label class="custom-file-label" for="image">Choose file</label>
                                     </div>
                                 </div>
-                                @error('image')
+                                @error('image_category')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -80,11 +80,12 @@
                                 <label for="image">SubCategory Image</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input name="image_subcategory" type="file" class="custom-file-input" id="image">
+                                        <input name="image_subcategory" type="file" class="custom-file-input"
+                                            id="image">
                                         <label class="custom-file-label" for="image">Choose file</label>
                                     </div>
                                 </div>
-                                @error('image')
+                                @error('image_subcategory')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -103,15 +104,17 @@
                         <div class="row">
                             <div class="col-md-4" id="formfield1">
                                 <input type="text" name="inputs[{{ $i }}][input]" class="form-control">
+                                @error('inputs.' . $i . '.input')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-md-8" id="formfield2">
                                 <input type="text" name="inputs[{{ $i }}][type]" class="form-control">
+                                @error('inputs.' . $i . '.type')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
-
                         </div>
-                        @error('inputs')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
                     @endfor
 
                     <div class="row">

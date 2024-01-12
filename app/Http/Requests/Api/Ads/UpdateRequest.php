@@ -29,7 +29,8 @@ class UpdateRequest extends FormRequest
                         'image.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                         'description'=>'nullable|string|max:500',
                         'feature'=>'nullable|string|max:500',
-                        'location'=>'nullable|string',
+                        'lang'=>'nullable|string',
+                        'late'=>'nullable|string',
                         'subcategory_id'=>'nullable|exists:subcategories,id',
 
                         //AdDetail

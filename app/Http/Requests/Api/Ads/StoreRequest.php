@@ -35,7 +35,8 @@ class StoreRequest extends FormRequest
             // 'country'=>'required|string',
             // 'state'=>'required|string',
             'city'=>'nullable|string',
-            'location'=>'nullable|string',
+            'lang'=>'nullable|string',
+            'late'=>'nullable|string',
             'subcategory_id'=>'required|exists:subcategories,id',
             'user_id'=>'nullable|exists:users,id',
 

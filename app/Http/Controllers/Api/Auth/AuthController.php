@@ -96,7 +96,7 @@ class AuthController extends Controller
             $user = User::where('id',auth()->user()->id)->first();
 
             return responseSuccessData(RegisterResource::make($user));
-        }
+    }
 
     public function logout()
     {

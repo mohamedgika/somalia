@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Exception;
+use App\Models\Input;
 use App\Models\Category;
-use App\Trait\UploadTrait;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Category\StoreRequest;
-use App\Models\Input;
+use App\Http\Requests\Dashboard\Category\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -25,31 +25,18 @@ class CategoryController extends Controller
         // Relation Between Category And Sub Category
         $categories = Category::all();
 
-        // $subcategories = Category::find($id)->subcategory;
-
         return view('backend.Category.dashboard_category', ['categories' => $categories]);
     }
 
 
     public function create()
     {
-        $arr = [];
-
-        return view('backend.Category.dashboard_add_category', compact('arr'));
+        return view('backend.Category.dashboard_add_category');
     }
 
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name_category' => 'required|string|min:3',
-            'name_subcategory' => 'required|string|min:3',
-            'image_category' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image_subcategory' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'inputs' => 'required|array',
-            'inputs.*.input' => 'required|string|max:255',
-            'inputs.*.type' => ['required', 'string'],
-        ]);
 
         // Remove elements with null values for both "input" and "type"
         $filteredArray = array_filter($request->inputs, function ($item) {
@@ -77,11 +64,11 @@ class CategoryController extends Controller
                 'category_id' => $category->id,
             ]);
 
-
             session()->flash('add_catergory', 'Add Category And SubCategory Successfully');
             return redirect()->route('category.index');
+
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 

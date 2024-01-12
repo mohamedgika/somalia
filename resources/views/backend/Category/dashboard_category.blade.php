@@ -10,22 +10,22 @@
 
 @section('after_next')
     Category
-    <a href="{{route('category.create')}}"><input type="submit" class="btn btn-success ml-3" value="Add Category"></a>
+    <a href="{{ route('category.create') }}"><input type="submit" class="btn btn-success ml-3" value="Add Category"></a>
 @endsection
 
 @section('next')
     Category
 @endsection
 
-
 @section('content')
+    @include('backend.Category.dashboard_category_massage')
 
-    {{-- <section class="content">
+    <section class="content">
 
         <!-- Default box -->
         <div class="card card-blue">
             <div class="card-header">
-                <h3 class="card-title">{{ __('backend/dashboard_category.Show Category') }}</h3>
+                <h3 class="card-title">Show Category And SubCategory</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -41,49 +41,64 @@
                 <table id="example2" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>{{ __('backend/dashboard_category.Category') }}</th>
-                            <th>{{ __('backend/dashboard_category.Content') }}</th>
-                            <th>{{ __('backend/dashboard_category.Slug') }}</th>
-                            <th>{{ __('backend/dashboard_category.Image') }}</th>
-                            <th>{{ __('backend/dashboard_category.Action') }}</th>
+                            <th>Category</th>
+                            <th>SubCategory</th>
+                            <th>Category Image</th>
+                            <th>SubCategory Image</th>
+                            <th>Inputs</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         @foreach ($categories as $category)
                             <tr>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $category->getTranslation('title', 'en') : $category->getTranslation('title', 'ar') }}
+                                <td>{{ $category->name }}
                                 </td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $category->getTranslation('content', 'en') : $category->getTranslation('content', 'ar') }}
-                                </td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $category->getTranslation('slug', 'en') : $category->getTranslation('slug', 'ar') }}
-                                </td>
-                                <td><img src="{{ URL::asset('imgs/' . $category->image) }}" width="50px" height="50px"
-                                        alt=""></td>
+                                @foreach ($category->subCategories as $sub)
+                                    <td>{{ $sub->name }}
+                                    </td>
+                                @endforeach
                                 <td>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#EditCategory{{ $category->id }}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#DeleteCategory{{ $category->id }}">
-                                        <i class="fas fa-trash"></i>
-                                        Delete
-                                    </button>
+                                    <img src="{{ $category->getFirstMediaUrl('category') }}" width="75px"><br />
                                 </td>
-                            </tr>
-                            @include('backend.Category.dashboard_edit_category')
+                                @foreach ($category->subCategories as $sub)
+                                    <td>
+                                        <img src="{{ $sub->getFirstMediaUrl('subcategory') }}" width="75px"><br />
+                                    </td>
+                                @endforeach
+                                @foreach (json_decode($category->inputs, true) as $input)
+                                    @if(is_array($input)) {{-- Check if $input is an array --}}
+                                        <td>{{ isset($input['inputs']) ? $input['inputs'] : '' }}</td>
+                                        <td>{{ isset($input['type']) ? $input['type'] : '' }}</td>
+                                    @else
+                                    @endif
+                            @endforeach
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                data-target="#EditCategory{{ $category->id }}">
+                                <i class="fas fa-pencil-alt"></i>
+                                Edit
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                data-target="#DeleteCategory{{ $category->id }}">
+                                <i class="fas fa-trash"></i>
+                                Delete
+                            </button>
+                        </td>
+                        </tr>
+                        {{-- @include('backend.Category.dashboard_edit_category') --}}
                         @endforeach
 
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>{{ __('backend/dashboard_category.Category') }}</th>
-                            <th>{{ __('backend/dashboard_category.Content') }}</th>
-                            <th>{{ __('backend/dashboard_category.Slug') }}</th>
-                            <th>{{ __('backend/dashboard_category.Image') }}</th>
-                            <th>{{ __('backend/dashboard_category.Action') }}</th>
+                            <th>Category</th>
+                            <th>SubCategory</th>
+                            <th>Category Image</th>
+                            <th>SubCategory Image</th>
+                            <th>Inputs</th>
+                            <th>Actions</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -93,8 +108,7 @@
         </div>
         <!-- /.card -->
 
-    </section> --}}
-
+    </section>
 @endsection
 
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Shop;
+namespace App\Http\Requests\Api\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,12 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        => 'required|string|unique:shops,name,except,id',
-            'image'       => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'lang'    => 'required|string',
-            'late'    => 'required|string',
-            'phone'       => 'required',
-            'description' => 'nullable|string|max:500',
-            'category_id' => 'required',
+            'name'     => 'required|min:3',
+            'image'    => 'nullable|image',
+            'phone'     => 'nullable|unique:users|max:255',
+            'code_phone' => 'nullable',
+            'password'  => 'nullable|min:8',
+            'confirm_password' => 'nullable',
         ];
     }
 }
