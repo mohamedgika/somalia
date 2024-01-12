@@ -23,10 +23,10 @@ class UpdateRequest extends FormRequest
     {
         return [
                         //Ads
-                        'name'=>'required|string',
-                        'price'=>'required|numeric',
-                        'image' => 'required|array',
-                        'image.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                        'name'=>'nullable|string',
+                        'price'=>'nullable|numeric',
+                        'image' => 'nullable|array',
+                        'image.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                         'description'=>'nullable|string|max:500',
                         'feature'=>'nullable|string|max:500',
                         'lang'=>'nullable|string',
