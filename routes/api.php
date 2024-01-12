@@ -38,12 +38,14 @@ Route::middleware(['api'])->group(function () {
     //Main Page
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
     Route::get('/public/shops', [PublicController::class, 'public_shops']);
+    Route::get('/public/poplocations', [PublicController::class, 'pop_locations']);
     Route::get('/public/ads/{ad}', [PublicController::class, 'show']);
     Route::get('/public/shops/{shop}', [PublicController::class, 'show_shop']);
     Route::get('/public/ads/category/{category}', [PublicController::class, 'public_ads_by_category']);
     Route::get('/public/subcategory', [PublicController::class, 'public_subcategory']);
     Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
     Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
+    Route::get('/public/shops', [PublicController::class, 'public_shops']);
     Route::post('/public/ads/filteration', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/filter/date', [PublicController::class, 'filterAdsByDate']);
     Route::get('/public/category', [PublicController::class, 'public_category']);

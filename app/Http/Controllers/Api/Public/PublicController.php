@@ -118,4 +118,14 @@ class PublicController extends Controller
         $subcategory = SubCategory::get();
         return responseSuccessData(SubCategoryResource::collection($subcategory->load('category')));
     }
+
+    public function pop_locations()
+    {
+        // Get the number of ads grouped by country
+        $adsByCountry = Ads::groupBy('country')
+            ->selectRaw('country, count(*) as ads_count')
+            ->get();
+
+        return response()->json(['ads_by_country' => $adsByCountry]);
+    }
 }
