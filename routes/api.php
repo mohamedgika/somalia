@@ -13,8 +13,8 @@ use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
+use App\Http\Controllers\Api\Package\SubScriptionController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
-use App\Http\Controllers\Api\SubScription\SubScriptionController;
 
 Route::middleware(['api'])->group(function () {
 

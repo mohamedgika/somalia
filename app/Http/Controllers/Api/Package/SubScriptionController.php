@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api\SubScription;
+namespace App\Http\Controllers\Api\Package;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\SubScription\SubScriptionResource;
 use App\Models\SubScription;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\SubScription\SubScriptionResource;
 
 class SubScriptionController extends Controller
 {
