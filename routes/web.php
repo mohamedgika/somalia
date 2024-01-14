@@ -4,6 +4,7 @@ use App\Livewire\Post\ListPosts;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Category\ListCategories;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\AdsController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -31,6 +32,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //Category
         Route::resource('/dashboard/category',CategoryController::class);
         // Route::put('dashboard/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
+
+        //Ads
+        Route::resource('/dashboard/Ads',AdsController::class);
+
+
+
     });
 
 Route::middleware('auth')->group(function () {

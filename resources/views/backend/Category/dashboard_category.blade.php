@@ -67,27 +67,33 @@
                                         <img src="{{ $sub->getFirstMediaUrl('subcategory') }}" width="75px"><br />
                                     </td>
                                 @endforeach
-                                @foreach (json_decode($category->inputs, true) as $input)
-                                    @if(is_array($input)) {{-- Check if $input is an array --}}
-                                        <td>{{ isset($input['inputs']) ? $input['inputs'] : '' }}</td>
-                                        <td>{{ isset($input['type']) ? $input['type'] : '' }}</td>
-                                    @else
-                                    @endif
-                            @endforeach
-                        <td>
-                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                data-target="#EditCategory{{ $category->id }}">
-                                <i class="fas fa-pencil-alt"></i>
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                data-target="#DeleteCategory{{ $category->id }}">
-                                <i class="fas fa-trash"></i>
-                                Delete
-                            </button>
-                        </td>
-                        </tr>
-                        {{-- @include('backend.Category.dashboard_edit_category') --}}
+                                <td>
+                                    @foreach ($inputs as $input)
+                                        @if (is_array($input))
+                                            <p>
+                                                Name: {{ $input['name'] ?? '' }}, Type: {{ $input['type'] ?? '' }}
+                                            </p>
+                                        @elseif (is_object($input))
+                                            <p>
+                                                Name: {{ $input->name ?? '' }}, Type: {{ $input->type ?? '' }}
+                                            </p>
+                                        @endif
+                                    @endforeach
+                                <td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                        data-target="#EditCategory{{ $category->id }}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#DeleteCategory{{ $category->id }}">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                            @include('backend.Category.dashboard_edit_category')
                         @endforeach
 
                     </tbody>

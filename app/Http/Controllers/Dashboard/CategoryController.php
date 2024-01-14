@@ -23,9 +23,17 @@ class CategoryController extends Controller
     public function index()
     {
         // Relation Between Category And Sub Category
-        $categories = Category::all();
+        $categories = Category::get();
 
-        return view('backend.Category.dashboard_category', ['categories' => $categories]);
+        foreach ($categories as $category) {
+            foreach ($category->inputs as $input) {
+                $inputs = json_decode($input->inputs);
+            }
+        }
+
+
+
+        return view('backend.Category.dashboard_category', ['categories' => $categories,'inputs'=>$inputs]);
     }
 
 
@@ -40,7 +48,7 @@ class CategoryController extends Controller
 
         // Remove elements with null values for both "input" and "type"
         $filteredArray = array_filter($request->inputs, function ($item) {
-            return $item['input'] !== null || $item['type'] !== null;
+            return $item['name'] !== null || $item['type'] !== null;
         });
 
         $filteredArray = array_values($filteredArray);

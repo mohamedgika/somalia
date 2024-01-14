@@ -1,21 +1,21 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    {{ __('backend/dashboard_setting.| Post') }}
+    Ads
 @endsection
 
 @section('css')
-    @include('backend.Post.dashboard_head_post')
+    @include('backend.Ads.dashboard_head_ads')
 @endsection
 
 @section('after_next')
-    {{ __('backend/dashboard_post.Post') }}
-    <a href="{{ route('post.create') }}"><input type="submit" class="btn btn-success ml-3"
-            value="{{ __('backend/dashboard_post.Add Posts') }}"></a>
+Ads
+    {{-- <a href="{{ route('post.create') }}"><input type="submit" class="btn btn-success ml-3"
+            value="{{ __('backend/dashboard_post.Add Posts') }}"></a> --}}
 @endsection
 
 @section('next')
-    {{ __('backend/dashboard_post.Post') }}
+Ads
 @endsection
 
 
@@ -26,7 +26,7 @@
         <!-- Default box -->
         <div class="card card-dark">
             <div class="card-header">
-                <h3 class="card-title">{{ __('backend/dashboard_post.Post') }}</h3>
+                <h3 class="card-title">Ads</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -51,14 +51,14 @@
                             <th>{{ __('backend/dashboard_post.slug') }}</th>
                             <th>{{ __('backend/dashboard_post.image') }}</th>
                             <th>{{ __('backend/dashboard_post.created at') }}</th>
-                            @can('view', $posts)
+                            {{-- @can('view', $posts)
                                 <th>{{ __('backend/dashboard_post.action') }}</th>
-                            @endcan
+                            @endcan --}}
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($posts as $post)
+                        {{-- @foreach ($posts as $post)
                             <tr>
                                 <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('title', 'en') : $post->getTranslation('title', 'ar') }}
                                 </td>
@@ -76,7 +76,6 @@
                                         alt=""></td>
                                 <td>{{ $post->created_at }}</td>
 
-                                {{-- post policy view --}}
                                 @can('view', $posts)
                                     <td>
                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
@@ -93,7 +92,7 @@
                                 @endcan
 
                             </tr>
-                        @endforeach
+                        @endforeach --}}
 
                     </tbody>
                     <tfoot>
@@ -107,9 +106,9 @@
                             <th>{{ __('backend/dashboard_post.slug') }}</th>
                             <th>{{ __('backend/dashboard_post.image') }}</th>
                             <th>{{ __('backend/dashboard_post.created at') }}</th>
-                            @can('view', $posts)
+                            {{-- @can('view', $posts)
                                 <th>{{ __('backend/dashboard_post.action') }}</th>
-                            @endcan
+                            @endcan --}}
                         </tr>
                     </tfoot>
                 </table>
@@ -125,5 +124,5 @@
 
 
 @section('js')
-    @include('backend.Post.dashboard_end_post')
+    @include('backend.Ads.dashboard_end_ads')
 @endsection

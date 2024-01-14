@@ -156,7 +156,7 @@
 
             var newField1 = document.createElement('input');
             newField1.setAttribute('type', 'text');
-            newField1.setAttribute('name', 'inputs[' + counter + '][input]');
+            newField1.setAttribute('name', 'inputs[' + counter + '][name]');
             newField1.setAttribute('class', 'form-control');
 
             var newField2 = document.createElement('input');
