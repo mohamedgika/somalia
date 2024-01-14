@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Package;
 
-use App\Models\SubScription;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\SubScription\SubScriptionResource;
@@ -14,7 +14,7 @@ class SubScriptionController extends Controller
      */
     public function index()
     {
-        $sub = SubScription::get();
+        $sub = Subscription::get();
         return responseSuccessData(SubScriptionResource::collection($sub));
     }
 

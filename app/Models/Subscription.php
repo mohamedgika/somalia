@@ -6,7 +6,7 @@ use App\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SubScription extends Model
+class Subscription extends Model
 {
     use HasFactory;
 
