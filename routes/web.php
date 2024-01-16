@@ -27,14 +27,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //User
         Route::get('/dashboard/user',[UserController::class,'index'])->name('user.index');
         Route::post('/dashboard/user/store',[UserController::class,'store'])->name('user.store');
-        Route::put('/dashboard/user/edit/{id}',[UserController::class,'edit'])->name('user.edit');
-        Route::delete('/dashboard/user/delete/{id}',[UserController::class,'del'])->name('user.delete');
+        Route::put('/dashboard/user/{user}',[UserController::class,'edit'])->name('user.edit');
+        Route::delete('/dashboard/user/{user}',[UserController::class,'del'])->name('user.delete');
+
         //Category
         Route::resource('/dashboard/category',CategoryController::class);
-        // Route::put('dashboard/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
 
         //Ads
-        Route::resource('/dashboard/Ads',AdsController::class);
+        Route::middleware(['auth','verified'])->controller(AdsController::class)->group(function () {
+            Route::get('/dashboard/ads', 'index')->name('ads.index');
+            Route::get('/dashboard/ads/{ad}', 'show')->name('ads.show');
+            Route::post('/dashboard/ads', 'store')->name('ads.store');
+            Route::put('/dashboard/ads/{ad}', 'edit')->name('ads.edit');
+            Route::delete('/dashboard/ads/{ad}', 'destroy')->name('ads.destroy');
+        });
 
 
 

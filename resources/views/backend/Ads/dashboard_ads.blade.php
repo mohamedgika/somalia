@@ -1,7 +1,7 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Ads
+    Dashboard | Ads
 @endsection
 
 @section('css')
@@ -9,18 +9,31 @@
 @endsection
 
 @section('after_next')
-Ads
-    {{-- <a href="{{ route('post.create') }}"><input type="submit" class="btn btn-success ml-3"
+    Ads
+    {{-- <a href="{{ route('post.create') }}"><input type="submit" class="ml-3 btn btn-success"
             value="{{ __('backend/dashboard_post.Add Posts') }}"></a> --}}
 @endsection
 
 @section('next')
-Ads
+    Ads
 @endsection
 
 
 @section('content')
+    <!--For Add Setting Successfully-->
     <!-- Main content -->
+    @if (session()->has('ActiveAds'))
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>{{ session()->get('ActiveAds') }}</strong>
+        </div>
+    @endif
+    @if (session()->has('edit_ads'))
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>{{ session()->get('edit_ads') }}</strong>
+        </div>
+    @endif
     <section class="content">
 
         <!-- Default box -->
@@ -42,15 +55,21 @@ Ads
                 <table id="example2" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>{{ __('backend/dashboard_post.title') }}</th>
-                            <th>{{ __('backend/dashboard_post.category') }}</th>
-                            <th>{{ __('backend/dashboard_post.subcategory') }}</th>
-                            <th>{{ __('backend/dashboard_post.content') }}</th>
-                            <th>{{ __('backend/dashboard_post.description') }}</th>
-                            <th>{{ __('backend/dashboard_post.summary') }}</th>
-                            <th>{{ __('backend/dashboard_post.slug') }}</th>
-                            <th>{{ __('backend/dashboard_post.image') }}</th>
-                            <th>{{ __('backend/dashboard_post.created at') }}</th>
+                            <th>Name</th>
+                            <th>Images</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
+                            <th>User</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Feature</th>
+                            <th>Country</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Ad Detail</th>
+                            <th>Active</th>
+                            <th>Active Actions</th>
+                            <th>Actions</th>
                             {{-- @can('view', $posts)
                                 <th>{{ __('backend/dashboard_post.action') }}</th>
                             @endcan --}}
@@ -58,54 +77,111 @@ Ads
                     </thead>
                     <tbody>
 
-                        {{-- @foreach ($posts as $post)
+                        @foreach ($ads as $ad)
                             <tr>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('title', 'en') : $post->getTranslation('title', 'ar') }}
+                                <td>{{ $ad->name }}</td>
+                                <td>
+                                    @foreach ($ad->getMedia('ads') as $media)
+                                        <img src="{{ $media->getUrl() }}" width="75px"><br />
+                                    @endforeach
                                 </td>
-                                <td><a href="{{ route('category.index') }}">{{ $post->categories->title }}</a></td>
-                                <td><a href="{{ route('subcategory.index') }}">{{ $post->subcategories->title }}</a></td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('content', 'en') : $post->getTranslation('content', 'ar') }}
+                                <td>{{ $ad->subCategory->name }}</td>
+                                <td>{{ $ad->subCategory->category->name }}</td>
+                                <td>{{ $ad->user->name }}</td>
+                                <td>{{ $ad->price }}</td>
+                                <td>
+                                    <textarea id="" cols="20" rows="2" disabled>{{ $ad->description }}</textarea>
                                 </td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('description', 'en') : $post->getTranslation('description', 'ar') }}
+                                <td>
+                                    <textarea id="" cols="20" rows="2" disabled>{{ $ad->feature }}</textarea>
                                 </td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('summary', 'en') : $post->getTranslation('summary', 'ar') }}
-                                </td>
-                                <td>{{ LaravelLocalization::getCurrentLocaleDirection() == 'ltr' ? $post->getTranslation('slug', 'en') : $post->getTranslation('slug', 'ar') }}
-                                </td>
-                                <td><img src="{{ URL::asset('imgs/' . $post->image) }}" width="50px" height="50px"
-                                        alt=""></td>
-                                <td>{{ $post->created_at }}</td>
+                                <td>{{ $ad->country }}</td>
+                                <td>{{ $ad->state }}</td>
+                                <td>{{ $ad->city }}</td>
+                                <td>
+                                    @php
+                                        $data = json_decode($ad->adDetail->ad_detail);
+                                    @endphp
 
-                                @can('view', $posts)
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#EditCategory">
-                                            <i class="fas fa-pencil-alt"></i>
-                                            Edit
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#DeleteCategory">
-                                            <i class="fas fa-trash"></i>
-                                            Delete
-                                        </button>
-                                    </td>
-                                @endcan
+                                    @if (is_array($data))
+                                        <ul>
+                                            @foreach ($data as $adDetail)
+                                                @if (is_object($adDetail))
+                                                    <li>
+                                                        @foreach ($adDetail as $key => $value)
+                                                            <strong>{{ $key }}:</strong>
+                                                            {{ $value }}&nbsp;&nbsp;
+                                                        @endforeach
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>Invalid data structure</p>
+                                    @endif
+                                </td>
+                                <td><span
+                                        class="badge {{ $ad->is_active == 1 ? 'badge-success' : 'badge-danger' }}">{{ $ad->is_active == 1 ? 'Active' : 'Not Active' }}
+                                </td>
+                                <td>
+                                    @if ($ad->is_active == 1)
+                                        <form action="{{ route('ads.show', $ad->id) }}">
+                                            @csrf
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                                data-target="#EditCategory" disabled>
+                                                Active
+                                            </button>
+                                            <input type="submit" class="btn btn-danger btn-sm" value="Disactive">
+                                            <input type="hidden" name="active" value="0">
+                                        </form>
+                                    @elseif ($ad->is_active == 0)
+                                        <form action="{{ route('ads.show', $ad->id) }}">
+                                            @csrf
+                                            <input type="submit" class="btn btn-info btn-sm" value="Active">
+                                            <input type="hidden" name="active" value="1">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#EditCategory" disabled>
+                                                Disactive
+                                            </button>
+                                        </form>
+                                    @endif
 
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                        data-target="#EditAds{{ $ad->id }}">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#DeleteAds{{ $ad->id }}">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
-                        @endforeach --}}
+                            @include('backend.Ads.dashboard_delete_ads')
+                            @include('backend.Ads.dashboard_edit_ads')
+                        @endforeach
 
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>{{ __('backend/dashboard_post.title') }}</th>
-                            <th>{{ __('backend/dashboard_post.category') }}</th>
-                            <th>{{ __('backend/dashboard_post.subcategory') }}</th>
-                            <th>{{ __('backend/dashboard_post.content') }}</th>
-                            <th>{{ __('backend/dashboard_post.description') }}</th>
-                            <th>{{ __('backend/dashboard_post.summary') }}</th>
-                            <th>{{ __('backend/dashboard_post.slug') }}</th>
-                            <th>{{ __('backend/dashboard_post.image') }}</th>
-                            <th>{{ __('backend/dashboard_post.created at') }}</th>
+                            <th>Name</th>
+                            <th>Images</th>
+                            <th>Category</th>
+                            <th>Sub Category</th>
+                            <th>User</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Feature</th>
+                            <th>Country</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Ad Detail</th>
+                            <th>Active</th>
+                            <th>Active Actions</th>
+                            <th>Actions</th>
                             {{-- @can('view', $posts)
                                 <th>{{ __('backend/dashboard_post.action') }}</th>
                             @endcan --}}

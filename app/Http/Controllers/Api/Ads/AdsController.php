@@ -188,4 +188,5 @@ class AdsController extends Controller
             $ads->load('adDetail', 'subCategory', 'user')
         ));
     }
+
 }

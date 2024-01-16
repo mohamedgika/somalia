@@ -100,6 +100,8 @@ Route::middleware(['auth:api'])->controller(AdsController::class)->group(functio
     Route::post('/ads', 'store');
     Route::put('/ads/{ad}', 'update');
     Route::delete('/ads/{ad}', 'destroy');
+    Route::get('/ads/category/{category}', 'ads_by_category');
+
 });
 
 //Fav

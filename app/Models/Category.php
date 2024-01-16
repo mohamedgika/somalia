@@ -25,7 +25,7 @@ class Category extends Model implements HasMedia
     }
 
     public function inputs(){
-        return $this->hasMany(Input::class);
+        return $this->hasMany(Input::class,'category_id');
     }
 
 }

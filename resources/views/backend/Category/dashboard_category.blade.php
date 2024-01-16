@@ -10,7 +10,7 @@
 
 @section('after_next')
     Category
-    <a href="{{ route('category.create') }}"><input type="submit" class="btn btn-success ml-3" value="Add Category"></a>
+    <a href="{{ route('category.create') }}"><input type="submit" class="ml-3 btn btn-success" value="Add Category"></a>
 @endsection
 
 @section('next')
@@ -68,17 +68,12 @@
                                     </td>
                                 @endforeach
                                 <td>
-                                    @foreach ($inputs as $input)
-                                        @if (is_array($input))
-                                            <p>
-                                                Name: {{ $input['name'] ?? '' }}, Type: {{ $input['type'] ?? '' }}
-                                            </p>
-                                        @elseif (is_object($input))
-                                            <p>
-                                                Name: {{ $input->name ?? '' }}, Type: {{ $input->type ?? '' }}
-                                            </p>
-                                        @endif
+                                    @foreach (json_decode($category->inputs, true) as $input)
+                                    @foreach ($input as $key => $value)
+                                        <p>Key: {{ $key }}, Value: {{ $value }}</p>
                                     @endforeach
+                                @endforeach
+
                                 <td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"

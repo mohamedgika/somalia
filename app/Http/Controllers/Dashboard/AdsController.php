@@ -8,118 +8,80 @@ use App\Http\Controllers\Controller;
 
 class AdsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $ads = Ads::where('is_active', 0)->get();
-        return view('backend.Ads.dashboard_ads',['ads'=>$ads]);
+        $ads = Ads::get();
+
+        // foreach ($ads as $ad) {
+        //     $data = json_decode($ad->adDetail->ad_detail);
+
+        //     if (is_array($data)) {
+        //         // Assuming each ad detail is an object with 'model', 'brand', and 'year' properties
+        //         $formattedData = [];
+
+        //         foreach ($data as $adDetail) {
+        //             foreach ($adDetail as $key => $value){
+        //                 $formattedData[] = " $key :  $value ";
+        //             }
+        //       }
+
+        //         $resultString = implode(', ', $formattedData);
+
+        //         dd($resultString);
+        //     } else {
+        //         // Handle the case where $data is not an array (e.g., JSON decoding failed)
+        //         dd('Invalid data structure');
+        //     }
+        // }
+
+
+        return view('backend.Ads.dashboard_ads', ['ads' => $ads]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function show(Request $request,Ads $ad){
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // dd($request->file('image'));
+        try {
+            $ad->update([
+                'is_active'=>$request->active,
+            ]);
 
-        $ads = Ads::create([
-            "user_id" => auth()->user()->id,
-            "country" => auth()->user()->country,
-            "state" => auth()->user()->state,
-            "city" => auth()->user()->city,
-        ] + $request->validated());
-
-        // $ads->addMediaFromRequest('image')->toMediaCollection('ads');
-
-        if ($request->hasFile('image')) {
-            $fileAdders = $ads->addMultipleMediaFromRequest(['image'])
-                ->each(function ($fileAdder) {
-                    $fileAdder->toMediaCollection('ads', 'ads');
-                });
-        }
-
-        if (!empty($request->ad_detail))
-            $adDetail = AdDetail::create(["ad_id" => $ads->id] + $request->validated());
-
-        $ads->load('adDetail');
-        return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory')), 'تم اضافة الاعلان بنجاح');
-    }
-
-
-    public function show(Ads $ad)
-    {
-        // Find the ad by its ID
-        $ad = Ads::find($ad->id);
-
-        if (!$ad)
-            return responseErrorMessage('الاعلان غير موجود');
-
-        $ad->increment('view');
-
-
-        return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ads $ad)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRequest $request, Ads $ad)
-    {
-        if ($ad->where('user_id', auth()->user()->id)) {
-            if (!$ad)
-                return responseErrorMessage('الاعلان غير موجود');
-
-            $ad->update($request->validated());
-
-            if ($request->hasFile('image')) {
-                $ad->clearMediaCollection('ads', 'ads');
-                // Add the new images to the media library
-                $fileAdders = $ad->addMultipleMediaFromRequest(['image'])
-                    ->each(function ($fileAdder) {
-                        $fileAdder->toMediaCollection('ads', 'ads');
-                    });
-            }
-
-            if (!empty($request->ad_detail))
-                $adDetail = $ad->adDetail->update($request->validated());
-
-
-            return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
-        } else {
-            return responseErrorMessage("You don't have permission to perform this action");
+            session()->flash('ActiveAds', 'Ad Active Successfully');
+            return redirect()->route('ads.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
+    public function update(Request $request , Ads $ad){
 
-    public function destroy(Ads $ad)
-    {
-        if ($ad->where('user_id', auth()->user()->id)) {
-            if (!$ad)
-                return responseErrorMessage('الاعلان غير موجود');
+    }
 
-            $ad->clearMediaCollection('ads', 'ads');
+    public function edit(Request $request , Ads $ad){
+        try {
+            $ad->update([
+                'name'=>$request->name,
+                'price'=>$request->price,
+                'description'=>$request->description,
+                'feature'=>$request->feature,
+                'country'=>$request->country,
+                'state'=>$request->state,
+                'city'=>$request->city
+            ]);
+
+            session()->flash('edit_ads', 'Edit Ads Successfully');
+            return redirect()->route('ads.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function destroy(Ads $ad){
+        try {
             $ad->delete();
-            return responseSuccessMessage('تم حذف الاعلان بنجاح');
-        } else {
-            return responseErrorMessage("You don't have permission to perform this action");
+            session()->flash('ActiveAds', 'Ad Deleted Successfully');
+            return redirect()->route('ads.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 }

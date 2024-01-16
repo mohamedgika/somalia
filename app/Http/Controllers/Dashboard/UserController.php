@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Dashboard\User\StoreRequest;
 
 class UserController extends Controller
 {
@@ -23,19 +23,19 @@ class UserController extends Controller
         return view('backend.User.dashboard_user',['user'=>$user]);
     }
 
-    public function store(StoreUserRequest $request){
+    public function store(StoreRequest $request){
         try{
-
             User::create([
-
                 'name' => $request->name,
                 'email' => $request->email,
+                'country'=>$request->country,
+                'state'=>$request->state,
+                'city'=>$request->city,
                 'status'=>$request->status,
                 'password' => Hash::make($request->password),
-
             ]);
 
-            session()->flash('store_user',__('backend/dashboard_message.Add User Successfully'));
+            session()->flash('store_user','Add User Successfully');
             return redirect()->route('user.index');
 
         }
@@ -44,22 +44,19 @@ class UserController extends Controller
         }
     }
 
-    public function edit(Request $request,$id){
-
-        $this->authorize('update',$this->user); // Secure Url
-
-         User::findorFail($id);
+    public function edit(Request $request,User $user){
         try{
-
-            User::where('id',$id)->update([
-
-                'name'=>$request->username,
+            $user->update([
+                'name'=>$request->name,
                 'email'=>$request->email,
+                'phone'=>$request->phone,
+                'country'=>$request->country,
+                'state'=>$request->state,
+                'city'=>$request->city,
                 'status'=>$request->status,
-
             ]);
 
-            session()->flash('edit_user',__('backend/dashboard_message.Edit User Successfully'));
+            session()->flash('edit_user','Edit User Successfully');
             return redirect()->route('user.index');
 
         }
@@ -68,16 +65,12 @@ class UserController extends Controller
         }
     }
 
-    public function del($id){
-
-        $this->authorize('delete',$this->user); // Secure Url
-
-             User::findorFail($id);
+    public function del(User $user){
 
             try{
-                User::where('id',$id)->delete();
+                $user->delete();
 
-                session()->flash('delete_user',__('backend/dashboard_message.Deleted User Successfully'));
+                session()->flash('delete_user','Deleted User Successfully');
                 return redirect()->route('user.index');
 
             }
