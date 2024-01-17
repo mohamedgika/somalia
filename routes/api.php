@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
+use App\Http\Controllers\Api\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
 use App\Http\Controllers\Api\Package\SubScriptionController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
@@ -34,6 +35,9 @@ Route::middleware(['api'])->group(function () {
 
     // Package
     Route::get('/packages', [SubScriptionController::class,'index']);
+
+    //Contact Us
+    Route::get('/contactus', [ContactUsController::class,'index']);
 
     //Main Page
     Route::get('/public/ads', [PublicController::class, 'public_ads']);

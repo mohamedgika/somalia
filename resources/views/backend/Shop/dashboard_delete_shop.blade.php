@@ -1,20 +1,20 @@
-<div class="modal fade" id="DeleteCategory{{$category->id}}">
+<div class="modal fade" id="DeleteShop{{$s->id}}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Delete {{$category->name}} And @foreach ($category->subCategories as $sub){{ $sub->name }}@endforeach</h4>
+          <h4 class="modal-title">Delete Shop {{$s->name}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-            <form action="{{route('category.destroy',$category->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('shop.destroy',$s->id)}}" method="POST" enctype="multipart/form-data">
               @method('DELETE')
               @csrf
                     <div class="col-md">
                         <div class="form-group">
-                            <p class="text-danger"><b>Are You Sure Delete {{$category->name}} And @foreach ($category->subCategories as $sub){{ $sub->name }}@endforeach</b></p>
+                            <p class="text-danger"><b>Are You Sure Delete {{$s->name}}</b></p>
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">

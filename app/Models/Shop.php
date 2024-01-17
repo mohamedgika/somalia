@@ -19,6 +19,7 @@ class Shop extends Model implements HasMedia
         'lang',
         'late',
         'phone',
+        'is_active',
         'description',
         'user_id',
         'category_id'

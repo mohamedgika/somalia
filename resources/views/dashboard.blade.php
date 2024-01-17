@@ -15,7 +15,7 @@ Dashboard | Somalia Sky
         <div class="row">
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-info">
+              <div class="small-box" style="background-color: #016764">
                 <div class="inner">
                   <h3>{{ $totalAds }}</h3>
 
@@ -31,7 +31,7 @@ Dashboard | Somalia Sky
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-warning">
+              <div class="small-box" style="background-color: #016764">
                 <div class="inner">
                   <h3>{{ $adsDaily }}</h3>
 
@@ -46,7 +46,7 @@ Dashboard | Somalia Sky
 
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-success">
+              <div class="small-box" style="background-color: #016764">
                 <div class="inner">
                   <h3>{{ $adsMonthly }}<sup style="font-size: 20px"></h3>
 

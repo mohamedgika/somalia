@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('lang')->nullable();
-            $table->string('late')->nullable();            $table->string('phone');
+            $table->string('late')->nullable();
+            $table->string('phone');
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(false);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();

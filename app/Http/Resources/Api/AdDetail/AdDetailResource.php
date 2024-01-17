@@ -17,7 +17,7 @@ class AdDetailResource extends JsonResource
     {
         return [
             "id"    => $this->id,
-            'ad_detail' => json_decode($this->ad_detail),
+            'ad_detail' => $this->ad_detail,
             'ad' => AdsResource::make($this->whenLoaded('ads'))
         ];
     }

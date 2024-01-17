@@ -53,9 +53,18 @@ class AdsController extends Controller
                     $fileAdder->toMediaCollection('ads', 'ads');
                 });
         }
+        
+        if (!empty($request->ad_detail)) {
+            $adDetailData = is_array($request->ad_detail)
+                ? $request->ad_detail
+                : json_decode($request->input('ad_detail'), true);
 
-        if (!empty($request->ad_detail))
-            $adDetail = AdDetail::create(["ad_id" => $ads->id] + $request->validated());
+            $adDetail = AdDetail::create([
+                "ad_id" => $ads->id,
+                'ad_detail' => $adDetailData,
+            ]);
+        }
+
 
         $ads->load('adDetail');
         return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory')), 'تم اضافة الاعلان بنجاح');
@@ -188,5 +197,4 @@ class AdsController extends Controller
             $ads->load('adDetail', 'subCategory', 'user')
         ));
     }
-
 }

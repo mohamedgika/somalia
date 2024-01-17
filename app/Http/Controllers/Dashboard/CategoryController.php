@@ -25,15 +25,15 @@ class CategoryController extends Controller
         // Relation Between Category And Sub Category
         $categories = Category::get();
 
-        foreach ($categories as $category) {
-            foreach ($category->inputs as $input) {
-                $inputs = json_decode($input->inputs);
-            }
-        }
+        // foreach ($categories as $category) {
+        //     foreach ($category->inputs as $input) {
+        //         $inputs = json_decode($input->inputs);
+        //     }
+        // }
 
 
 
-        return view('backend.Category.dashboard_category', ['categories' => $categories,'inputs'=>$inputs]);
+        return view('backend.Category.dashboard_category', ['categories' => $categories]);
     }
 
 
@@ -43,16 +43,8 @@ class CategoryController extends Controller
     }
 
 
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-
-        // Remove elements with null values for both "input" and "type"
-        $filteredArray = array_filter($request->inputs, function ($item) {
-            return $item['name'] !== null || $item['type'] !== null;
-        });
-
-        $filteredArray = array_values($filteredArray);
-
         try {
 
             $category = Category::create([
@@ -68,13 +60,12 @@ class CategoryController extends Controller
             $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory', 'subcategory');
 
             $input = Input::create([
-                'inputs' => json_encode($filteredArray),
+                'inputs' => $request->input('inputs'),
                 'category_id' => $category->id,
             ]);
 
             session()->flash('add_catergory', 'Add Category And SubCategory Successfully');
             return redirect()->route('category.index');
-
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
@@ -91,38 +82,37 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, Category $category)
     {
-        $this->authorize('update', $this->category); // Secure Url
+    }
 
-        Category::findorFail($id);
-
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Category $category)
+    {
         try {
-            // Function To Save In Storage With Folder Name
-            $image = $this->uploadfile($request, 'category', 'image');
-
-            Category::where('id', $id)->update([
-
-                'title' =>
-                [
-                    'en' => $request->en_title,
-                    'ar' => $request->ar_title
-                ],
-                'slug' =>
-                [
-                    'en' => $request->en_slug,
-                    'ar' => $request->ar_slug
-                ],
-                'content' =>
-                [
-                    'en' => $request->en_content,
-                    'ar' => $request->ar_content
-                ],
-                'image' => $image,
-
+            $subcategory = SubCategory::where('category_id', $category->id)->update([
+                'name' => $request->name_subcategory,
             ]);
 
-            session()->flash('edit_user', __('backend/dashboard_message.Edit User Successfully'));
+            $category->update([
+                'name' => $request->name_category,
+            ]);
+
+            $input = Input::where('category_id', $category->id)->update([
+                'inputs' => $request->input('inputs')
+            ]);
+
+            if ($request->hasFile('image_category'))
+                $category->clearMediaCollection('category', 'category');
+                $category->addMediaFromRequest('image_category')->toMediaCollection('category', 'category');
+
+            // if($request->hasFile('image_subcategory'))
+            //     $subcategory->clearMediaCollection('subcategory','subcategory');
+            //     $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory','subcategory');
+
+            // session()->flash('edit_user', __('backend/dashboard_message.Edit User Successfully'));
             return redirect()->route('category.index');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
@@ -130,18 +120,16 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            // session()->flash('ActiveAds', 'Ad Deleted Successfully');
+            return redirect()->route('category.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }

@@ -9,14 +9,16 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('category.edit', $category->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('category.update', $category->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <input name="name_category" value="{{ $category->name }}" type="text" id="name_category" class="form-control">
+                                <input name="name_category" value="{{ $category->name }}" type="text"
+                                    id="name_category" class="form-control">
                                 @error('name_category')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -25,13 +27,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name_subcategory">SubCategory</label>
-                                @foreach ($category->subCategories as $sub )
-                                    <input name="name_subcategory" value="{{ $sub->name }}" type="text" id="name_subcategory"
-                                @endforeach
+                                @foreach ($category->subCategories as $sub)
+                                    <input name="name_subcategory" value="{{ $sub->name }}" type="text"
+                                        id="name_subcategory" @endforeach
                                     class="form-control">
-                                @error('name_subcategory')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                                    @error('name_subcategory')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                             </div>
                         </div>
                     </div>
@@ -44,8 +46,8 @@
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input name="image_category" type="file" class="custom-file-input"
-                                            id="image">
-                                        <label class="custom-file-label" for="image">Choose file</label>
+                                            id="image_category">
+                                        <label class="custom-file-label" for="image_category">Choose file</label>
                                     </div>
                                 </div>
                                 @error('image_category')
@@ -57,15 +59,15 @@
                             <div class="form-group">
                                 <label for="image">SubCategory Image</label>
                                 @foreach ($category->subCategories as $sub)
-                                <img src="{{ $sub->getFirstMediaUrl('subcategory') }}" width="75px"><br />
-                                @endforeach
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input name="image_subcategory" type="file" class="custom-file-input"
-                                            id="image">
-                                        <label class="custom-file-label" for="image">Choose file</label>
+                                    <img src="{{ $sub->getFirstMediaUrl('subcategory') }}" width="75px"><br />
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input name="image_subcategory" type="file" class="custom-file-input"
+                                                id="image_subcategory">
+                                            <label class="custom-file-label" for="image_subcategory">Choose file</label>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
                                 @error('image_subcategory')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -81,23 +83,21 @@
                             Type:
                         </div>
                     </div>
-                    @for ($i = 0; $i < 1; $i++)
-                        <div class="row">
-                            <div class="col-md-4" id="formfield1">
-                                <input type="text" value="inputs[{{ $i }}][name]" class="form-control">
-                                @error('inputs.' . $i . '.input')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
+                
+                    @foreach ($category->inputs as $input)
+                        @foreach ($input->inputs as $index => $it)
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" name="inputs[{{ $index }}][name]" class="form-control"
+                                        value="{{ $it['name'] }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="inputs[{{ $index }}][type]" class="form-control"
+                                        value="{{ $it['type'] }}">
+                                </div>
                             </div>
-                            <div class="col-md-8" id="formfield2">
-                                <input type="text" value="inputs[{{ $i }}][type]" class="form-control">
-                                @error('inputs.' . $i . '.type')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    @endfor
-
+                        @endforeach
+                    @endforeach
 
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -103,7 +103,7 @@
                     @for ($i = 0; $i < 1; $i++)
                         <div class="row">
                             <div class="col-md-4" id="formfield1">
-                                <input type="text" name="inputs[{{ $i }}][input]" class="form-control">
+                                <input type="text" name="inputs[{{ $i }}][name]" class="form-control">
                                 @error('inputs.' . $i . '.input')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
@@ -155,7 +155,7 @@
             counter++;
 
             var newField1 = document.createElement('input');
-            newField1.setAttribute('type', 'text');
+            newField1.setAttribute('name', 'text');
             newField1.setAttribute('name', 'inputs[' + counter + '][name]');
             newField1.setAttribute('class', 'form-control');
 

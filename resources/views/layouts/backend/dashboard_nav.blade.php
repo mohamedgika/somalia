@@ -15,12 +15,12 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a href="{{route('profile.edit')}}"><input class="btn" type="button" value="Profile" style="margin-right: 10px; background-color:#d38d64; color:white"></a>
+        <a href="{{route('profile.edit')}}"><input class="btn" type="button" value="Profile" style="margin-right: 10px; background-color: #016764; color:white"></a>
      </li>
       <li class="nav-item">
           <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <input class="btn btn-danger" type="submit" value="Logout">
+            <input class="btn btn" style="background-color: #016764; color:white" type="submit" value="Logout">
         </form>
       </li>
       <li class="nav-item">

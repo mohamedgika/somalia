@@ -1,21 +1,21 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Dashboard | Ads
+    Dashboard | ShopAds
 @endsection
 
 @section('css')
-    @include('backend.Ads.dashboard_head_ads')
+    @include('backend.Shop.ShopAds.dashboard_head_shopads')
 @endsection
 
 @section('after_next')
-    Ads
+    ShopAds
     {{-- <a href="{{ route('post.create') }}"><input type="submit" class="ml-3 btn btn-success"
             value="{{ __('backend/dashboard_post.Add Posts') }}"></a> --}}
 @endsection
 
 @section('next')
-    Ads
+    ShopAds
 @endsection
 
 
@@ -39,7 +39,7 @@
         <!-- Default box -->
         <div class="card card-dark">
             <div class="card-header">
-                <h3 class="card-title">Ads</h3>
+                <h3 class="card-title">ShopAds</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -57,8 +57,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Images</th>
+                            <th>Shop</th>
                             <th>Category</th>
-                            <th>Sub Category</th>
                             <th>User</th>
                             <th>Price</th>
                             <th>Description</th>
@@ -66,7 +66,7 @@
                             <th>Country</th>
                             <th>State</th>
                             <th>City</th>
-                            <th>Ad Detail</th>
+                            <th>Shop Ad Detail</th>
                             <th>Active</th>
                             <th>Active Actions</th>
                             <th>Actions</th>
@@ -77,17 +77,17 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($ads as $ad)
+                        @foreach ($shopads as $ad)
                             <tr>
                                 <td>{{ $ad->name }}</td>
                                 <td>
-                                    @foreach ($ad->getMedia('ads') as $media)
+                                    @foreach ($ad->getMedia('shopads') as $media)
                                         <img src="{{ $media->getUrl() }}" width="75px"><br />
                                     @endforeach
                                 </td>
-                                <td>{{ $ad->subCategory->name }}</td>
-                                <td>{{ $ad->subCategory->category->name }}</td>
-                                <td>{{ $ad->user->name }}</td>
+                                <td>{{ $ad->shop->name }}</td>
+                                <td>{{ $ad->shop->categories->name }}</td>
+                                <td>{{ $ad->shop->user->name }}</td>
                                 <td>{{ $ad->price }}</td>
                                 <td>
                                     <textarea id="" cols="20" rows="2" disabled>{{ $ad->description }}</textarea>
@@ -99,14 +99,14 @@
                                 <td>{{ $ad->state }}</td>
                                 <td>{{ $ad->city }}</td>
                                 <td>
-                                    @if ($ad->adDetail != null && $ad->adDetail->ad_detail != null)
-                                        @foreach ($ad->adDetail->ad_detail as $item)
+                                    @if ($ad->shopAdsDetail != null && $ad->shopAdsDetail->shop_ad_detail != null)
+                                        @foreach ($ad->shopAdsDetail->shop_ad_detail as $item)
                                             @foreach ($item as $key => $value)
                                                 <p><b>{{ $key }}:</b> {{ $value }}</p>
                                             @endforeach
                                         @endforeach
                                     @else
-                                        <p>Ad Detail is null</p>
+                                        <p>Shop Ad Detail is null</p>
                                     @endif
                                 </td>
                                 <td><span
@@ -114,7 +114,7 @@
                                 </td>
                                 <td>
                                     @if ($ad->is_active == 1)
-                                        <form action="{{ route('ads.show', $ad->id) }}">
+                                        <form action="{{ route('shopAds.show', $ad->id) }}">
                                             @csrf
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#EditCategory" disabled>
@@ -124,7 +124,7 @@
                                             <input type="hidden" name="active" value="0">
                                         </form>
                                     @elseif ($ad->is_active == 0)
-                                        <form action="{{ route('ads.show', $ad->id) }}">
+                                        <form action="{{ route('shopAds.show', $ad->id) }}">
                                             @csrf
                                             <input type="submit" class="btn btn-info btn-sm" value="Active">
                                             <input type="hidden" name="active" value="1">
@@ -138,19 +138,19 @@
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#EditAds{{ $ad->id }}">
+                                        data-target="#EditShopAds{{ $ad->id }}">
                                         <i class="fas fa-pencil-alt"></i>
                                         Edit
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#DeleteAds{{ $ad->id }}">
+                                        data-target="#DeleteShopAds{{ $ad->id }}">
                                         <i class="fas fa-trash"></i>
                                         Delete
                                     </button>
                                 </td>
                             </tr>
-                            @include('backend.Ads.dashboard_delete_ads')
-                            @include('backend.Ads.dashboard_edit_ads')
+                            @include('backend.Shop.ShopAds.dashboard_delete_shopads')
+                            @include('backend.Shop.ShopAds.dashboard_edit_shopads')
                         @endforeach
 
                     </tbody>
@@ -158,8 +158,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Images</th>
+                            <th>Shop</th>
                             <th>Category</th>
-                            <th>Sub Category</th>
                             <th>User</th>
                             <th>Price</th>
                             <th>Description</th>
@@ -167,7 +167,7 @@
                             <th>Country</th>
                             <th>State</th>
                             <th>City</th>
-                            <th>Ad Detail</th>
+                            <th>Shop Ad Detail</th>
                             <th>Active</th>
                             <th>Active Actions</th>
                             <th>Actions</th>
@@ -189,5 +189,5 @@
 
 
 @section('js')
-    @include('backend.Ads.dashboard_end_ads')
+    @include('backend.Shop.ShopAds.dashboard_end_shopads')
 @endsection

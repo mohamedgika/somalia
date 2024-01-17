@@ -68,6 +68,10 @@ class AdsController extends Controller
                 'city'=>$request->city
             ]);
 
+            $ad->adDetail->update([
+                'ad_detail'=>[$request->input('ad_detail')]
+            ]);
+
             session()->flash('edit_ads', 'Edit Ads Successfully');
             return redirect()->route('ads.index');
         } catch (\Exception $e) {

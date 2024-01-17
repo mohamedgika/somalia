@@ -17,9 +17,8 @@ class ShopAdsController extends Controller
      */
     public function index()
     {
-        $shopads = ShopAds::where('is_active',0)->get();
-        return responseSuccessData(ShopAdsResource::collection($shopads->load('shop','shopAdsDetail')));
-
+        $shopads = ShopAds::where('is_active', 0)->get();
+        return responseSuccessData(ShopAdsResource::collection($shopads->load('shop', 'shopAdsDetail')));
     }
 
     /**
@@ -36,26 +35,35 @@ class ShopAdsController extends Controller
     public function store(StoreRequest $request)
     {
         $shopad = ShopAds::create([
-            "shop_id"=>Shop::where('user_id',auth()->user()->id)->first()->id,
-            "country"=>auth()->user()->country,
-            "state"=>auth()->user()->state,
-            "city"=>auth()->user()->city,
-            ]+$request->validated());
+            "shop_id" => Shop::where('user_id', auth()->user()->id)->first()->id,
+            "country" => auth()->user()->country,
+            "state" => auth()->user()->state,
+            "city" => auth()->user()->city,
+        ] + $request->validated());
 
-            // $ads->addMediaFromRequest('image')->toMediaCollection('ads');
+        // $ads->addMediaFromRequest('image')->toMediaCollection('ads');
 
-            if ($request->hasFile('image')) {
-                $fileAdders = $shopad->addMultipleMediaFromRequest(['image'])
-                    ->each(function ($fileAdder) {
-                        $fileAdder->toMediaCollection('shopads','shopads');
+        if ($request->hasFile('image')) {
+            $fileAdders = $shopad->addMultipleMediaFromRequest(['image'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('shopads', 'shopads');
                 });
-            }
+        }
 
-        if (!empty($request->shop_ad_detail))
-                $shopAdsDetail = ShopAdsDetail::create(["shop_ad_id"=>$shopad->id]+$request->validated());
+
+        if (!empty($request->shop_ad_detail)) {
+            $adDetailData = is_array($request->shop_ad_detail)
+                ? $request->shop_ad_detail
+                : json_decode($request->input('shop_ad_detail'), true);
+
+            $shopAdsDetail = ShopAdsDetail::create([
+                "shop_ad_id" => $shopad->id,
+                'shop_ad_detail' => $adDetailData,
+            ]);
+        }
 
         $shopad->load('shopAdsDetail');
-        return responseSuccessData(ShopAdsResource::make($shopad->load('shop')),'تم اضافة اعلان المتجر بنجاح');
+        return responseSuccessData(ShopAdsResource::make($shopad->load('shop')), 'تم اضافة اعلان المتجر بنجاح');
     }
 
     /**
@@ -63,10 +71,10 @@ class ShopAdsController extends Controller
      */
     public function show(ShopAds $shopad)
     {
-        if(! $shopad)
-             return responseErrorMessage('اعلان المتجر غير موجود');
+        if (!$shopad)
+            return responseErrorMessage('اعلان المتجر غير موجود');
 
-        return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail','shop')));
+        return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail', 'shop')));
     }
 
     /**
@@ -82,33 +90,32 @@ class ShopAdsController extends Controller
      */
     public function update(UpdateRequest $request, ShopAds $shopad)
     {
-        $user = $shopad->whereHas('shop' , function($q){
-          return  $q->where('user_id', auth()->user()->id);
+        $user = $shopad->whereHas('shop', function ($q) {
+            return  $q->where('user_id', auth()->user()->id);
         });
 
-        if (isset($user)){
-            if(! $shopad)
+        if (isset($user)) {
+            if (!$shopad)
                 return responseErrorMessage('اعلان المتجر غير موجود');
 
             $shopad->update($request->validated());
 
-            if($request->hasFile('image')){
-                $shopad->clearMediaCollection('shopads','shopads');
+            if ($request->hasFile('image')) {
+                $shopad->clearMediaCollection('shopads', 'shopads');
                 // Add the new images to the media library
                 $fileAdders = $shopad->addMultipleMediaFromRequest(['image'])
-                ->each(function ($fileAdder) {
-                    $fileAdder->toMediaCollection('shopads','shopads');
-                });
+                    ->each(function ($fileAdder) {
+                        $fileAdder->toMediaCollection('shopads', 'shopads');
+                    });
             }
 
             if (!empty($request->shop_ad_detail))
-                    $shopad_detail = $shopad->shopAdsDetail->update($request->validated());
+                $shopad_detail = $shopad->shopAdsDetail->update($request->validated());
 
-            return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail','shop')));
-        }else{
+            return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail', 'shop')));
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
-
     }
 
     /**
@@ -116,18 +123,18 @@ class ShopAdsController extends Controller
      */
     public function destroy(ShopAds $shopad)
     {
-        $user = $shopad->whereHas('shop' , function($q){
+        $user = $shopad->whereHas('shop', function ($q) {
             return  $q->where('user_id', auth()->user()->id);
-          });
+        });
 
-        if(isset($user)){
-            if(! $shopad)
+        if (isset($user)) {
+            if (!$shopad)
                 return responseErrorMessage('اعلان المتجر غير موجود');
 
-            $shopad->clearMediaCollection('shopads','shopads');
+            $shopad->clearMediaCollection('shopads', 'shopads');
             $shopad->delete();
             return responseSuccessMessage('تم حذف اعلان المتجر بنجاح');
-        }else{
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
     }

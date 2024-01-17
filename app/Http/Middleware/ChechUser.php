@@ -16,8 +16,8 @@ class ChechUser
     public function handle(Request $request, Closure $next): Response
     {
         if( auth()->user()->status != 'admin' || auth()->user()->status != 'customer_service'){
-            return abort(401,'Unauthorized');
+            return $next($request);
         }
-        return $next($request);
+        return abort(401,'Unauthorized');
     }
 }

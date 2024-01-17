@@ -68,11 +68,14 @@
                                     </td>
                                 @endforeach
                                 <td>
-                                    @foreach (json_decode($category->inputs, true) as $input)
-                                    @foreach ($input as $key => $value)
-                                        <p>Key: {{ $key }}, Value: {{ $value }}</p>
+                                    {{-- @foreach ($category->inputs as $input)
+                                        <b>{{ $input['name'] }}</b>: {{ $input['type'] }}<br />
+                                    @endforeach --}}
+                                    @foreach ($category->inputs as $input)
+                                        @foreach ($input->inputs as $it)
+                                            <p><b>Input</b> : {{ $it['name'] }} - <b>Type</b>: {{ $it['type'] }}</p>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
 
                                 <td>
                                 <td>
@@ -89,6 +92,7 @@
                                 </td>
                             </tr>
                             @include('backend.Category.dashboard_edit_category')
+                            @include('backend.Category.dashboard_delete_category')
                         @endforeach
 
                     </tbody>

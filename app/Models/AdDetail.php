@@ -16,7 +16,7 @@ class AdDetail extends Model
     ];
 
     protected $casts = [
-        'ad_detail' => 'array'
+        'ad_detail' => 'array',
     ];
 
     public function ads(){

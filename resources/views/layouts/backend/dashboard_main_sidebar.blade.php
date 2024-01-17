@@ -90,19 +90,27 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="pages/UI/general.html" class="nav-link">
+                              <a href="{{ route('shop.index') }}" class="nav-link">
                                   <ion-icon name="copy" class="nav-icon"></ion-icon>
                                   <p>Shop</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="pages/UI/general.html" class="nav-link">
+                              <a href="{{ route('shopAds.index') }}" class="nav-link">
                                   <ion-icon name="copy" class="nav-icon"></ion-icon>
                                   <p>Shop Ads</p>
                               </a>
                           </li>
                       </ul>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ route('contact.index') }}" class="nav-link">
+                        <ion-icon name="call" class="nav-icon"></ion-icon>
+                        <p>
+                            Contact Us
+                        </p>
+                    </a>
+                </li>
 
 
                   {{-- <li class="nav-item">

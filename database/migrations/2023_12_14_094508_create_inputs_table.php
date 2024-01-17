@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inputs', function (Blueprint $table) {
             $table->id();
-            $table->text('inputs');
+            $table->json('inputs');
             $table->foreignId('category_id')->unique()->constrained('categories')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

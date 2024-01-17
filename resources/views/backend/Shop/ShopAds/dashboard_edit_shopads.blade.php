@@ -1,15 +1,15 @@
-<div class="modal fade" id="EditAds{{ $ad->id }}">
+<div class="modal fade" id="EditShopAds{{ $ad->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Ads {{ $ad->name }}</h4>
+                <h4 class="modal-title">Edit Shop Ads {{ $ad->name }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('ads.edit', $ad->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('shopAds.edit', $ad->id) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
 
@@ -93,11 +93,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="country">Ad Details</label>
-                                @if ($ad->adDetail != null && $ad->adDetail->ad_detail != null)
-                                    @foreach ($ad->adDetail->ad_detail as $item)
+                                <label for="country">Shop Ad Details</label>
+                                @if ($ad->shopAdsDetail != null && $ad->shopAdsDetail->shop_ad_detail != null)
+                                    @foreach ($ad->shopAdsDetail->shop_ad_detail as $item)
                                         @foreach ($item as $key => $value)
-                                            <p><b>{{ $key }}: <input name="ad_detail[{{ $key }}]"
+                                            <p><b>{{ $key }}: <input
+                                                        name="shop_ad_detail[{{ $key }}]"
                                                         value="{{ $value }}" type="text"
                                                         id="{{ $key }}" class="form-control"></p>
                                         @endforeach

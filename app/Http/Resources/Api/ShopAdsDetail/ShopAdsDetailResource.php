@@ -17,7 +17,7 @@ class ShopAdsDetailResource extends JsonResource
     {
         return [
             'id'            =>$this->id,
-            'shop_ad_detail'=>json_decode($this->shop_ad_detail),
+            'shop_ad_detail'=>$this->shop_ad_detail,
             'shopad'        => ShopAdsResource::make($this->whenLoaded('shopAds'))
         ];
     }
