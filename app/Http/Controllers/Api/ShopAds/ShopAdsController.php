@@ -118,7 +118,7 @@ class ShopAdsController extends Controller
                     'shop_ad_detail' => $adDetailData,
                 ]);
             }
-            
+
             return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail', 'shop')));
         } else {
             return responseErrorMessage("You don't have permission to perform this action");

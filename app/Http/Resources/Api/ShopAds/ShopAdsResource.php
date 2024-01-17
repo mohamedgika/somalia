@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\ShopAds;
 
+use App\Http\Resources\Api\Auth\RegisterResource;
 use Illuminate\Http\Request;
 use App\Models\ShopAdsDetail;
 use App\Http\Resources\Api\Shop\ShopResource;
@@ -33,7 +34,8 @@ class ShopAdsResource extends JsonResource
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
             'shopAdDetail'      => ShopAdsDetailResource::make($this->whenLoaded('shopAdsDetail')),
-            'shop'              => ShopResource::make($this->whenLoaded('shop')->load('user')),
+            'shop'              => ShopResource::make($this->whenLoaded('shop')),
+            'user'              => RegisterResource::make($this->shop)
         ];
     }
 }
