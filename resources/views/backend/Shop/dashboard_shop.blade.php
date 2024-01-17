@@ -8,7 +8,7 @@
 @endsection
 
 @section('after_next')
-    Shop <input type="submit" class="ml-3 btn btn-success" value="Add Shop" data-toggle="modal" data-target="#AddShop">
+    Shop
     @include('backend.Shop.dashboard_add_shop')
 @endsection
 

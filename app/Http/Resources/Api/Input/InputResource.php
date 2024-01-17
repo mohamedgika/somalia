@@ -17,7 +17,7 @@ class InputResource extends JsonResource
     {
         return [
             'id'       => $this->id,
-            'inputs'   => json_decode($this->inputs),
+            'inputs'   => $this->inputs,
             'category' => CategoryResource::make($this->whenLoaded('category')),
         ];
     }

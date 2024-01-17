@@ -109,9 +109,16 @@ class ShopAdsController extends Controller
                     });
             }
 
-            if (!empty($request->shop_ad_detail))
-                $shopad_detail = $shopad->shopAdsDetail->update($request->validated());
+            if (!empty($request->shop_ad_detail)) {
+                $adDetailData = is_array($request->shop_ad_detail)
+                    ? $request->shop_ad_detail
+                    : json_decode($request->input('shop_ad_detail'), true);
 
+                    $shopad->shopAdsDetail->update([
+                    'shop_ad_detail' => $adDetailData,
+                ]);
+            }
+            
             return responseSuccessData(ShopAdsResource::make($shopad->load('shopAdsDetail', 'shop')));
         } else {
             return responseErrorMessage("You don't have permission to perform this action");

@@ -53,7 +53,7 @@ class AdsController extends Controller
                     $fileAdder->toMediaCollection('ads', 'ads');
                 });
         }
-        
+
         if (!empty($request->ad_detail)) {
             $adDetailData = is_array($request->ad_detail)
                 ? $request->ad_detail
@@ -113,9 +113,16 @@ class AdsController extends Controller
                     });
             }
 
-            if (!empty($request->ad_detail))
-                $adDetail = $ad->adDetail->update($request->validated());
 
+            if (!empty($request->ad_detail)) {
+                $adDetailData = is_array($request->ad_detail)
+                    ? $request->ad_detail
+                    : json_decode($request->input('ad_detail'), true);
+
+                $ad->adDetail->update([
+                    'ad_detail' => $adDetailData,
+                ]);
+            }
 
             return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
         } else {

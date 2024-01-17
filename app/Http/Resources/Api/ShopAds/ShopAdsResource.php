@@ -33,7 +33,7 @@ class ShopAdsResource extends JsonResource
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
             'shopAdDetail'      => ShopAdsDetailResource::make($this->whenLoaded('shopAdsDetail')),
-            'shop'              => ShopResource::make($this->whenLoaded('shop')),
+            'shop'              => ShopResource::make($this->whenLoaded('shop')->load('user')),
         ];
     }
 }
