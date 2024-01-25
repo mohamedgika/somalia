@@ -23,13 +23,6 @@ use App\Http\Controllers\Dashboard\ContactUsController;
 |
 */
 
-Route::middleware('guest')->group(
-    function () {
-        Route::get('/', [AuthenticatedSessionController::class, 'create'])
-            ->name('login');
-    }
-);
-
 Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');

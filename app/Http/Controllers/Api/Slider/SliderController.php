@@ -11,6 +11,7 @@ class SliderController extends Controller
 {
     public function store(Request $request){
         $slider = Slider::create([
+            'title'=>$request->title,
             'desc'=>$request->desc,
             'link'=>$request->link
         ]);
