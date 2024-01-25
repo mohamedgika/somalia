@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Api\Public;
 
 use App\Models\Ads;
 use App\Models\Shop;
+use App\Models\Slider;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Ads\AdsResource;
+use App\Http\Resources\Api\Blog\BlogResource;
+use App\Http\Resources\Api\Slider\SliderResource;
 use App\Http\Resources\Api\Category\CategoryResource;
 use App\Http\Resources\Api\PublicShop\PublicShopResource;
 use App\Http\Resources\Api\SubCategory\SubCategoryResource;
+use App\Models\Blog;
 
 class PublicController extends Controller
 {
@@ -128,4 +132,16 @@ class PublicController extends Controller
 
         return response()->json(['ads_by_country' => $adsByCountry]);
     }
+
+    public function slider(){
+        $sliders = Slider::get();
+        return responseSuccessData(SliderResource::collection($sliders));
+    }
+
+    public function blog(){
+        $blogs = Blog::get();
+        return responseSuccessData(BlogResource::collection($blogs));
+    }
+
+
 }

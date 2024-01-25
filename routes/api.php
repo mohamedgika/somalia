@@ -14,7 +14,9 @@ use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
+use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\Package\SubScriptionController;
+use App\Http\Controllers\Api\Slider\SliderController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 
 Route::middleware(['api'])->group(function () {
@@ -53,6 +55,8 @@ Route::middleware(['api'])->group(function () {
     Route::post('/public/ads/filteration', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/filter/date', [PublicController::class, 'filterAdsByDate']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
+    Route::get('/public/slider',[PublicController::class,'slider']);
+    Route::get('/public/blog',[PublicController::class,'blog']);
 });
 
 
@@ -145,9 +149,22 @@ Route::middleware(['auth:api'])->controller(ChatController::class)->group(functi
     Route::post('/chat/messagestatus/{message}', 'messageStatus');
 });
 
+//Paypal
 Route::middleware(['auth:api'])->controller(PaymentController::class)->group(function () {
     Route::get('/payment/{package_id}', 'payment');
     Route::get('/payment/cancel', 'cancel')->name('payment.cancel');
     Route::get('/payment/success', 'success')->name('payment.success');
 });
 
+
+
+//Slider Store Test
+Route::middleware(['auth:api'])->controller(SliderController::class)->group(function () {
+    Route::post('/slider','store');
+});
+
+
+//Blog Store Test
+Route::middleware(['auth:api'])->controller(BlogController::class)->group(function () {
+    Route::post('/blog','store');
+});

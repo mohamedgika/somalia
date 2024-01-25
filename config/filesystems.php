@@ -67,6 +67,22 @@ return [
             'throw' => false,
         ],
 
+        'slider' => [
+            'driver' => 'local',
+            'root' => public_path('slider'),
+            'url'=>env('APP_URL').'/slider',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'blog' => [
+            'driver' => 'local',
+            'root' => public_path('blog'),
+            'url'=>env('APP_URL').'/blog',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

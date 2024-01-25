@@ -51,13 +51,7 @@ class CategoryController extends Controller
                 'name' => $request->name_category,
             ]);
 
-            $subcategory = SubCategory::create([
-                'name' => $request->name_subcategory,
-                'category_id' => $category->id,
-            ]);
-
             $category->addMediaFromRequest('image_category')->toMediaCollection('category', 'category');
-            $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory', 'subcategory');
 
             $input = Input::create([
                 'inputs' => $request->input('inputs'),
@@ -92,10 +86,6 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         try {
-            $subcategory = SubCategory::where('category_id', $category->id)->update([
-                'name' => $request->name_subcategory,
-            ]);
-
             $category->update([
                 'name' => $request->name_category,
             ]);
@@ -107,10 +97,6 @@ class CategoryController extends Controller
             if ($request->hasFile('image_category'))
                 $category->clearMediaCollection('category', 'category');
                 $category->addMediaFromRequest('image_category')->toMediaCollection('category', 'category');
-
-            // if($request->hasFile('image_subcategory'))
-            //     $subcategory->clearMediaCollection('subcategory','subcategory');
-            //     $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory','subcategory');
 
             // session()->flash('edit_user', __('backend/dashboard_message.Edit User Successfully'));
             return redirect()->route('category.index');

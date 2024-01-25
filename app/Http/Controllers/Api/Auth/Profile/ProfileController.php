@@ -14,6 +14,7 @@ use App\Http\Resources\Api\Ads\AdsResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
 use App\Http\Resources\Api\MyShop\MyShopResource;
 use App\Http\Requests\Api\Profile\UpdateProfileRequest;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -40,24 +41,32 @@ class ProfileController extends Controller
         return responseSuccessData(MyShopResource::collection($shop->load('categories', 'shopAds')));
     }
 
-    public function update_profile(UpdateProfileRequest $request)
+    public function update_profile(Request $request)
     {
-        $code_phone = $request->code_phone;
-        $phone = $request->phone;
-
-        $user = User::where('id', auth()->user()->id)->update([
-            'name'     => $request->get('name'),
-            'phone'    => '+' . $code_phone . $phone,
-            'password' => Hash::make($request->get('password')),
-        ]);
-
-        // Retrieve the updated user instance
         $user = User::find(auth()->user()->id);
-        $user->clearMediaCollection('profileauth', 'profileauth');
-        // Add media to the user's profileauth collection
-        $user->addMediaFromRequest('image')->toMediaCollection('profileauth', 'profileauth');
 
-        return responseSuccessData(RegisterResource::make($user),'تم تحديث الملف الشخصي بنجاح');
+        // Check if the request has the 'image' file
+        if ($request->hasFile('image')) {
+            // Clear existing media collection and add new media
+            $user->clearMediaCollection('profileauth', 'profileauth');
+            $user->addMediaFromRequest('image')->toMediaCollection('profileauth', 'profileauth');
+        }
+
+        // Prepare the data to be updated
+        $updateData = [
+            'name'     => $request->input('name'),
+            'password' => Hash::make($request->input('password')),
+        ];
+
+        // Check if 'phone' is provided and not empty
+        if ($request->filled('phone')) {
+            $updateData['phone'] = $request->input('code_phone') . $request->input('phone');
+        }
+
+        // Update the user with the prepared data
+        $user->update($updateData);
+
+        return responseSuccessData(RegisterResource::make($user), 'تم تحديث الملف الشخصي بنجاح');
     }
 
     public function count_of_my_ads(){
@@ -77,7 +86,7 @@ class ProfileController extends Controller
 
     public function get_view_ads(){
         $ads = Ads::select('name', 'view')->get();
-        
+
         $adsArray = $ads->map(function ($ad) {
             return ['name' => $ad->name, 'view' => $ad->view];
         })->all();
