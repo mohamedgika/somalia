@@ -45,6 +45,7 @@ class ProfileController extends Controller
     public function update_profile(Request $request)
     {
         $user = User::find(auth()->user()->id);
+        $updateData = []; // Initialize the variable
 
         // Check if the request has the 'image' file
         if ($request->hasFile('image')) {
@@ -54,9 +55,7 @@ class ProfileController extends Controller
         }
 
         if ($request->filled('name')) {
-            $updateData = [
-                'name'     => $request->input('name'),
-            ];
+            $updateData['name'] = $request->input('name');
         }
 
         // Check if 'phone' is provided and not empty
@@ -69,6 +68,7 @@ class ProfileController extends Controller
 
         return responseSuccessData(RegisterResource::make($user), 'تم تحديث الملف الشخصي بنجاح');
     }
+
 
     public function update_profile_password(Request $request)
     {
