@@ -25,7 +25,7 @@
         <!-- Default box -->
         <div class="card card-blue">
             <div class="card-header">
-                <h3 class="card-title">Show Category And SubCategory</h3>
+                <h3 class="card-title">Category</h3>
 
             </div>
             <div class="card-body">

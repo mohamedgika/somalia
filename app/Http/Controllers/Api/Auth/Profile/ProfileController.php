@@ -53,10 +53,11 @@ class ProfileController extends Controller
             $user->addMediaFromRequest('image')->toMediaCollection('profileauth', 'profileauth');
         }
 
-        // Prepare the data to be updated
-        $updateData = [
-            'name'     => $request->input('name'),
-        ];
+        if ($request->filled('name')) {
+            $updateData = [
+                'name'     => $request->input('name'),
+            ];
+        }
 
         // Check if 'phone' is provided and not empty
         if ($request->filled('phone')) {
@@ -85,11 +86,11 @@ class ProfileController extends Controller
 
         // Check if the current password matches the user's actual password
         if (!Hash::check($request->input('current_password'), auth()->user()->password)) {
-            return responseErrorMessage('Not Current Password',400);
+            return responseErrorMessage('Not Current Password', 400);
         }
 
         // Update the user's password
-        User::where('id',auth()->user()->id)->update([
+        User::where('id', auth()->user()->id)->update([
             'password' =>  Hash::make($request->input('new_password'))
 
         ]);

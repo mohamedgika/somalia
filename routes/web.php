@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\ShopAdsController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dashboard\ContactUsController;
+use App\Http\Controllers\Dashboard\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,16 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
 
     //Category
     Route::middleware(['auth', 'verified', 'CheckUser'])->resource('/dashboard/category', CategoryController::class);
+
+
+    //SubCategory
+    Route::middleware(['auth', 'verified', 'CheckUser'])->controller(SubCategoryController::class)->group(function () {
+        Route::get('/dashboard/subcategory', 'index')->name('subcategory.index');
+        Route::get('/dashboard/subcategory/{sub}', 'show')->name('subcategory.show');
+        Route::post('/dashboard/subcategory', 'store')->name('subcategory.store');
+        Route::put('/dashboard/subcategory/{sub}', 'edit')->name('subcategory.edit');
+        Route::delete('/dashboard/subcategory/{sub}', 'destroy')->name('subcategory.destroy');
+    });
 
     //Ads
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(AdsController::class)->group(function () {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,7 +16,8 @@ class SubCategoryController extends Controller
     {
         // Relation Between Sub Category
         $subcategories = SubCategory::get();
-        return view('backend.Category.dashboard_category', ['subcategories' => $subcategories]);
+        $categories = Category::get();
+        return view('backend.Category.SubCategory.dashboard_subcategory', ['subcategories' => $subcategories,'categories'=>$categories]);
     }
 
     /**

@@ -63,11 +63,21 @@
                               <a href="{{ route('category.index') }}" class="nav-link">
                                   <ion-icon name="copy" class="nav-icon"></ion-icon>
                                   <p>
-                                      Category & SubCategory
+                                      Category
                                   </p>
                               </a>
                           </li>
                       </ul>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('subcategory.index') }}" class="nav-link">
+                                <ion-icon name="copy" class="nav-icon"></ion-icon>
+                                <p>
+                                    SubCategory
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                   </li>
 
 

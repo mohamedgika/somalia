@@ -1,31 +1,32 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Dashboard | Category
+    Dashboard | SubCategory
 @endsection
 
 @section('css')
-    @include('backend.Category.dashboard_head_category')
+    @include('backend.Category.SubCategory.dashboard_head_subcategory')
 @endsection
 
 @section('after_next')
-    Category
-    <a href="{{ route('category.create') }}"><input type="submit" class="ml-3 btn btn-success" value="Add Category"></a>
+    SubCategory
+    <input type="submit" class="ml-3 btn btn-success" value="Add SubCategory" data-toggle="modal" data-target="#AddSubCategory">
+    @include('backend.Category.SubCategory.dashboard_add_subcategory')
 @endsection
 
 @section('next')
-    Category
+    SubCategory
 @endsection
 
 @section('content')
-    @include('backend.Category.dashboard_category_massage')
+    @include('backend.Category.SubCategory.dashboard_subcategory_massage')
 
     <section class="content">
 
         <!-- Default box -->
         <div class="card card-blue">
             <div class="card-header">
-                <h3 class="card-title">Show Category And SubCategory</h3>
+                <h3 class="card-title">SubCategory</h3>
 
             </div>
             <div class="card-body">
@@ -33,69 +34,49 @@
                 <table id="test" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Category</th>
                             <th>SubCategory</th>
-                            <th>Category Image</th>
+                            <th>Category</th>
                             <th>SubCategory Image</th>
-                            <th>Inputs</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($categories as $category)
+                        @foreach ($subcategories as $subcategory)
                             <tr>
-                                <td>{{ $category->name }}</td>
+                                <td>{{ $subcategory->name }}</td>
 
                                 <td>
-                                    @foreach ($category->subCategories as $sub)
-                                        {{ $sub->name }}
-                                    @endforeach
+                                    {{ $subcategory->category->name }}
                                 </td>
 
                                 <td>
-                                    <img src="{{ $category->getFirstMediaUrl('category') }}" width="75px"><br />
+                                    <img src="{{ $subcategory->getFirstMediaUrl('subcategory') }}" width="75px"><br />
                                 </td>
 
-                                <td>
-                                    @foreach ($category->subCategories as $sub)
-                                        <img src="{{ $sub->getFirstMediaUrl('subcategory') }}" width="75px"><br />
-                                    @endforeach
-                                </td>
-
-                                <td>
-                                    @foreach ($category->inputs as $input)
-                                        @foreach ($input->inputs as $it)
-                                            <p><b>Input</b> : {{ $it['name'] }} - <b>Type</b>: {{ $it['type'] }}</p>
-                                        @endforeach
-                                    @endforeach
-
-                                </td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#EditCategory{{ $category->id }}">
+                                        data-target="#EditCategory{{ $subcategory->id }}">
                                         <i class="fas fa-pencil-alt"></i>
                                         Edit
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#DeleteCategory{{ $category->id }}">
+                                        data-target="#DeleteCategory{{ $subcategory->id }}">
                                         <i class="fas fa-trash"></i>
                                         Delete
                                     </button>
                                 </td>
                             </tr>
-                            @include('backend.Category.dashboard_edit_category')
-                            @include('backend.Category.dashboard_delete_category')
+                            {{-- @include('backend.Category.SubCategory.dashboard_edit_subcategory')
+                            @include('backend.Category.SubCategory.dashboard_delete_subcategory') --}}
                         @endforeach
 
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Category</th>
                             <th>SubCategory</th>
-                            <th>Category Image</th>
+                            <th>Category</th>
                             <th>SubCategory Image</th>
-                            <th>Inputs</th>
                             <th>Actions</th>
                         </tr>
                     </tfoot>
@@ -111,5 +92,5 @@
 
 
 @section('js')
-    @include('backend.Category.dashboard_end_category')
+    @include('backend.Category.SubCategory.dashboard_end_subcategory')
 @endsection
