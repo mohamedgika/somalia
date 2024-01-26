@@ -70,6 +70,7 @@ Route::middleware(['auth:api'])->controller(ProfileController::class)->group(fun
     Route::get('/view_ad/{ad}', 'get_view_one_ad');
     Route::get('/views_ads', 'get_view_ads');
     Route::put('/updateprofile', 'update_profile');
+    Route::put('/updateprofilepassword','update_profile_password');
 });
 
 

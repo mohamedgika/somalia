@@ -6,15 +6,16 @@ use App\Models\Ads;
 use App\Models\Fav;
 use App\Models\Shop;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\Ads\AdsResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
 use App\Http\Resources\Api\MyShop\MyShopResource;
 use App\Http\Requests\Api\Profile\UpdateProfileRequest;
-use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -55,7 +56,6 @@ class ProfileController extends Controller
         // Prepare the data to be updated
         $updateData = [
             'name'     => $request->input('name'),
-            'password' => Hash::make($request->input('password')),
         ];
 
         // Check if 'phone' is provided and not empty
@@ -69,28 +69,60 @@ class ProfileController extends Controller
         return responseSuccessData(RegisterResource::make($user), 'تم تحديث الملف الشخصي بنجاح');
     }
 
-    public function count_of_my_ads(){
-        $count = Ads::where('user_id',Auth::user()->id)->count();
-        return response()->json(['count'=>$count]);
+    public function update_profile_password(Request $request)
+    {
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+
+        // Redirect back with errors if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+
+        // Check if the current password matches the user's actual password
+        if (!Hash::check($request->input('current_password'), auth()->user()->password)) {
+            return responseErrorMessage('Not Current Password',400);
+        }
+
+        // Update the user's password
+        User::where('id',auth()->user()->id)->update([
+            'password' =>  Hash::make($request->input('new_password'))
+
+        ]);
+
+        return responseSuccessMessage('تم تحديث كلمة المرور بنجاح');
     }
 
-    public function fav_ads(){
+    public function count_of_my_ads()
+    {
+        $count = Ads::where('user_id', Auth::user()->id)->count();
+        return response()->json(['count' => $count]);
+    }
+
+    public function fav_ads()
+    {
         $favs = Fav::where('user_id', auth()->user()->id)->count();
-        return response()->json(['favs'=>$favs]);
+        return response()->json(['favs' => $favs]);
     }
 
-    public function get_view_one_ad($ad){
-        $view = Ads::where('id',$ad)->first('view')->view;
-        return response()->json(['views'=>$view]);
+    public function get_view_one_ad($ad)
+    {
+        $view = Ads::where('id', $ad)->first('view')->view;
+        return response()->json(['views' => $view]);
     }
 
-    public function get_view_ads(){
+    public function get_view_ads()
+    {
         $ads = Ads::select('name', 'view')->get();
 
         $adsArray = $ads->map(function ($ad) {
             return ['name' => $ad->name, 'view' => $ad->view];
         })->all();
 
-        return response()->json($adsArray);    }
-
+        return response()->json($adsArray);
+    }
 }
