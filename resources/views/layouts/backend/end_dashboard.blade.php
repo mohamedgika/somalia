@@ -42,6 +42,9 @@
 <script src="{{URL::asset('backend/assets/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{URL::asset('backend/assets/dist/js/pages/dashboard.js')}}"></script>
+<!-- Summernote -->
+<script src="{{URL::asset('backend/assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
+
 
 @yield('js')
 

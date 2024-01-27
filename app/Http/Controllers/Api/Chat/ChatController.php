@@ -122,7 +122,7 @@ class ChatController extends Controller
             $messages = $chat->messages()->with('sender')->orderBy('created_at', 'asc')->paginate('150');
             return response()->json([
                 'chat' => new ChatResource($chat),
-                'messages' => MassageResource::collection($messages)->response()->getData(true)
+                'messages' => MassageResource::collection($messages)
             ], 200);
         } else {
             return response()->json([

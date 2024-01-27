@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($shopad as $ad)
+                        @foreach ($sa as $ad)
                             <tr>
                                 <td>{{ $ad->name }}</td>
                                 <td>

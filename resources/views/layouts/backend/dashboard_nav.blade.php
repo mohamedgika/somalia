@@ -19,7 +19,7 @@
           <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="#">
                 <ion-icon name="bag-sharp"></ion-icon>
-                <span class="badge badge-danger navbar-badge">{{ $shopadsNotActive }}</span>
+                <span class="badge badge-success navbar-badge">{{ $shopadsNotActive }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                   <span class="dropdown-item dropdown-header">{{ $shopadsNotActive }} ShopAds Not Active</span>

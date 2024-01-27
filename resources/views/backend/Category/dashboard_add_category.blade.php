@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-block btn-outline-success">
+                                <input type="submit" value="Create" class="btn btn-block btn-success">
                             </div>
                         </div>
                     </div>

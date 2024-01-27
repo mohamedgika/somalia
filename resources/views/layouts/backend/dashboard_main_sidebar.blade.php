@@ -121,7 +121,22 @@
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="{{ route('slider.index') }}" class="nav-link">
+                        <ion-icon class="nav-icon" name="albums-sharp"></ion-icon>
+                        <p>
+                            Slider
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <ion-icon class="nav-icon" name="book-sharp"></ion-icon>
+                        <p>
+                            Blog
+                        </p>
+                    </a>
+                </li>
 
                   {{-- <li class="nav-item">
             <a href="#" class="nav-link">

@@ -7,11 +7,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\AdsController;
 use App\Http\Controllers\Dashboard\ShopController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\SliderController;
 use App\Http\Controllers\Dashboard\ShopAdsController;
 use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Dashboard\ContactUsController;
 use App\Http\Controllers\Dashboard\SubCategoryController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,16 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
         Route::post('/dashboard/shopads', 'store')->name('shopAds.store');
         Route::put('/dashboard/shopads/{shopad}', 'edit')->name('shopAds.edit');
         Route::delete('/dashboard/shopads/{shopad}', 'destroy')->name('shopAds.destroy');
+    });
+
+    //Slider
+    Route::middleware(['auth', 'verified', 'CheckUser'])->controller(SliderController::class)->group(function () {
+        Route::get('/dashboard/slider', 'index')->name('slider.index');
+        Route::get('/dashboard/slider/create', 'create')->name('slider.create');
+        Route::get('/dashboard/slider/{slide}', 'show')->name('slider.show');
+        Route::post('/dashboard/slider', 'store')->name('slider.store');
+        Route::put('/dashboard/slider/{slide}', 'update')->name('slider.update');
+        Route::delete('/dashboard/slider/{slide}', 'destroy')->name('slider.destroy');
     });
 });
 
