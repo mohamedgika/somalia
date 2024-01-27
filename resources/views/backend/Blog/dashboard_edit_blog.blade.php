@@ -1,15 +1,15 @@
-<div class="modal fade" id="EditSlider{{ $s->id }}">
+<div class="modal fade" id="EditBlog{{ $b->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Slider {{ $s->title }}</h4>
+                <h4 class="modal-title">Edit Blog {{ $b->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('slider.update', $s->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('blog.update', $b->id) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
 
@@ -17,7 +17,7 @@
                         <div class="col-md">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input name="title" type="text" id="title" value="{{ $s->title }}"
+                                <input name="title" type="text" id="title" value="{{ $b->title }}"
                                     class="form-control">
                                 @error('title')
                                     <div class="alert alert-danger">{{ $message }}</div>
@@ -29,8 +29,8 @@
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <label for="image">Slider Image</label>
-                                <img src="{{ $s->getFirstMediaUrl('slider') }}" width="75px">
+                                <label for="image">Blog Image</label>
+                                <img src="{{ $b->getFirstMediaUrl('blog') }}" width="75px">
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input name="image" type="file" class="custom-file-input" id="image">
@@ -47,10 +47,10 @@
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <label for="link">Link (Optional)</label>
-                                <input name="link" type="text" id="title" value="{{ $s->link }}"
+                                <label for="author">Author (Optional)</label>
+                                <input name="author" type="text" id="author" value="{{ $b->author }}"
                                     class="form-control">
-                                @error('link')
+                                @error('author')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -60,11 +60,11 @@
                     <div class="row">
                         <div class="col-md">
                             <div class="form-group">
-                                <label for="summernote_slider_edit">Description</label>
+                                <label for="content">Content</label>
                                 <!-- Hidden input field to store the content of the summernote div -->
                                 <!-- summernote div to display the description content -->
-                                    <textarea class="summernote" name="desc">{{ $s->desc }}</textarea>
-                                @error('desc')
+                                    <textarea class="summernote" name="content">{{ $b->content }}</textarea>
+                                @error('content')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -40,4 +40,38 @@ class SliderController extends Controller
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+
+    public function update(Request $request , Slider $slide)
+    {
+        try {
+            $slide->update([
+                'title'=>$request->title,
+                'link'=>$request->link,
+                'desc'=>$request->input('desc')
+            ]);
+
+            if ($request->hasFile('image')) {
+                $slide->clearMediaCollection('slider', 'slider');
+                $slide->addMediaFromRequest('image')->toMediaCollection('slider', 'slider');
+            }
+
+            session()->flash('add_slider', 'Add Slider Successfully');
+            return redirect()->route('slider.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function destroy(Slider $slide)
+    {
+        try {
+            $slide->delete();
+            // session()->flash('ActiveAds', 'Ad Deleted Successfully');
+            return redirect()->route('slider.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
+
+
 }

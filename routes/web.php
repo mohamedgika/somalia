@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Category\ListCategories;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\AdsController;
+use App\Http\Controllers\Dashboard\BlogController;
 use App\Http\Controllers\Dashboard\ShopController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\SliderController;
@@ -100,6 +101,16 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
         Route::post('/dashboard/slider', 'store')->name('slider.store');
         Route::put('/dashboard/slider/{slide}', 'update')->name('slider.update');
         Route::delete('/dashboard/slider/{slide}', 'destroy')->name('slider.destroy');
+    });
+
+    //Blog
+    Route::middleware(['auth', 'verified', 'CheckUser'])->controller(BlogController::class)->group(function () {
+        Route::get('/dashboard/blog', 'index')->name('blog.index');
+        Route::get('/dashboard/blog/create', 'create')->name('blog.create');
+        Route::get('/dashboard/blog/{blog}', 'show')->name('blog.show');
+        Route::post('/dashboard/blog', 'store')->name('blog.store');
+        Route::put('/dashboard/blog/{blog}', 'update')->name('blog.update');
+        Route::delete('/dashboard/blog/{blog}', 'destroy')->name('blog.destroy');
     });
 });
 

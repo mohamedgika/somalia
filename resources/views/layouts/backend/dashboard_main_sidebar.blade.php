@@ -130,7 +130,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('blog.index') }}" class="nav-link">
                         <ion-icon class="nav-icon" name="book-sharp"></ion-icon>
                         <p>
                             Blog

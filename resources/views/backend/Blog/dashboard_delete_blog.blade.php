@@ -1,20 +1,20 @@
-<div class="modal fade" id="DeleteSlider{{$s->id}}">
+<div class="modal fade" id="DeleteBlog{{$b->id}}">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Delete {{$s->title}}</h4>
+          <h4 class="modal-title">Delete {{$b->title}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-            <form action="{{route('slider.destroy',$s->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('blog.destroy',$b->id)}}" method="POST" enctype="multipart/form-data">
               @method('DELETE')
               @csrf
                     <div class="col-md">
                         <div class="form-group">
-                            <p class="text-danger"><b>Are You Sure Delete {{$s->title}}</b></p>
+                            <p class="text-danger"><b>Are You Sure Delete {{$b->title}}</b></p>
                         </div>
                     </div>
                 <div class="modal-footer justify-content-between">

@@ -1,20 +1,20 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Dashboard | Slider
+    Dashboard | Blog
 @endsection
 
 @section('css')
-    @include('backend.Slider.dashboard_head_slider')
+    @include('backend.Blog.dashboard_head_blog')
 @endsection
 
 @section('after_next')
-    Slider
-    <a href="{{ route('slider.create') }}"><input type="submit" class="ml-3 btn btn-success" value="Add Slider"></a>
+    Blog
+    <a href="{{ route('blog.create') }}"><input type="submit" class="ml-3 btn btn-success" value="Add Blog"></a>
 @endsection
 
 @section('next')
-    Slider
+    Blog
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
         <!-- Default box -->
         <div class="card card-blue">
             <div class="card-header">
-                <h3 class="card-title">Slider</h3>
+                <h3 class="card-title">Blog</h3>
 
             </div>
             <div class="card-body">
@@ -34,37 +34,40 @@
                     <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Author</th>
                             <th>Image</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @foreach ($slider as $s)
+                        @foreach ($blog as $b)
                             <tr>
-                                <td>{{ $s->title }}</td>
-                                <td><img src="{{ $s->getFirstMediaUrl('slider') }}" width="75px"><br /></td>
+                                <td>{{ $b->title }}</td>
+                                <td>{{ $b->author }}</td>
+                                <td><img src="{{ $b->getFirstMediaUrl('blog') }}" width="75px"><br /></td>
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#EditSlider{{ $s->id }}">
+                                        data-target="#EditBlog{{ $b->id }}">
                                         <i class="fa fa-eye"></i>
                                         Preview
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#DeleteSlider{{ $s->id }}">
+                                        data-target="#DeleteBlog{{ $b->id }}">
                                         <i class="fas fa-trash"></i>
                                         Delete
                                     </button>
                                 </td>
                             </tr>
-                            @include('backend.Slider.dashboard_edit_slider')
-                            @include('backend.Slider.dashboard_delete_slider')
+                            @include('backend.Blog.dashboard_edit_blog')
+                            @include('backend.Blog.dashboard_delete_blog')
                         @endforeach
 
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Title</th>
+                            <th>Author</th>
                             <th>Image</th>
                             <th>Actions</th>
                         </tr>
@@ -86,5 +89,5 @@
             $('.summernote').summernote();
         });
     </script>
-    @include('backend.Slider.dashboard_end_slider')
+    @include('backend.Blog.dashboard_end_blog')
 @endsection
