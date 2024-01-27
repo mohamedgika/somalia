@@ -49,7 +49,7 @@ class ChatController extends Controller
         $chats = $user->chats()->with('users')->get();
         $success = true;
         return response()->json([
-            ChatsResource::collection($chats),
+            'chats' => ChatsResource::collection($chats),
             'success' => $success
         ], 200);
     }
