@@ -6,7 +6,7 @@
 <script src="{{URL::asset('backend/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
 <script src="{{URL::asset('backend/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
 <script>
-    $('#example1').DataTable({
+    $('#shop').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": true,

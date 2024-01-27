@@ -46,7 +46,7 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
         Route::get('/dashboard/subcategory', 'index')->name('subcategory.index');
         Route::get('/dashboard/subcategory/{sub}', 'show')->name('subcategory.show');
         Route::post('/dashboard/subcategory', 'store')->name('subcategory.store');
-        Route::put('/dashboard/subcategory/{sub}', 'edit')->name('subcategory.edit');
+        Route::put('/dashboard/subcategory/{sub}', 'update')->name('subcategory.update');
         Route::delete('/dashboard/subcategory/{sub}', 'destroy')->name('subcategory.destroy');
     });
 
@@ -54,6 +54,7 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(AdsController::class)->group(function () {
         Route::get('/dashboard/ads', 'index')->name('ads.index');
         Route::get('/dashboard/ads/{ad}', 'show')->name('ads.show');
+        Route::get('/dashboard/notactive/ads', 'create')->name('ads.create');
         Route::post('/dashboard/ads', 'store')->name('ads.store');
         Route::put('/dashboard/ads/{ad}', 'edit')->name('ads.edit');
         Route::delete('/dashboard/ads/{ad}', 'destroy')->name('ads.destroy');
@@ -63,6 +64,7 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(ShopController::class)->group(function () {
         Route::get('/dashboard/shop', 'index')->name('shop.index');
         Route::get('/dashboard/shop/{shop}', 'show')->name('shop.show');
+        Route::get('/dashboard/notactive/shop', 'create')->name('shop.create');
         // Route::post('/dashboard/shop/{shop}', 'update')->name('shop.update');
         Route::post('/dashboard/shop', 'store')->name('shop.store');
         Route::put('/dashboard/shop/{shop}', 'edit')->name('shop.edit');

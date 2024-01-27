@@ -11,7 +11,6 @@
 @section('after_next')
     SubCategory
     <input type="submit" class="ml-3 btn btn-success" value="Add SubCategory" data-toggle="modal" data-target="#AddSubCategory">
-    @include('backend.Category.SubCategory.dashboard_add_subcategory')
 @endsection
 
 @section('next')
@@ -19,6 +18,7 @@
 @endsection
 
 @section('content')
+    @include('backend.Category.SubCategory.dashboard_add_subcategory')
     @include('backend.Category.SubCategory.dashboard_subcategory_massage')
 
     <section class="content">
@@ -56,19 +56,19 @@
 
                                 <td>
                                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                        data-target="#EditCategory{{ $subcategory->id }}">
+                                        data-target="#EditSubCategory{{ $subcategory->id }}">
                                         <i class="fas fa-pencil-alt"></i>
                                         Edit
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#DeleteCategory{{ $subcategory->id }}">
+                                        data-target="#DeleteSubCategory{{ $subcategory->id }}">
                                         <i class="fas fa-trash"></i>
                                         Delete
                                     </button>
                                 </td>
                             </tr>
-                            {{-- @include('backend.Category.SubCategory.dashboard_edit_subcategory')
-                            @include('backend.Category.SubCategory.dashboard_delete_subcategory') --}}
+                            @include('backend.Category.SubCategory.dashboard_edit_subcategory')
+                            @include('backend.Category.SubCategory.dashboard_delete_subcategory')
                         @endforeach
 
                     </tbody>

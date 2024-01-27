@@ -41,7 +41,7 @@
         <!-- Default box -->
         <div class="card card-dark">
             <div class="card-header">
-                <h3 class="card-title">Ads</h3>
+                <h3 class="card-title">Contact Us</h3>
 
             </div>
             <div class="card-body">

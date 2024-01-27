@@ -6,6 +6,8 @@ use App\Models\Ads;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use function Ramsey\Uuid\v1;
+
 class AdsController extends Controller
 {
     public function index()
@@ -36,6 +38,11 @@ class AdsController extends Controller
 
 
         return view('backend.Ads.dashboard_ads', ['ads' => $ads]);
+    }
+
+    public function create(){
+        $not_active_ads = Ads::where('is_active',0)->get();
+        return view('backend.Ads.dashboard_not_active_ads',['not_active_ads'=>$not_active_ads]);
     }
 
     public function show(Request $request,Ads $ad){

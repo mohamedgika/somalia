@@ -22,7 +22,8 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        $shops = Shop::where('is_active',0)->get();
+        return view('backend.Shop.dashboard_not_active_shop',['shops',$shops]);
     }
 
     /**

@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($shop as $s)
+                        @foreach ($shops as $s)
                             <tr>
                                 <td>{{ $s->name }}</td>
                                 <td>{{ $s->user->name }}</td>

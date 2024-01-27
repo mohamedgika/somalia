@@ -5,11 +5,11 @@
 @endsection
 
 @section('css')
+@include('backend.User.dashboard_head_user')
 @endsection
 
 @section('after_next')
     User <input type="submit" class="ml-3 btn btn-success" value="Add User" data-toggle="modal" data-target="#AddUser">
-    @include('backend.User.dashboard_add_user')
 @endsection
 
 @section('next')
@@ -21,6 +21,7 @@
     <!-- Main content -->
     <section class="content">
         @include('backend.User.dashboard_user_massage')
+        @include('backend.User.dashboard_add_user')
         <!-- Default box -->
         <div class="card card-danger">
             <div class="card-header">

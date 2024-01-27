@@ -17,7 +17,7 @@ class SubCategoryController extends Controller
         // Relation Between Sub Category
         $subcategories = SubCategory::get();
         $categories = Category::get();
-        return view('backend.Category.SubCategory.dashboard_subcategory', ['subcategories' => $subcategories,'categories'=>$categories]);
+        return view('backend.Category.SubCategory.dashboard_subcategory', ['subcategories' => $subcategories, 'categories' => $categories]);
     }
 
     /**
@@ -33,18 +33,17 @@ class SubCategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
-
             $subcategory = SubCategory::create([
-                'name' => $request->name_subcategory,
+                'name' => $request->name,
                 'category_id' => $request->category_id,
             ]);
 
-            $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory', 'subcategory');
+            if ($request->hasFile('image'))
+                $subcategory->addMediaFromRequest('image')->toMediaCollection('subcategory', 'subcategory');
 
-            session()->flash('add_catergory', 'Add Category And SubCategory Successfully');
-            return redirect()->route('category.index');
+            session()->flash('add_subcategory', 'Add SubCategory Successfully');
+            return redirect()->route('subcategory.index');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['message' => $e->getMessage()]);
         }
@@ -72,13 +71,20 @@ class SubCategoryController extends Controller
     public function update(Request $request, SubCategory $sub)
     {
         try {
-            $subcategory = SubCategory::where('category_id', $sub->id)->update([
-                'name' => $request->name_subcategory,
+            // Find the SubCategory by ID
+            $subcategory = SubCategory::find($sub->id);
+
+            // Update the SubCategory's name
+            $subcategory->update([
+                'name' => $request->name,
             ]);
 
-            if ($request->hasFile('image_subcategory'))
+            // Check if the request has the 'image_subcategory' file
+            if ($request->hasFile('image_subcategory')) {
+                // Clear existing media collection and add new media
                 $subcategory->clearMediaCollection('subcategory', 'subcategory');
                 $subcategory->addMediaFromRequest('image_subcategory')->toMediaCollection('subcategory', 'subcategory');
+            }
 
             // session()->flash('edit_user', __('backend/dashboard_message.Edit User Successfully'));
             return redirect()->route('subcategory.index');

@@ -19,18 +19,21 @@ class ChatController extends Controller
 {
     public function createChat(CreateChatRequest $request)
     {
-        $users = $request->users;
+        // Include the current user's ID in the users array
+        $users = array_unique(array_merge($request->users, [$request->user()->id]));
+
         // check if they had a chat before
         $chat =  $request->user()->chats()->whereHas('users', function ($q) use ($users) {
-            $q->where('user_id', $users[0]);
+            $q->whereIn('user_id', $users);
         })->first();
 
-        //if not, create a new one
+        // if not, create a new one
         if (empty($chat)) {
-            array_push($users, $request->user()->id);
             $chat = Chat::create()->makePrivate($request->isPrivate);
-            $chat->users()->attach($users);
         }
+
+        // Sync users to the chat
+        $chat->users()->sync($users);
 
         $success = true;
         return response()->json([
