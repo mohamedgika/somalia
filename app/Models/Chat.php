@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Message;
 use App\Models\ChatMessage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -36,8 +37,8 @@ class Chat extends Model
     public function isUser($user_id)
     {
         $data = $this->users->where('id', $user_id)->first();
-        if(!empty($data) ){
-         return true;
+        if (!empty($data)) {
+            return true;
         }
         return false;
     }
@@ -49,4 +50,8 @@ class Chat extends Model
         return $this;
     }
 
+    public function latestMessage(): HasOne
+    {
+        return $this->hasOne(ChatMessage::class)->latest()->with('sender');
+    }
 }

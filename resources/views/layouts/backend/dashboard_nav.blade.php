@@ -15,6 +15,25 @@
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
 
+          <!-- Notifications ShopAds -->
+          <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" href="#">
+                <ion-icon name="bag-sharp"></ion-icon>
+                <span class="badge badge-danger navbar-badge">{{ $shopadsNotActive }}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                  <span class="dropdown-item dropdown-header">{{ $shopadsNotActive }} ShopAds Not Active</span>
+                  <div class="dropdown-divider"></div>
+                  @foreach ($shopadses as $s)
+                      <a href="{{ route('shopads.create') }}" class="dropdown-item">
+                        <img src="{{ $s->getFirstMediaUrl('shopads') }}" width="75px"> {{ $s->name }}
+                        <span class="float-right text-muted text-sm">{{ $s->created_at->format('Y M d') }}</span>
+                      </a>
+                  @endforeach
+                  <a href="{{ route('shopads.create') }}" class="dropdown-item dropdown-footer">See All ShopAds</a>
+              </div>
+          </li>
+
           <!-- Notifications Shops -->
           <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="#">
@@ -24,13 +43,13 @@
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                   <span class="dropdown-item dropdown-header">{{ $shopNotActive }} Shop Not Active</span>
                   <div class="dropdown-divider"></div>
-                  @foreach ($shops as $s )
-                  <a href="{{ route('shop.create') }}" class="dropdown-item">
-                      @foreach ($s->getMedia('shop') as $media)
-                          <img src="{{ $media->getUrl() }}" width="75px"> {{ $s->name }}
-                          <span class="float-right text-muted text-sm">{{ $s->created_at->format('Y M d') }}</span>
-                      @endforeach
-                  </a>
+                  @foreach ($shops as $s)
+                      <a href="{{ route('shop.create') }}" class="dropdown-item">
+                          @foreach ($s->getMedia('shop') as $media)
+                              <img src="{{ $media->getUrl() }}" width="75px"> {{ $s->name }}
+                              <span class="float-right text-muted text-sm">{{ $s->created_at->format('Y M d') }}</span>
+                          @endforeach
+                      </a>
                   @endforeach
                   <a href="{{ route('shop.create') }}" class="dropdown-item dropdown-footer">See All Shops</a>
               </div>
@@ -45,11 +64,11 @@
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                   <span class="dropdown-item dropdown-header">{{ $adsNotActive }} Ads Not Active</span>
                   <div class="dropdown-divider"></div>
-                  @foreach ($adses as $ad )
-                  <a href="{{ route('ads.create') }}" class="dropdown-item">
+                  @foreach ($adses as $ad)
+                      <a href="{{ route('ads.create') }}" class="dropdown-item">
                           <img src="{{ $ad->getFirstMediaUrl('ads') }}" width="75px"> {{ $ad->name }}
                           <span class="float-right text-muted text-sm">{{ $ad->created_at->format('Y M d') }}</span>
-                  </a>
+                      </a>
                   @endforeach
                   <div class="dropdown-divider"></div>
                   <a href="{{ route('ads.create') }}" class="dropdown-item dropdown-footer">See All Ads</a>

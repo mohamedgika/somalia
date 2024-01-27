@@ -14,6 +14,7 @@ use App\Http\Resources\Api\Chat\ChatResource;
 use App\Http\Resources\Api\Chat\MassageResource;
 use App\Http\Requests\Api\Chat\CreateChatRequest;
 use App\Http\Requests\Api\Chat\SendTextMessageRequest;
+use App\Http\Resources\Api\Chat\ChatsResource;
 
 class ChatController extends Controller
 {
@@ -48,7 +49,7 @@ class ChatController extends Controller
         $chats = $user->chats()->with('users')->get();
         $success = true;
         return response()->json([
-            'chats' => $chats,
+            ChatsResource::collection($chats),
             'success' => $success
         ], 200);
     }

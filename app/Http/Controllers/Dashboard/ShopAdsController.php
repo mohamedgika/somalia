@@ -22,7 +22,8 @@ class ShopAdsController extends Controller
      */
     public function create()
     {
-        //
+        $shopad = ShopAds::where('is_active',0)->get();
+        return view('backend.Shop.ShopAds.dashboard_not_active_shopads',['shopad',$shopad]);
     }
 
     /**

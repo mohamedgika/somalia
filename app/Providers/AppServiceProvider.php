@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\Carbon;
 use App\Models\Ads;
 use App\Models\Shop;
+use App\Models\ShopAds;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,11 +46,11 @@ class AppServiceProvider extends ServiceProvider
             view()->share('shops', $shops);
 
             //ShopAds Not Active
-            $shop_not_active = Shop::where('is_active', 0)->count();
-            view()->share('shopNotActive', $shop_not_active);
+            $shopads_not_active = ShopAds::where('is_active', 0)->count();
+            view()->share('shopadsNotActive', $shopads_not_active);
 
-            $shops = Shop::where('is_active', 0)->get();
-            view()->share('shops', $shops);
+            $shopadses = ShopAds::where('is_active', 0)->get();
+            view()->share('shopadses', $shopadses);
 
             // Number of ads monthly
             $now = Carbon::now();

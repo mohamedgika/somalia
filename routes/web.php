@@ -81,10 +81,11 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     });
 
 
-    //Ads
+    //ShopAds
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(ShopAdsController::class)->group(function () {
         Route::get('/dashboard/shopads', 'index')->name('shopAds.index');
         Route::get('/dashboard/shopads/{shopad}', 'show')->name('shopAds.show');
+        Route::get('/dashboard/notactive/shopads', 'create')->name('shopads.create');
         Route::post('/dashboard/shopads', 'store')->name('shopAds.store');
         Route::put('/dashboard/shopads/{shopad}', 'edit')->name('shopAds.edit');
         Route::delete('/dashboard/shopads/{shopad}', 'destroy')->name('shopAds.destroy');
