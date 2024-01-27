@@ -119,10 +119,8 @@ class ChatController extends Controller
     public function getChatById(Chat $chat, Request $request)
     {
         if ($chat->isUser($request->user()->id)) {
-            $messages = $chat->messages()->with('sender')->orderBy('created_at', 'asc')->paginate('150');
             return response()->json([
                 'chat' => new ChatResource($chat),
-                'messages' => MassageResource::collection($messages)
             ], 200);
         } else {
             return response()->json([
