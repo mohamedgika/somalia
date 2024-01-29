@@ -28,7 +28,7 @@ class PublicShopResource extends JsonResource
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'shopAd'        => ShopAdsResource::collection($this->whenLoaded('shopAds')),
+            'shopAd'        => ShopAdsResource::collection($this->whenLoaded('shopAds')->load('shopAdsDetail')),
             'category'      => CategoryResource::make($this->whenLoaded('categories')),
             'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
