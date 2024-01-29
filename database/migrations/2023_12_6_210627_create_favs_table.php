@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('favs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ad_id')->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('ad_id')->nullable()->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('shopad_id')->nullable()->constrained('shop_ads')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

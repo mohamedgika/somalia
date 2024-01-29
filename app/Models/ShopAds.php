@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Fav;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ShopAds extends Model implements HasMedia
 {
@@ -31,5 +32,9 @@ class ShopAds extends Model implements HasMedia
 
     public function shopAdsDetail(){
         return $this->hasOne(ShopAdsDetail::class,'shop_ad_id');
+    }
+
+    public function fav(){
+        return $this->hasMany(Fav::class,'shopad_id');
     }
 }
