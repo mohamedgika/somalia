@@ -7,6 +7,7 @@ use App\Models\Fav;
 use App\Models\Chat;
 use App\Models\Google;
 use App\Models\Payment;
+use App\Models\Rateads;
 use App\Models\SubScription;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
@@ -82,6 +83,10 @@ class User extends Authenticatable implements HasMedia ,  JWTSubject
 
     public function payments(){
         return $this->hasMany(Payment::class);
+    }
+
+    public function rates(){
+        return $this->hasMany(Rateads::class,'user_id');
     }
 
     public function getJWTIdentifier()

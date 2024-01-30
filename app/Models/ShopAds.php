@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Fav;
+use App\Models\Rateads;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -36,5 +37,9 @@ class ShopAds extends Model implements HasMedia
 
     public function fav(){
         return $this->hasMany(Fav::class,'shopad_id');
+    }
+
+    public function rates(){
+        return $this->hasMany(Rateads::class,'shopad_id');
     }
 }

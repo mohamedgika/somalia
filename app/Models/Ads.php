@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Rateads;
 use App\Models\AdDetail;
 use App\Models\SubCategory;
 use Spatie\MediaLibrary\HasMedia;
@@ -54,4 +55,8 @@ class Ads extends Model implements HasMedia
     // public function shop(){
     //     return $this->belongsTo(Shop::class, 'shop_id');
     // }
+
+    public function rates(){
+        return $this->hasMany(Rateads::class,'ad_id');
+    }
 }

@@ -8,12 +8,13 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
+        "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "*",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-medialibrary": "^10.15",
-        "srmklive/paypal": "~1.0",
+        "srmklive/paypal": "~3.0",
         "tymon/jwt-auth": "^2.0"
     },
     "require-dev": {

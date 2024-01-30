@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\PublicShop;
 
+use App\Models\Fav;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
@@ -17,6 +18,7 @@ class PublicShopResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'id'            => $this->id,
             'name'          => $this->name,

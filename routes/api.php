@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
 use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\Package\SubScriptionController;
+use App\Http\Controllers\Api\RateAds\RateadsController;
 use App\Http\Controllers\Api\Slider\SliderController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
 
@@ -118,6 +119,12 @@ Route::middleware(['auth:api'])->controller(FavController::class)->group(functio
     Route::get('/favs', 'getFav');
     Route::post('/favs', 'fav');
     Route::delete('/favs/{ad_id}', 'destroyFav');
+});
+
+
+//Rate
+Route::middleware(['auth:api'])->controller(RateadsController::class)->group(function () {
+    Route::post('/rates', 'rate');
 });
 
 
