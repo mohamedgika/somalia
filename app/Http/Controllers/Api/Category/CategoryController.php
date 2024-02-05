@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Category\StoreRequest;
 use App\Http\Requests\Api\Category\UpdateRequest;
-use App\Http\Requests\Dashboard\Category\CategoryRequest;
 use App\Http\Resources\Api\Category\CategoryResource;
 
 class CategoryController extends Controller
@@ -26,19 +25,26 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
+    public function store(StoreRequest $request)
     {
-        $category = Category::create($request->validated());
+        $translations = $request->input('name');
 
-        $category->addMediaFromRequest('image')->toMediaCollection('category','category');
+        $category = new Category(); // Create a new instance of Category model
 
-        return responseSuccessData(CategoryResource::make($category),'تم اضافة الصنف بنجاح');
+        $category->setTranslations('name', $translations);
+
+        $category->name = $request->name; // Make sure you're getting the name from the request
+
+        $category->save(); // Save the category to the database
+
+        $category->addMediaFromRequest('image')->toMediaCollection('category', 'category');
+
+        return responseSuccessData(CategoryResource::make($category), 'تم اضافة الصنف بنجاح');
     }
 
     /**
@@ -46,7 +52,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        if(! $category)
+        if (!$category)
             return responseErrorMessage('الصنف غير موجود');
 
         return responseSuccessData(CategoryResource::make($category->load('subcategories')));
@@ -57,7 +63,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-
     }
 
     /**
@@ -65,17 +70,17 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, Category $category)
     {
-        if(! $category)
+        if (!$category)
             return responseErrorMessage('الصنف غير موجود');
 
-       $category->update($request->validated());
+        $category->update($request->validated());
 
-       if($request->hasFile('image'))
-            $category->clearMediaCollection('category','category');
-            $category->addMediaFromRequest('image')->toMediaCollection('category','category');
-            // Add the new images to the media library
+        if ($request->hasFile('image'))
+            $category->clearMediaCollection('category', 'category');
+        $category->addMediaFromRequest('image')->toMediaCollection('category', 'category');
+        // Add the new images to the media library
 
-       return responseSuccessData(CategoryResource::make($category),'تم تحديث الصنف بنجاح');
+        return responseSuccessData(CategoryResource::make($category), 'تم تحديث الصنف بنجاح');
     }
 
     /**
@@ -83,10 +88,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        if(! $category)
+        if (!$category)
             return responseErrorMessage('الصنف غير موجود');
 
-        $category->clearMediaCollection('category','category');
+        $category->clearMediaCollection('category', 'category');
         $category->delete();
         return responseSuccessMessage('تم حذف الصنف بنجاح');
     }

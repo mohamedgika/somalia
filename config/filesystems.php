@@ -83,6 +83,14 @@ return [
             'throw' => false,
         ],
 
+        'country' => [
+            'driver' => 'local',
+            'root' => public_path('country'),
+            'url'=>env('APP_URL').'/country',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

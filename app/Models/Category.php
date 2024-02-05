@@ -5,15 +5,23 @@ namespace App\Models;
 use App\Models\Input;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model implements HasMedia
 {
-    use HasFactory , InteractsWithMedia;
+    use HasFactory , InteractsWithMedia , HasTranslations;
+
 
     protected $fillable =[
         'name'
+    ];
+
+    public $translatable = ['name'];
+
+    protected $casts = [
+        'name' => 'array'
     ];
 
     public function subCategories(){

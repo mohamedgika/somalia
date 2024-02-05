@@ -6,6 +6,8 @@ use App\Models\Ads;
 use App\Models\Fav;
 use App\Models\Shop;
 use App\Models\User;
+use App\Models\Payment;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\Ads\AdsResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
 use App\Http\Resources\Api\MyShop\MyShopResource;
+use App\Http\Resources\Api\Payment\PaymentResource;
 use App\Http\Requests\Api\Profile\UpdateProfileRequest;
 
 class ProfileController extends Controller
@@ -125,5 +128,10 @@ class ProfileController extends Controller
         })->all();
 
         return response()->json($adsArray);
+    }
+
+    public function getMySubscription(){
+        $subscriptions = Payment::where('user_id', auth()->user()->id)->get();
+        return responseSuccessData(PaymentResource::collection($subscriptions));
     }
 }

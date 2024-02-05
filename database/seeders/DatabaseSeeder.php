@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Database\Seeders\CitySeeder;
+use Database\Seeders\UserSeeder;
 use Database\Seeders\SubCategorySeeder;
 use Database\Seeders\SubScriptionSeeder;
 
@@ -23,10 +24,11 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call([
+        UserSeeder::class,
+        CategorySeeder::class,
         CountrySeeder::class,
         StateSeeder::class,
         CitySeeder::class,
-        CategorySeeder::class,
         SubCategorySeeder::class,
         SubScriptionSeeder::class,
     ]);

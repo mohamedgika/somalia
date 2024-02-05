@@ -53,7 +53,7 @@ Route::middleware(['api'])->group(function () {
     Route::get('/public/ads/price/{min}/{max}', [PublicController::class, 'public_ads_by_price']);
     Route::get('/public/ads/name/{name}', [PublicController::class, 'public_ads_by_name']);
     Route::get('/public/shops', [PublicController::class, 'public_shops']);
-    Route::post('/public/ads/filteration', [PublicController::class, 'filterAds']);
+    Route::get('/public/ads/sort/filteration', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/filter/date', [PublicController::class, 'filterAdsByDate']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
     Route::get('/public/slider',[PublicController::class,'slider']);
@@ -65,6 +65,7 @@ Route::middleware(['api'])->group(function () {
 Route::middleware(['auth:api'])->controller(ProfileController::class)->group(function () {
     Route::get('/account', 'getAccount');
     Route::get('/myads', 'getMyAds');
+    Route::get('/mysubscription', 'getMySubscription');
     Route::get('/myshop', 'getMyShop');
     Route::get('/countMyAds', 'count_of_my_ads');
     Route::get('/favscount', 'fav_ads');

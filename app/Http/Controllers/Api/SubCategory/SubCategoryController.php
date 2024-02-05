@@ -33,7 +33,17 @@ class SubCategoryController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $subcategory = SubCategory::create($request->validated());
+        $translations = $request->input('name');
+
+        $subcategory = new SubCategory(); // Create a new instance of Category model
+
+        $subcategory->setTranslations('name', $translations);
+
+        $subcategory->category_id = $request->category_id;
+
+        $subcategory->name = $request->name; // Make sure you're getting the name from the request
+
+        $subcategory->save(); // Save the category to the database
 
         $subcategory->addMediaFromRequest('image')->toMediaCollection('subcategory','subcategory');
 

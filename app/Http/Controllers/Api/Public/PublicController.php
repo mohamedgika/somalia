@@ -13,6 +13,7 @@ use App\Http\Resources\Api\Ads\AdsResource;
 use App\Http\Resources\Api\Blog\BlogResource;
 use App\Http\Resources\Api\Slider\SliderResource;
 use App\Http\Resources\Api\Category\CategoryResource;
+use App\Http\Resources\Api\PopLocation\PopResouece;
 use App\Http\Resources\Api\PublicShop\PublicShopResource;
 use App\Http\Resources\Api\SubCategory\SubCategoryResource;
 use App\Models\Blog;
@@ -79,21 +80,21 @@ class PublicController extends Controller
         $query = Ads::query();
 
         if ($request->has('category_id')) {
-            $category = $request->input('category_id');
-            $query->whereHas('subCategory.category', function ($q) use ($category) {
-                $q->where('id', $category);
+            $category_id = $request->category_id;
+            $query->whereHas('subCategory.category', function ($q) use ($category_id) {
+                $q->where('id', $category_id);
             });
         }
 
-        if ($request->has('min') && $request->has('max')) {
-            $min = $request->input('min');
-            $max = $request->input('max');
-            $query->whereBetween('price', [$min, $max]);
+        if ($request->has('subcategory_id')) {
+            $subcategory_id = $request->subcategory_id;
+            $query->where('subcategory_id', $subcategory_id);
         }
 
-        if ($request->has('name')) {
-            $name = $request->input('name');
-            $query->where('name', 'like', '%' . $name . '%');
+        if ($request->has('min') && $request->has('max')) {
+            $min = $request->min;
+            $max = $request->max;
+            $query->whereBetween('price', [$min, $max]);
         }
 
         $ads = $query->get();
@@ -130,18 +131,18 @@ class PublicController extends Controller
             ->selectRaw('country, count(*) as ads_count')
             ->get();
 
-        return response()->json(['ads_by_country' => $adsByCountry]);
+        return responseSuccessData(PopResouece::collection($adsByCountry));
     }
 
-    public function slider(){
+    public function slider()
+    {
         $sliders = Slider::get();
         return responseSuccessData(SliderResource::collection($sliders));
     }
 
-    public function blog(){
+    public function blog()
+    {
         $blogs = Blog::get();
         return responseSuccessData(BlogResource::collection($blogs));
     }
-
-
 }

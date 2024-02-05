@@ -15,9 +15,20 @@ class SubCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        if($request->header('locale')){
+            $locale = $request->header('locale');
+
+            app()->setLocale($locale);
+            //  Get language
+            $locale = app()->getLocale();
+        }else{
+            $locale = app()->getLocale();
+        }
+
         return [
             'id'=>$this->id,
-            'name'=>$this->name,
+            'name' => $this->getTranslation('name',$locale),
             'image'=>$this->getMedia('subcategory'),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->updated_at,
