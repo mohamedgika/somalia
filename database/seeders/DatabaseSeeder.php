@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\CitySeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\InputSeeder;
 use Database\Seeders\SubCategorySeeder;
 use Database\Seeders\SubScriptionSeeder;
 
@@ -26,11 +27,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
         UserSeeder::class,
         CountrySeeder::class,
-        CategorySeeder::class,
         StateSeeder::class,
         CitySeeder::class,
-        SubCategorySeeder::class,
         SubScriptionSeeder::class,
+        CategorySeeder::class,
+        InputSeeder::class,
+        SubCategorySeeder::class,
     ]);
     }
 }
