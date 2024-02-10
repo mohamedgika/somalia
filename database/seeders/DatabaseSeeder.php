@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         CountrySeeder::class,
         StateSeeder::class,
         CitySeeder::class,
-        SubScriptionSeeder::class,
+        // SubScriptionSeeder::class,
         CategorySeeder::class,
         InputSeeder::class,
         SubCategorySeeder::class,

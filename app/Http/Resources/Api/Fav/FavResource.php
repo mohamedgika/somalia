@@ -32,8 +32,7 @@ class FavResource extends JsonResource
             'is_active'         => $this->ads->is_active,
             'adDetail'          => AdDetailResource::make($this->ads->adDetail),
             'subcategory'       => SubCategoryResource::make($this->ads->subCategory->load('category')),
-            'user'              => RegisterResource::make($this->whenLoaded('user')),
-
+            'user'              => RegisterResource::make($this->ads->user),
         ];
     }
 }

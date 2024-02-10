@@ -13,7 +13,7 @@ class FavController extends Controller
     {
         $favs = Fav::where('user_id', auth()->user()->id)->get();
         // dd($favs->ads);
-        return responseSuccessData(FavResource::collection($favs->load('user')));
+        return responseSuccessData(FavResource::collection($favs));
     }
 
     public function fav(Request $request)

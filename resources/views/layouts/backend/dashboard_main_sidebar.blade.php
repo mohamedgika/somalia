@@ -116,7 +116,7 @@
 
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                        <ion-icon class="nav-icon" name="pricetags"></ion-icon>
+                        <ion-icon name="card" class="nav-icon"></ion-icon>
                         <p>
                             Package
                             <i class="fas fa-angle-left right"></i>
@@ -124,14 +124,14 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('shop.index') }}" class="nav-link">
-                                <ion-icon name="copy" class="nav-icon"></ion-icon>
+                            <a href="{{ route('package.index') }}" class="nav-link">
+                                <ion-icon name="card" class="nav-icon"></ion-icon>
                                 <p>Packages</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('shopAds.index') }}" class="nav-link">
-                                <ion-icon name="copy" class="nav-icon"></ion-icon>
+                                <ion-icon name="card" class="nav-icon"></ion-icon>
                                 <p>Subscription Clients</p>
                             </a>
                         </li>

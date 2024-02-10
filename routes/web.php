@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\BlogController;
 use App\Http\Controllers\Dashboard\ShopController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\SliderController;
+use App\Http\Controllers\Dashboard\PackageController;
 use App\Http\Controllers\Dashboard\ShopAdsController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ContactUsController;
@@ -42,6 +43,8 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     //Category
     Route::middleware(['auth', 'verified', 'CheckUser'])->resource('/dashboard/category', CategoryController::class);
 
+    //Package
+    Route::middleware(['auth', 'verified', 'CheckUser'])->resource('/dashboard/package', PackageController::class);
 
     //SubCategory
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(SubCategoryController::class)->group(function () {

@@ -15,8 +15,11 @@ class Subscription extends Model
     protected $fillable = [
         'name',
         'desc',
-        'price',
-        'month'
+        'package_details'
+    ];
+
+    protected $casts = [
+        'package_details'=>'array'
     ];
 
     public function payments(){
