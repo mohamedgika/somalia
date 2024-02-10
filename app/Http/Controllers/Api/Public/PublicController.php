@@ -79,6 +79,15 @@ class PublicController extends Controller
     {
         $query = Ads::query();
 
+        // Filter by name or description
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        }
+
         if ($request->has('category_id')) {
             $category_id = $request->category_id;
             $query->whereHas('subCategory.category', function ($q) use ($category_id) {
