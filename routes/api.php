@@ -119,6 +119,7 @@ Route::middleware(['auth:api'])->controller(AdsController::class)->group(functio
 Route::middleware(['auth:api'])->controller(FavController::class)->group(function () {
     Route::get('/favs', 'getFav');
     Route::post('/favs', 'fav');
+    Route::post('/favs/shopad', 'favshopad');
     Route::delete('/favs/{ad_id}', 'destroyFav');
 });
 
