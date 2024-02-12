@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
 use App\Http\Resources\Api\AdDetail\AdDetailResource;
+use App\Http\Resources\Api\Shop\ShopResource;
 use App\Http\Resources\Api\SubCategory\SubCategoryResource;
 use App\Models\Rateads;
 
@@ -45,6 +46,7 @@ class AdsResource extends JsonResource
             'total_rate'    => $total_rate ?? 0,
             'adDetail'      => AdDetailResource::make($this->whenLoaded('adDetail')),
             'subcategory'   => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
+            'shop'          => ShopResource::make($this->whenLoaded('shop')),
             'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
     }

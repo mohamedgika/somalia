@@ -28,7 +28,6 @@ class StoreRequest extends FormRequest
             'late'    => 'required|string',
             'phone'       => 'required',
             'description' => 'nullable|string|max:500',
-            'category_id' => 'required',
         ];
     }
 }

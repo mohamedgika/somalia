@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Shop;
 use App\Models\Rateads;
 use App\Models\AdDetail;
 use App\Models\SubCategory;
@@ -28,6 +29,7 @@ class Ads extends Model implements HasMedia
         'is_active',
         'subcategory_id',
         'user_id',
+        'shop_id'
     ];
 
     // public function registerMediaCollections(): void
@@ -52,9 +54,9 @@ class Ads extends Model implements HasMedia
         return $this->hasMany(Fav::class,'ad_id');
     }
 
-    // public function shop(){
-    //     return $this->belongsTo(Shop::class, 'shop_id');
-    // }
+    public function shop(){
+        return $this->belongsTo(Shop::class,'shop_id');
+    }
 
     public function rates(){
         return $this->hasMany(Rateads::class,'ad_id');

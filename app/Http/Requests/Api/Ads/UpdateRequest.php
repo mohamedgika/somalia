@@ -32,6 +32,7 @@ class UpdateRequest extends FormRequest
                         'lang'=>'nullable|string',
                         'late'=>'nullable|string',
                         'subcategory_id'=>'nullable|exists:subcategories,id',
+                        'shop_id'=>'nullable',
 
                         //AdDetail
                         'ad_detail'=>'nullable|json',

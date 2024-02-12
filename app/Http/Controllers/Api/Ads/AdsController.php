@@ -20,7 +20,7 @@ class AdsController extends Controller
     public function index()
     {
         $ads = Ads::where('is_active', 0)->get();
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user','shop')));
     }
 
     /**
@@ -67,7 +67,7 @@ class AdsController extends Controller
 
 
         $ads->load('adDetail');
-        return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory')), 'تم اضافة الاعلان بنجاح');
+        return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory','shop')), 'تم اضافة الاعلان بنجاح');
     }
 
 
@@ -82,7 +82,7 @@ class AdsController extends Controller
         $ad->increment('view');
 
 
-        return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
+        return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user','shop')));
     }
 
     /**
@@ -124,7 +124,7 @@ class AdsController extends Controller
                 ]);
             }
 
-            return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user')));
+            return responseSuccessData(AdsResource::make($ad->load('adDetail', 'subCategory', 'user','shop')));
         } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
@@ -154,14 +154,14 @@ class AdsController extends Controller
             })
             ->get();
 
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user','shop')));
     }
 
     public function ads_by_price($min, $max)
     {
         $ads = Ads::whereBetween('price', [$min, $max])
             ->get();
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user','shop')));
     }
 
     public function filterAds(Request $request)
@@ -193,7 +193,7 @@ class AdsController extends Controller
         $ads = $query->get();
 
         return responseSuccessData(AdsResource::collection(
-            $ads->load('adDetail', 'subCategory', 'user')
+            $ads->load('adDetail', 'subCategory', 'user','shop')
         ));
     }
 
@@ -201,7 +201,7 @@ class AdsController extends Controller
     {
         $ads = Ads::latest('created_at')->get();
         return responseSuccessData(AdsResource::collection(
-            $ads->load('adDetail', 'subCategory', 'user')
+            $ads->load('adDetail', 'subCategory', 'user','shop')
         ));
     }
 }

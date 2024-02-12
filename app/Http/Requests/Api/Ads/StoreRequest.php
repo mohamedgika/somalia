@@ -39,6 +39,7 @@ class StoreRequest extends FormRequest
             'late'=>'nullable|string',
             'subcategory_id'=>'required|exists:subcategories,id',
             'user_id'=>'nullable|exists:users,id',
+            'shop_id'=>'nullable',
 
             //AdDetail
             'ad_detail'=>'nullable|json',

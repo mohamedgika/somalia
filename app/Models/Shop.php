@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ads;
 use App\Models\User;
 use App\Models\ShopAds;
 use App\Models\Category;
@@ -22,16 +23,10 @@ class Shop extends Model implements HasMedia
         'is_active',
         'description',
         'user_id',
-        'category_id'
     ];
 
-
-    public function categories(){
-        return $this->belongsTo(Category::class,'category_id');
-    }
-
-    public function shopAds(){
-        return $this->hasMany(ShopAds::class);
+    public function ads(){
+        return $this->hasMany(Ads::class);
     }
 
     public function user(){

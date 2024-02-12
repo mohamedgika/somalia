@@ -16,8 +16,8 @@ class RateadsController extends Controller
 
         // Check if the user has already favorited the ad
         $existingRate = Rateads::where('user_id', $user->id)
-            ->where(function ($query) use ($adId,$shopAdId) {
-                $query->where('ad_id', $adId)->orWhere('shopad_id', $shopAdId);
+            ->where(function ($query) use ($adId) {
+                $query->where('ad_id', $adId);
             })
             ->first();
 
@@ -31,7 +31,6 @@ class RateadsController extends Controller
                 'rate' => $request->rate,
                 'user_id' => $user->id,
                 'ad_id' => $adId,
-                'shopad_id'=>$shopAdId
             ]);
             return responseSuccessMessage('Rated');
         }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('view')->nullable();
             $table->boolean('is_active')->default(false);
             $table->foreignId('subcategory_id')->constrained('subcategories')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('shop_id')->nullable()->constrained('shops')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
