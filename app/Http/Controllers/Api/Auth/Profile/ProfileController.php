@@ -42,7 +42,7 @@ class ProfileController extends Controller
     public function getMyShop()
     {
         $shop = Shop::where('user_id', auth()->user()->id)->get();
-        return responseSuccessData(MyShopResource::collection($shop->load('categories', 'shopAds')));
+        return responseSuccessData(MyShopResource::collection($shop->load('ads')));
     }
 
     public function update_profile(Request $request)
