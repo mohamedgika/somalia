@@ -15,8 +15,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $shop = Shop::where('is_active',0)->get();
-        return responseSuccessData(ShopResource::collection($shop->load('user','ads')));
+        $shop = Shop::where('is_active', 0)->get();
+        return responseSuccessData(ShopResource::collection($shop->load('user')));
 
     }
 
@@ -37,7 +37,7 @@ class ShopController extends Controller
         if ($request->hasFile('image'))
                 $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
 
-        return responseSuccessData(ShopResource::make($shop->load('user','ads')),'تم اضافة المتجر بنجاح');
+        return responseSuccessData(ShopResource::make($shop->load('user')),'تم اضافة المتجر بنجاح');
     }
 
     /**
@@ -48,7 +48,7 @@ class ShopController extends Controller
         if(! $shop)
             return responseErrorMessage('المتجر غير موجود');
 
-        return responseSuccessData(ShopResource::make($shop->load('user','ads')),'تم اضافة المتجر بنجاح');
+        return responseSuccessData(ShopResource::make($shop->load('user')),'تم اضافة المتجر بنجاح');
     }
 
     /**
@@ -77,7 +77,7 @@ class ShopController extends Controller
                 $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
             }
 
-            return responseSuccessData(ShopResource::make($shop->load('user','ads')),'تم تحديث المتجر بنجاح');
+            return responseSuccessData(ShopResource::make($shop->load('user')),'تم تحديث المتجر بنجاح');
         }else{
             return responseErrorMessage("You don't have permission to perform this action");
         }

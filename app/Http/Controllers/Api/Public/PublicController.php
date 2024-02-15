@@ -29,7 +29,7 @@ class PublicController extends Controller
     public function public_shops()
     {
         $shop = Shop::get();
-        return responseSuccessData(PublicShopResource::collection($shop->load('categories', 'shopAds', 'user')));
+        return responseSuccessData(PublicShopResource::collection($shop->load('user')));
     }
 
     public function show(Ads $ad)
@@ -45,7 +45,7 @@ class PublicController extends Controller
         if (!$shop)
             return responseErrorMessage('المتجر غير موجود');
 
-        return responseSuccessData(PublicShopResource::make($shop->load('categories', 'shopAds', 'user')));
+        return responseSuccessData(PublicShopResource::make($shop->load('user')));
     }
 
     public function public_ads_by_category($category)

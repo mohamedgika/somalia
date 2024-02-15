@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api\PublicShop;
 
+use App\Http\Resources\Api\Ads\AdsResource;
 use App\Models\Fav;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,8 +31,7 @@ class PublicShopResource extends JsonResource
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'shopAd'        => ShopAdsResource::collection($this->whenLoaded('shopAds')->load('shopAdsDetail')),
-            'category'      => CategoryResource::make($this->whenLoaded('categories')),
+            'shopAd'        => AdsResource::collection($this->whenLoaded('ads')),
             'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
     }
