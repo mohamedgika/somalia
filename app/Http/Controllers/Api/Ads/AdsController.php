@@ -67,7 +67,7 @@ class AdsController extends Controller
 
 
         $ads->load('adDetail');
-        return responseSuccessData(AdsResource::make($ads->load('user', 'subCategory','shop')), 'تم اضافة الاعلان بنجاح');
+        return responseSuccessData(AdsResource::make($ads->load('subCategory', 'user','shop')), 'تم اضافة الاعلان بنجاح');
     }
 
 

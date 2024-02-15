@@ -30,8 +30,10 @@ class ShopResource extends JsonResource
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'shopAd' => AdsResource::collection($this->whenLoaded('ads')),
-            'user' => RegisterResource::make($this->whenLoaded('user')),
+            'shopAd' => $this->whenLoaded('ads', function () {
+                return AdsResource::collection($this->ads->load('subCategory'));
+            }),
+            'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
     }
 }

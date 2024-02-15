@@ -44,7 +44,7 @@ class AdsResource extends JsonResource
             'fav'           => $fav ?? false,
             'user_rate'     => $user_rate->rate ?? 0,
             'total_rate'    => $total_rate ?? 0,
-            'adDetail'      => AdDetailResource::make($this->whenLoaded('adDetail')),
+            'adDetail'      => AdDetailResource::make($this->adDetail),
             'subcategory'   => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
             'shop'          => ShopResource::make($this->whenLoaded('shop')),
             'user'          => RegisterResource::make($this->whenLoaded('user')),

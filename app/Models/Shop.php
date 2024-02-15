@@ -26,10 +26,10 @@ class Shop extends Model implements HasMedia
     ];
 
     public function ads(){
-        return $this->hasMany(Ads::class,'shop_id');
+        return $this->hasMany(Ads::class);
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 }

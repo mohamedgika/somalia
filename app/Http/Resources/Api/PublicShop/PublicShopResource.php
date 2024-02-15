@@ -24,14 +24,14 @@ class PublicShopResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'image'         => $this->getMedia('shop'),
-            'lang'      => $this->lang,
-            'late'      => $this->late,
+            'lang'          => $this->lang,
+            'late'          => $this->late,
             'phone'         => $this->phone,
             'description'   => $this->description,
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
-            'shopAd'        => AdsResource::collection($this->whenLoaded('ads')),
+            'shopAd'        => AdsResource::collection($this->whenLoaded('ads')->load('subCategory')), // Assuming 'ads' is the relationship method
             'user'          => RegisterResource::make($this->whenLoaded('user')),
         ];
     }
