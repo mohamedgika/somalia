@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
@@ -21,7 +22,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register','redirectToGoogle','handleGoogleCallback']]); // login, register methods won't go through the api guard
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'redirectToGoogle', 'handleGoogleCallback']]); // login, register methods won't go through the api guard
     }
 
     public function redirectToGoogle()
@@ -45,10 +46,9 @@ class AuthController extends Controller
             );
 
 
-        // Generate a token manually
-        $token = $userCreated->createToken('token-name')->plainTextToken;
-        return response()->json(['token' => $token]);
-
+            // Generate a token manually
+            $token = $userCreated->createToken('token-name')->plainTextToken;
+            return response()->json(['token' => $token]);
         } catch (ClientException $exception) {
             return response()->json(['error' => 'Invalid credentials provided.'], 422);
         }
@@ -58,12 +58,11 @@ class AuthController extends Controller
     {
         // Should check phone_verified = 1
 
-        if (! $token = auth()->guard('api')->attempt(['phone'=> $request->phone , 'password'=>$request->password]))
+        if (!$token = auth()->guard('api')->attempt(['phone' => $request->phone, 'password' => $request->password]))
             return response()->json(['error' => 'الرجاء التأكد من البيانات الصحيحة'], 401);
 
-        $token =  [ 'token' =>  $token , 'expire_at' => auth()->guard('api')->factory()->getTTL() * 100 ];
-        return responseSuccessData(LoginResource::make($token),'تم تسجيل الدخول بنجاح');
-
+        $token =  ['token' =>  $token, 'expire_at' => auth()->guard('api')->factory()->getTTL() * 100];
+        return responseSuccessData(LoginResource::make($token), 'تم تسجيل الدخول بنجاح');
     }
 
     public function register(RegisterRequest $request)
@@ -71,13 +70,22 @@ class AuthController extends Controller
         $code_phone = $request->code_phone;
         $phone = $request->phone;
 
+        // Check if a user with the provided phone number already exists
+        $existingUser = User::where('phone', '+' . $code_phone . $phone)->first();
+        if ($existingUser) {
+            return response()->json([
+                'status' => 208,
+                'message' => 'هذا الرقم مسجل بالفعل'
+            ], Response::HTTP_ALREADY_REPORTED);
+        }
+
         $user = User::create([
-            'name'     =>$request->get('name'),
-            'image'    =>$request->get('image'),
-            'phone'    =>'+'.$code_phone.$phone,
-            'country'  =>$request->get('country'),
-            'state'    =>$request->get('state'),
-            'city'     =>$request->get('city'),
+            'name'     => $request->get('name'),
+            'image'    => $request->get('image'),
+            'phone'    => '+' . $code_phone . $phone,
+            'country'  => $request->get('country'),
+            'state'    => $request->get('state'),
+            'city'     => $request->get('city'),
             'password' => Hash::make($request->get('password')),
         ] + $request->validated());
 
@@ -86,16 +94,16 @@ class AuthController extends Controller
 
         // $token = JWTAuth::fromUser($user);
 
-        return responseSuccessData(RegisterResource::make($user),'تم ارسال رمز التحقق');
+        return responseSuccessData(RegisterResource::make($user), 'تم ارسال رمز التحقق');
     }
 
     public function getaccount()
     {
-        if( ! auth()->user() )
+        if (!auth()->user())
             return response()->json(['error' => 'Unauthorized Access']);
-            $user = User::where('id',auth()->user()->id)->first();
+        $user = User::where('id', auth()->user()->id)->first();
 
-            return responseSuccessData(RegisterResource::make($user));
+        return responseSuccessData(RegisterResource::make($user));
     }
 
     public function logout()
@@ -103,5 +111,4 @@ class AuthController extends Controller
         auth()->logout();
         return response()->json(['message' => 'تم تسجيل الخروج']);
     }
-
 }
