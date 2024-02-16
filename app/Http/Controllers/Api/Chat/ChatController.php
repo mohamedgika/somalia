@@ -71,7 +71,6 @@ class ChatController extends Controller
 
             $message =  new MassageResource($message);
 
-            broadcast(new ChatMessageSent($message))->toOthers();
 
             // broadcast the message to all users
 
@@ -80,6 +79,7 @@ class ChatController extends Controller
             //         $participant->notify(new NewMessage($message));
             //     }
             // }
+            broadcast(new ChatMessageSent($message));
 
             return response()->json([
                 "message" => $message,
