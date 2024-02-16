@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Chat;
 
+use Carbon\Carbon;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Message;
@@ -11,10 +12,10 @@ use App\Events\ChatMessageSent;
 use App\Events\ChatMessageStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Chat\ChatResource;
+use App\Http\Resources\Api\Chat\ChatsResource;
 use App\Http\Resources\Api\Chat\MassageResource;
 use App\Http\Requests\Api\Chat\CreateChatRequest;
 use App\Http\Requests\Api\Chat\SendTextMessageRequest;
-use App\Http\Resources\Api\Chat\ChatsResource;
 
 class ChatController extends Controller
 {
@@ -57,6 +58,7 @@ class ChatController extends Controller
     public function sendTextMessage(SendTextMessageRequest $request)
     {
         $chat = Chat::find($request->chat_id);
+        // $currentTimestamp = Carbon::now()->toIso8601String(); // Generate current timestamp in ISO 8601 format
         if ($chat->isUser($request->user()->id)) {
             $message = ChatMessage::create([
                 'message' => $request->message,
@@ -64,11 +66,14 @@ class ChatController extends Controller
                 'user_id' => $request->user()->id,
                 'data' => json_encode(['seenBy' => [], 'status' => 'sent']) //sent, delivered,seen
             ]);
+
             $success = true;
+
             $message =  new MassageResource($message);
 
-            // broadcast the message to all users
             broadcast(new ChatMessageSent($message));
+
+            // broadcast the message to all users
 
             // foreach ($chat->users as $participant) {
             //     if ($participant->id != $request->user()->id) {
@@ -87,34 +92,34 @@ class ChatController extends Controller
         }
     }
 
-    public function messageStatus(Request $request,ChatMessage $message){
-        if($message->chat->isUser($request->user()->id)){
-            $messageData = json_decode($message->data);
-            array_push($messageData->seenBy,$request->user()->id);
-            $messageData->seenBy = array_unique($messageData->seenBy);
-            if(count($message->chat->users)-1 < count( $messageData->seenBy)){
-                $messageData->status = 'delivered';
-            }else{
-                $messageData->status = 'seen';
-            }
-            $message->data = json_encode($messageData);
-            $message->save();
-            $message =  new MassageResource($message);
+    // public function messageStatus(Request $request,ChatMessage $message){
+    //     if($message->chat->isUser($request->user()->id)){
+    //         $messageData = json_decode($message->data);
+    //         array_push($messageData->seenBy,$request->user()->id);
+    //         $messageData->seenBy = array_unique($messageData->seenBy);
+    //         if(count($message->chat->users)-1 < count( $messageData->seenBy)){
+    //             $messageData->status = 'delivered';
+    //         }else{
+    //             $messageData->status = 'seen';
+    //         }
+    //         $message->data = json_encode($messageData);
+    //         $message->save();
+    //         $message =  new MassageResource($message);
 
-            //triggering the event
-            broadcast(new ChatMessageStatus($message));
+    //         //triggering the event
+    //         broadcast(new ChatMessageStatus($message));
 
-            return response()->json([
-                'message' =>  $message,
-                'success' => true
-            ], 200);
-        }else{
-            return response()->json([
-                'message' => 'Not found',
-                'success' => false
-            ], 404);
-        }
-    }
+    //         return response()->json([
+    //             'message' =>  $message,
+    //             'success' => true
+    //         ], 200);
+    //     }else{
+    //         return response()->json([
+    //             'message' => 'Not found',
+    //             'success' => false
+    //         ], 404);
+    //     }
+    // }
 
     public function getChatById(Chat $chat, Request $request)
     {
