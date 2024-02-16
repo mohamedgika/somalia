@@ -161,7 +161,7 @@ Route::middleware(['auth:api'])->controller(ChatController::class)->group(functi
 
 //Paypal
 Route::middleware(['auth:api'])->controller(PaymentController::class)->group(function () {
-    Route::get('/payment', 'payment')->route('payment.create');
+    Route::get('/payment', 'payment')->name('payment.create');
     Route::get('/payment/cancel', 'cancel')->name('payment.cancel');
     Route::get('/payment/success', 'success')->name('payment.success');
 });
