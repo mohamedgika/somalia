@@ -71,7 +71,7 @@ class ChatController extends Controller
 
             $message =  new MassageResource($message);
 
-            broadcast(new ChatMessageSent($message));
+            broadcast(new ChatMessageSent($message))->toOthers();
 
             // broadcast the message to all users
 
