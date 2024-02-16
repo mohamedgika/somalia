@@ -10,77 +10,68 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
-
-
 class PaymentController extends Controller
 {
-    public $package;
-
-
-    public function payment($package_id)
+    public function payment(Request $request)
     {
-        $this->package = SubScription::where('id', $package_id)->first();
-
-
-        // $data = [];
-        // $data['items'] = [
-        //     [
-        //         'name' =>  $this->package->name,
-        //         'price' =>   $this->package->price,
-        //         'desc' =>  '',
-        //         'qty'  =>  $this->package->month
-        //     ]
-        // ];
-
-        // $data['invoice_id'] = random_int(1, 9999999999999);
-        // $data['invoice_description'] = "Order # {$data['invoice_id']} Invoice";
-        // $data['return_url'] = route('payment.success');
-        // $data['cancel_url'] = route('payment.cancel');
-        // $data['total'] = $this->package->price * $this->package->month;
-
-
         $provider = new PayPalClient;
-        
         $provider->setApiCredentials(config('paypal'));
-
-        $response = $provider->addProductById('PROD-XYAB12ABSB7868434')
-            ->addBillingPlanById('P-5ML4271244454362WXNWU5NQ')
-            ->addCustomPlan($this->package->name, $this->package->name, $this->package->price, 'MONTH', $this->package->month)
-            ->setReturnAndCancelUrl('http://localhost:8000//payment/success', 'https://localhost:8000/payment/cancel')
-            // ->setReturnAndCancelUrl('http://somaliasky.com/paypal-success', 'https://somaliasky.com/paypal-cancel')
-            ->setupSubscription('John Doe', 'john@example.com', '2024-9-2');
-
-
-        // $response = $provider->createOrder($data);
-
-        // dd($provider->getAccessToken());
-
-        return response()->json(['payment_link' => $response]);
+        $paypalToken = $provider->getAccessToken();
+        $response = $provider->createOrder([
+            "intent" => "CAPTURE",
+            "application_context" => [
+                "return_url" => route('payment.success'),
+                "cancel_url" => route('payment.cancel'),
+            ],
+            "purchase_units" => [
+                0 => [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => $request->price
+                    ]
+                ]
+            ]
+        ]);
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $links) {
+                if ($links['rel'] == 'approve') {
+                    return redirect()->away($links['href']);
+                }
+            }
+            return redirect()
+                ->route('payment.cancel')
+                ->with('error', 'Something went wrong.');
+        } else {
+            return redirect()
+                ->route('payment.create')
+                ->with('error', $response['message'] ?? 'Something went wrong.');
+        }
     }
 
     public function cancel()
     {
-        return response()->json(['message' => 'Payment Canceled']);
+        return response()->json(['message' =>  $response['message'] ?? 'You have canceled the transaction.']);
     }
-
 
     public function success(Request $request)
     {
-        dd("done");
         $provider = new PayPalClient;
-        $response = $provider->getExpressCheckoutDetails($request->token);
-
-        if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+        $response = $provider->capturePaymentOrder($request['token']);
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             $payment = Payment::create([
                 'type' => 'paypal',
                 'status' => 1,
                 'user_id' => auth()->user()->id,
-                'subscription_id' => $this->package->id,
-                'expire_at' => now()->addMonths($this->package->month)
+                'subscription_id' => $request->id,
+                'expire_at' => Carbon::now()->addMonths($request->month)
             ]);
             return response()->json(['message' => 'Paid Success']);
+        } else {
+            return redirect()
+                ->route('payment.create')
+                ->with('error', $response['message'] ?? 'Something went wrong.');
         }
-
-        return response()->json(['message' => 'Paid Fail']);
     }
 }
