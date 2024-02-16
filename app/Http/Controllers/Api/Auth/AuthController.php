@@ -9,12 +9,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Notifications\OtpNotificate;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Laravel\Socialite\Facades\Socialite;
 use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\Api\Auth\LoginResource;
 use App\Http\Resources\Api\Auth\RegisterResource;
 
@@ -34,6 +32,7 @@ class AuthController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
+            // dd($user);
             $userCreated = User::updateOrCreate(
                 [
                     'google_id' => $user->getId(),
@@ -47,8 +46,10 @@ class AuthController extends Controller
 
 
             // Generate a token manually
-            $token = $userCreated->createToken('token-name')->plainTextToken;
+            $token = JWTAuth::fromUser($userCreated);
+
             return response()->json(['token' => $token]);
+
         } catch (ClientException $exception) {
             return response()->json(['error' => 'Invalid credentials provided.'], 422);
         }
