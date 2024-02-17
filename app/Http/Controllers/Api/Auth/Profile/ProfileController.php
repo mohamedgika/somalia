@@ -36,7 +36,7 @@ class ProfileController extends Controller
     {
         $ads = Ads::where('user_id', auth()->user()->id)->get();
         $ads->load('adDetail');
-        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user')));
+        return responseSuccessData(AdsResource::collection($ads->load('adDetail', 'subCategory', 'user','shop')));
     }
 
     public function getMyShop()

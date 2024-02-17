@@ -28,6 +28,9 @@ class MyShopResource extends JsonResource
             'is_active'     => $this->is_active,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
+            'shopAd' => $this->whenLoaded('ads', function () {
+                return AdsResource::collection($this->ads->load('subCategory'));
+            }),
         ];
     }
 }
