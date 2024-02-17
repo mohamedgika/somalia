@@ -59,11 +59,17 @@ class AuthController extends Controller
     {
         // Should check phone_verified = 1
 
-        if (!$token = auth()->guard('api')->attempt(['phone' => $request->phone, 'password' => $request->password]))
+        if (!$token = auth()->guard('api')->attempt(['phone' => $request->phone, 'password' => $request->password])) {
             return response()->json(['error' => 'الرجاء التأكد من البيانات الصحيحة'], 401);
+        }
 
-        $token =  ['token' =>  $token, 'expire_at' => auth()->guard('api')->factory()->getTTL() * 100];
-        return responseSuccessData(LoginResource::make($token), 'تم تسجيل الدخول بنجاح');
+        // Check if the token is expired
+        if (auth()->guard('api')->factory()->getTTL() <= 0) {
+            return response()->json(['error' => 'انتهت صلاحية الجلسة'], 401);
+        }
+
+        $tokenData =  ['token' =>  $token, 'expire_at' => auth()->guard('api')->factory()->getTTL() * 300];
+        return responseSuccessData(LoginResource::make($tokenData), 'تم تسجيل الدخول بنجاح');
     }
 
     public function register(RegisterRequest $request)

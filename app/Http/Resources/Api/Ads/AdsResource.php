@@ -43,7 +43,7 @@ class AdsResource extends JsonResource
             'updated_at'    => $this->updated_at,
             'fav'           => $fav ?? false,
             'user_rate'     => $user_rate->rate ?? 0,
-            'total_rate'    => $total_rate ?? 0,
+            'total_rate'    => (int)$total_rate ?? 0,
             'adDetail'      => AdDetailResource::make($this->adDetail),
             'subcategory'   => SubCategoryResource::make($this->whenLoaded('subCategory')->load('category')),
             'shop'          => ShopResource::make($this->whenLoaded('shop')),
