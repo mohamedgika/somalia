@@ -32,7 +32,6 @@ class AuthController extends Controller
     {
         try {
             $user = Socialite::driver('google')->user();
-            // dd($user);
             $userCreated = User::updateOrCreate(
                 [
                     'google_id' => $user->getId(),
@@ -43,6 +42,11 @@ class AuthController extends Controller
                     'name' => $user->getName(),
                 ]
             );
+
+            $image = $user->getAvatar();
+
+            $userCreated->clearMediaCollection('profileauth', 'profileauth');
+            $userCreated->addMediaFromUrl($image)->toMediaCollection('profileauth', 'profileauth');
 
 
             // Generate a token manually
