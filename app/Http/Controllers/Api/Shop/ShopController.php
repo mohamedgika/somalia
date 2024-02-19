@@ -16,8 +16,7 @@ class ShopController extends Controller
     public function index()
     {
         $shop = Shop::where('is_active', 0)->get();
-        return responseSuccessData(ShopResource::collection($shop->load('user','ads')));
-
+        return responseSuccessData(ShopResource::collection($shop->load('user', 'ads')));
     }
 
     public function create()
@@ -30,14 +29,24 @@ class ShopController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $userId = auth()->user()->id;
+
+        // Check if a shop already exists for the user
+        $existingShop = Shop::where('user_id', $userId)->first();
+        if ($existingShop) {
+            return responseErrorMessage('Shop already exists for this user.', 422); // Return an error response
+        }
+
+        // If no existing shop found, create a new one
         $shop = Shop::create([
-            'user_id'=>auth()->user()->id
-            ]+$request->validated());
+            'user_id' => $userId
+        ] + $request->validated());
 
-        if ($request->hasFile('image'))
-                $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
+        if ($request->hasFile('image')) {
+            $shop->addMediaFromRequest('image')->toMediaCollection('shop', 'shop');
+        }
 
-        return responseSuccessData(ShopResource::make($shop->load('user','ads')),'تم اضافة المتجر بنجاح');
+        return responseSuccessData(ShopResource::make($shop->load('user', 'ads')), 'تم اضافة المتجر بنجاح');
     }
 
     /**
@@ -45,10 +54,10 @@ class ShopController extends Controller
      */
     public function show(Shop $shop)
     {
-        if(! $shop)
+        if (!$shop)
             return responseErrorMessage('المتجر غير موجود');
 
-        return responseSuccessData(ShopResource::make($shop->load('user')),'تم اضافة المتجر بنجاح');
+        return responseSuccessData(ShopResource::make($shop->load('user')), 'تم اضافة المتجر بنجاح');
     }
 
     /**
@@ -64,21 +73,21 @@ class ShopController extends Controller
      */
     public function update(UpdateRequest $request, Shop $shop)
     {
-        if ($shop->where('user_id',auth()->user()->id)){
+        if ($shop->where('user_id', auth()->user()->id)) {
 
-            if(! $shop)
+            if (!$shop)
                 return responseErrorMessage('المتجر غير موجود');
 
             $shop->update($request->validated());
 
-            if($request->hasFile('image')){
-                $shop->clearMediaCollection('shop','shop');
+            if ($request->hasFile('image')) {
+                $shop->clearMediaCollection('shop', 'shop');
                 // Add the new images to the media library
-                $shop->addMediaFromRequest('image')->toMediaCollection('shop','shop');
+                $shop->addMediaFromRequest('image')->toMediaCollection('shop', 'shop');
             }
 
-            return responseSuccessData(ShopResource::make($shop->load('user','ads')),'تم تحديث المتجر بنجاح');
-        }else{
+            return responseSuccessData(ShopResource::make($shop->load('user', 'ads')), 'تم تحديث المتجر بنجاح');
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
     }
@@ -88,14 +97,14 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-        if ($shop->where('user_id',auth()->user()->id)){
-            if(! $shop)
+        if ($shop->where('user_id', auth()->user()->id)) {
+            if (!$shop)
                 return responseErrorMessage('المتجر غير موجود');
 
-            $shop->clearMediaCollection('shop','shop');
+            $shop->clearMediaCollection('shop', 'shop');
             $shop->delete();
             return responseSuccessMessage('تم حذف المتجر بنجاح');
-        }else{
+        } else {
             return responseErrorMessage("You don't have permission to perform this action");
         }
     }

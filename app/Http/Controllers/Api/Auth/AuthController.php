@@ -43,10 +43,10 @@ class AuthController extends Controller
                 ]
             );
 
-            $image = $user->getAvatar();
+            // $image = $user->getAvatar();
 
-            $userCreated->clearMediaCollection('profileauth', 'profileauth');
-            $userCreated->addMediaFromUrl($image)->toMediaCollection('profileauth', 'profileauth');
+            // $userCreated->clearMediaCollection('profileauth', 'profileauth');
+            // $userCreated->addMediaFromUrl($image)->toMediaCollection('profileauth', 'profileauth');
 
 
             // Generate a token manually
