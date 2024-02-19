@@ -17,8 +17,7 @@ class SubScriptionResource extends JsonResource
         return [
             'name'=>$this->name,
             'desc'=>$this->desc,
-            'price'=>$this->price,
-            'month'=>$this->month
+            'package_details'=>$this->package_details,
         ];
     }
 }
