@@ -31,12 +31,6 @@ class ShopController extends Controller
     {
         $userId = auth()->user()->id;
 
-        // Check if a shop already exists for the user
-        $existingShop = Shop::where('user_id', $userId)->first();
-        if ($existingShop) {
-            return responseErrorMessage('Shop already exists for this user.', 422); // Return an error response
-        }
-
         // If no existing shop found, create a new one
         $shop = Shop::create([
             'user_id' => $userId
