@@ -66,6 +66,14 @@ class ProfileController extends Controller
             $updateData['phone'] = $request->input('code_phone') . $request->input('phone');
         }
 
+        if ($request->filled('country')) {
+            $updateData['country'] = $request->input('country');
+        }
+
+        if ($request->filled('state')) {
+            $updateData['state'] = $request->input('state');
+        }
+
         // Update the user with the prepared data
         $user->update($updateData);
 
