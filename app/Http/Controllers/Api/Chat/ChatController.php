@@ -79,7 +79,7 @@ class ChatController extends Controller
             //         $participant->notify(new NewMessage($message));
             //     }
             // }
-            broadcast(new ChatMessageSent($message));
+            broadcast(new ChatMessageSent($message))->toOthers();
 
             return response()->json([
                 "message" => $message,
