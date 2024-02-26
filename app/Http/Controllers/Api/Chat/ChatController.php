@@ -125,7 +125,7 @@ class ChatController extends Controller
     {
         if ($chat->isUser($request->user()->id)) {
             return response()->json([
-                'chat' => new ChatResource($chat),
+                'chat' => ChatResource::make($chat),
             ], 200);
         } else {
             return response()->json([
