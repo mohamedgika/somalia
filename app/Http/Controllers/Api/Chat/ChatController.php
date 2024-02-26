@@ -66,12 +66,10 @@ class ChatController extends Controller
                 'user_id' => $request->user()->id,
                 'data' => json_encode(['seenBy' => [], 'status' => 'sent']) //sent, delivered,seen
             ]);
+            $message =  new MassageResource($message);
+            broadcast(new ChatMessageSent($message))->toOthers();
 
             $success = true;
-
-            $message =  new MassageResource($message);
-
-
             // broadcast the message to all users
 
             // foreach ($chat->users as $participant) {
@@ -79,7 +77,6 @@ class ChatController extends Controller
             //         $participant->notify(new NewMessage($message));
             //     }
             // }
-            broadcast(new ChatMessageSent($message))->toOthers();
 
             return response()->json([
                 "message" => $message,
