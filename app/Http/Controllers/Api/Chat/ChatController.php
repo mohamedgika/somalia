@@ -47,7 +47,7 @@ class ChatController extends Controller
     public function getChats()
     {
         // $user = $request->user();
-        $chats = Chat::with('users')->get();
+        $chats = Chat::where('users.id', auth()->user()->id)->get();
         $success = true;
         return response()->json([
             'chats' => ChatsResource::collection($chats),
