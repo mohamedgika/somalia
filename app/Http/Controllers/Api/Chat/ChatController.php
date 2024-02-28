@@ -27,6 +27,8 @@ class ChatController extends Controller
         // check if they had a chat before
         $chat = $request->user()->chats()->whereHas('users', function ($q) use ($users) {
             $q->whereIn('user_id', $users);
+            $q->select('chat_id');
+            $q->groupBy('chat_id');
             $q->havingRaw('count(distinct user_id) = ?', [count($users)]);
         })->first();
 
