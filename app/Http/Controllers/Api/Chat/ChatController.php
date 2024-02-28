@@ -25,8 +25,9 @@ class ChatController extends Controller
         $users = array_unique(array_merge($request->users, [$request->user()->id]));
 
         // check if they had a chat before
-        $chat =  $request->user()->chats()->whereHas('users', function ($q) use ($users) {
+        $chat = $request->user()->chats()->whereHas('users', function ($q) use ($users) {
             $q->whereIn('user_id', $users);
+            $q->havingRaw('count(distinct user_id) = ?', [count($users)]);
         })->first();
 
         // if not, create a new one
