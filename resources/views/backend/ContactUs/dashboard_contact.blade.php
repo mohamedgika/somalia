@@ -13,7 +13,6 @@
         data-target="#CreateContact">
         Add ContactUs
     </button>
-    @include('backend.ContactUs.dashboard_add_contact')
 @endsection
 
 @section('next')
@@ -24,6 +23,7 @@
 @section('content')
     <!--For Add Setting Successfully-->
     <!-- Main content -->
+    @include('backend.ContactUs.dashboard_add_contact')
     @if (session()->has('ActiveAds'))
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

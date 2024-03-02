@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Models\Ads;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Notification;
 
 use function Ramsey\Uuid\v1;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdsController extends Controller
 {
     public function index()
     {
-        $ads = Ads::get();
+        $ads = Ads::where('is_active',1)->get();
 
         // foreach ($ads as $ad) {
         //     $data = json_decode($ad->adDetail->ad_detail);
@@ -41,8 +43,7 @@ class AdsController extends Controller
     }
 
     public function create(){
-        $not_active_ads = Ads::where('is_active',0)->get();
-        return view('backend.Ads.dashboard_not_active_ads',['not_active_ads'=>$not_active_ads]);
+
     }
 
     public function show(Request $request,Ads $ad){
@@ -51,6 +52,23 @@ class AdsController extends Controller
             $ad->update([
                 'is_active'=>$request->active,
             ]);
+
+            $notify = $ad->where('is_active',1)->first();
+            if ($notify){
+                Notification::create([
+                    'user_id' => $ad->user_id,
+                    'type'=>'ads',
+                    'message'=>'your ad '.$ad->name.' accepted',
+                    'ad_id'=>$ad->id
+                ]);
+            }else{
+                Notification::create([
+                    'user_id' => $ad->user_id,
+                    'type'=>'ads',
+                    'message'=>'your ad '.$ad->name.' rejected',
+                    'ad_id'=>$ad->id
+                ]);
+            }
 
             session()->flash('ActiveAds', 'Ad Active Successfully');
             return redirect()->route('ads.index');

@@ -4,21 +4,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Ads\AdsController;
 use App\Http\Controllers\Api\Fav\FavController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\Chat\ChatController;
 use App\Http\Controllers\Api\Shop\ShopController;
 use App\Http\Controllers\Api\input\InputController;
 use App\Http\Controllers\Api\Public\PublicController;
+use App\Http\Controllers\Api\Slider\SliderController;
 use App\Http\Controllers\Api\Payment\PaymentController;
+use App\Http\Controllers\Api\RateAds\RateadsController;
 use App\Http\Controllers\Api\ShopAds\ShopAdsController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Auth\RegisterDetailController;
 use App\Http\Controllers\Api\ContactUs\ContactUsController;
 use App\Http\Controllers\Api\Auth\Profile\ProfileController;
-use App\Http\Controllers\Api\Blog\BlogController;
 use App\Http\Controllers\Api\Package\SubScriptionController;
-use App\Http\Controllers\Api\RateAds\RateadsController;
-use App\Http\Controllers\Api\Slider\SliderController;
 use App\Http\Controllers\Api\SubCategory\SubCategoryController;
+use App\Http\Controllers\Api\Notification\NotificationController;
 
 Route::middleware(['api'])->group(function () {
 
@@ -37,10 +38,11 @@ Route::middleware(['api'])->group(function () {
     Route::get('/cities/{state_id}', [RegisterDetailController::class, 'getCities']);
 
     // Package
-    Route::get('/packages', [SubScriptionController::class,'index']);
+    Route::get('/packages', [SubScriptionController::class, 'index']);
 
     //Contact Us
-    Route::get('/contactus', [ContactUsController::class,'index']);
+    Route::get('/contactus', [ContactUsController::class, 'index']);
+
 
     //Main Page
     Route::get('/public/ads', [PublicController::class, 'public_ads']);
@@ -56,14 +58,16 @@ Route::middleware(['api'])->group(function () {
     Route::get('/public/ads/sort/filteration', [PublicController::class, 'filterAds']);
     Route::get('/public/ads/filter/date', [PublicController::class, 'filterAdsByDate']);
     Route::get('/public/category', [PublicController::class, 'public_category']);
-    Route::get('/public/slider',[PublicController::class,'slider']);
-    Route::get('/public/blog',[PublicController::class,'blog']);
+    Route::get('/public/slider', [PublicController::class, 'slider']);
+    Route::get('/public/blog', [PublicController::class, 'blog']);
 });
 
 
 // //Profile
 Route::middleware(['auth:api'])->controller(ProfileController::class)->group(function () {
     Route::get('/account', 'getAccount');
+    //Notification
+    Route::get('/notifications', [NotificationController::class, 'notify']);
     Route::get('/myads', 'getMyAds');
     Route::get('/mysubscription', 'getMySubscription');
     Route::get('/myshop', 'getMyShop');
@@ -72,7 +76,7 @@ Route::middleware(['auth:api'])->controller(ProfileController::class)->group(fun
     Route::get('/view_ad/{ad}', 'get_view_one_ad');
     Route::get('/views_ads', 'get_view_ads');
     Route::put('/updateprofile', 'update_profile');
-    Route::put('/updateprofilepassword','update_profile_password');
+    Route::put('/updateprofilepassword', 'update_profile_password');
 });
 
 
@@ -112,7 +116,6 @@ Route::middleware(['auth:api'])->controller(AdsController::class)->group(functio
     Route::put('/ads/{ad}', 'update');
     Route::delete('/ads/{ad}', 'destroy');
     Route::get('/ads/category/{category}', 'ads_by_category');
-
 });
 
 //Fav
@@ -170,11 +173,11 @@ Route::middleware(['auth:api'])->controller(PaymentController::class)->group(fun
 
 //Slider Store Test
 Route::middleware(['auth:api'])->controller(SliderController::class)->group(function () {
-    Route::post('/slider','store');
+    Route::post('/slider', 'store');
 });
 
 
 //Blog Store Test
 Route::middleware(['auth:api'])->controller(BlogController::class)->group(function () {
-    Route::post('/blog','store');
+    Route::post('/blog', 'store');
 });

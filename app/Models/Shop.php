@@ -6,6 +6,7 @@ use App\Models\Ads;
 use App\Models\User;
 use App\Models\ShopAds;
 use App\Models\Category;
+use App\Models\Notification;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -31,5 +32,9 @@ class Shop extends Model implements HasMedia
 
     public function user(){
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function notifications(){
+        return $this->hasMany(Notification::class,'shop_id');
     }
 }

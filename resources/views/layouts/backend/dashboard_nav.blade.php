@@ -16,7 +16,7 @@
       <ul class="navbar-nav ml-auto">
 
           <!-- Notifications ShopAds -->
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="#">
                 <ion-icon name="bag-sharp"></ion-icon>
                 <span class="badge badge-success navbar-badge">{{ $shopadsNotActive }}</span>
@@ -32,7 +32,7 @@
                   @endforeach
                   <a href="{{ route('shopads.create') }}" class="dropdown-item dropdown-footer">See All ShopAds</a>
               </div>
-          </li>
+          </li> --}}
 
           <!-- Notifications Shops -->
           <li class="nav-item dropdown">
@@ -43,20 +43,21 @@
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                   <span class="dropdown-item dropdown-header">{{ $shopNotActive }} Shop Not Active</span>
                   <div class="dropdown-divider"></div>
-                  @foreach ($shops as $s)
-                      <a href="{{ route('shop.create') }}" class="dropdown-item">
+                  @foreach ($shops_not as $s)
+                      <a href="{{ route('shopnotactive.show', $s->id) }}" class="dropdown-item">
                           @foreach ($s->getMedia('shop') as $media)
                               <img src="{{ $media->getUrl() }}" width="75px"> {{ $s->name }}
                               <span class="float-right text-muted text-sm">{{ $s->created_at->format('Y M d') }}</span>
                           @endforeach
                       </a>
                   @endforeach
-                  <a href="{{ route('shop.create') }}" class="dropdown-item dropdown-footer">See All Shops</a>
+                  <a href="{{ route('shopnotactive.index') }}" class="dropdown-item dropdown-footer">See All Shops Not
+                      Active</a>
               </div>
           </li>
 
           <!-- Notifications Ads -->
-          <li class="nav-item dropdown" style="margin-right: 10px;"">
+          <li class="nav-item dropdown" style="margin-right: 10px;">
               <a class="nav-link" data-toggle="dropdown" href="#">
                   <ion-icon name="megaphone-sharp"></ion-icon>
                   <span class="badge badge-warning navbar-badge">{{ $adsNotActive }}</span>
@@ -65,13 +66,13 @@
                   <span class="dropdown-item dropdown-header">{{ $adsNotActive }} Ads Not Active</span>
                   <div class="dropdown-divider"></div>
                   @foreach ($adses as $ad)
-                      <a href="{{ route('ads.create') }}" class="dropdown-item">
+                      <a href="{{ route('adsnotactive.show', $ad->id) }}" class="dropdown-item">
                           <img src="{{ $ad->getFirstMediaUrl('ads') }}" width="75px"> {{ $ad->name }}
                           <span class="float-right text-muted text-sm">{{ $ad->created_at->format('Y M d') }}</span>
                       </a>
                   @endforeach
                   <div class="dropdown-divider"></div>
-                  <a href="{{ route('ads.create') }}" class="dropdown-item dropdown-footer">See All Ads</a>
+                  <a href="{{ route('adsnotactive.index') }}" class="dropdown-item dropdown-footer">See All Ads Not Active</a>
               </div>
           </li>
 

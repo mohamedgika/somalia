@@ -6,6 +6,7 @@ use App\Models\Shop;
 use App\Models\Rateads;
 use App\Models\AdDetail;
 use App\Models\SubCategory;
+use App\Models\Notification;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -60,5 +61,9 @@ class Ads extends Model implements HasMedia
 
     public function rates(){
         return $this->hasMany(Rateads::class,'ad_id');
+    }
+
+    public function notifications(){
+        return $this->hasMany(Notification::class,'ad_id');
     }
 }

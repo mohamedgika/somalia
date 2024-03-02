@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->enum('type',['shop','ads']);
+            $table->string('message');
+            $table->foreignId('ad_id')->nullable()->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('shop_id')->nullable()->constrained('shops')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Ads;
+use App\Charts\AdsChart;
 use App\Livewire\Post\ListPosts;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Category\ListCategories;
@@ -14,6 +16,8 @@ use App\Http\Controllers\Dashboard\ShopAdsController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ContactUsController;
 use App\Http\Controllers\Dashboard\SubCategoryController;
+use App\Http\Controllers\Dashboard\AdsNotActiveController;
+use App\Http\Controllers\Dashboard\ShopNotActiveController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -29,7 +33,14 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $today_ads = Ads::whereDate('created_at', today())->count();
+        $yesterday_ads = Ads::whereDate('created_at', today()->subDays(1))->count();
+        $ads_2_days_ago = Ads::whereDate('created_at', today()->subDays(2))->count();
+
+        $chart = new AdsChart;
+        $chart->labels(['2 days ago', 'Yesterday', 'Today']);
+        $chart->dataset('Ads', 'line', [$ads_2_days_ago, $yesterday_ads, $today_ads]);
+        return view('dashboard', ['chart' => $chart]);
     })->name('dashboard');
 
     Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
@@ -65,15 +76,26 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
         Route::delete('/dashboard/ads/{ad}', 'destroy')->name('ads.destroy');
     });
 
-    //Shop
+    //Ads Not Active
+    Route::middleware(['auth', 'verified', 'CheckUser'])->controller(AdsNotActiveController::class)->group(function () {
+        Route::get('/dashboard/adsnotactive', 'index')->name('adsnotactive.index');
+        Route::get('/dashboard/adsnotactive/{ad}', 'show')->name('adsnotactive.show');
+    });
+
+    //Shop Active
     Route::middleware(['auth', 'verified', 'CheckUser'])->controller(ShopController::class)->group(function () {
         Route::get('/dashboard/shop', 'index')->name('shop.index');
         Route::get('/dashboard/shop/{shop}', 'show')->name('shop.show');
         Route::get('/dashboard/notactive/shop', 'create')->name('shop.create');
-        // Route::post('/dashboard/shop/{shop}', 'update')->name('shop.update');
         Route::post('/dashboard/shop', 'store')->name('shop.store');
         Route::put('/dashboard/shop/{shop}', 'edit')->name('shop.edit');
         Route::delete('/dashboard/shop/{shop}', 'destroy')->name('shop.destroy');
+    });
+
+    //Shop Not Active
+    Route::middleware(['auth', 'verified', 'CheckUser'])->controller(ShopNotActiveController::class)->group(function () {
+        Route::get('/dashboard/shopnotactive', 'index')->name('shopnotactive.index');
+        Route::get('/dashboard/shopnotactive/{shop}', 'show')->name('shopnotactive.show');
     });
 
     //Contact

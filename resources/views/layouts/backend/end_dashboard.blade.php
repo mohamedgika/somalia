@@ -45,6 +45,5 @@
 <!-- Summernote -->
 <script src="{{URL::asset('backend/assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
-
 @yield('js')
 

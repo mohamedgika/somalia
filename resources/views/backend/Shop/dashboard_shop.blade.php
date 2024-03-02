@@ -35,7 +35,6 @@
                             <th>Name</th>
                             <th>User</th>
                             <th>Image</th>
-                            <th>Category</th>
                             <th>Phone</th>
                             <th>Discription</th>
                             <th>Status</th>
@@ -53,7 +52,6 @@
                                         <img src="{{ $media->getUrl() }}" width="75px"><br />
                                     @endforeach
                                 </td>
-                                <td>{{ $s->categories->name }}</td>
                                 <td>{{ $s->phone }}</td>
                                 <td>
                                     <textarea id="" cols="20" rows="2" disabled>{{ $s->description }}</textarea>
@@ -108,7 +106,6 @@
                             <th>Name</th>
                             <th>User</th>
                             <th>Image</th>
-                            <th>Category</th>
                             <th>Phone</th>
                             <th>Discription</th>
                             <th>Status</th>

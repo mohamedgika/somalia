@@ -43,14 +43,7 @@ class AppServiceProvider extends ServiceProvider
             view()->share('shopNotActive', $shop_not_active);
 
             $shops = Shop::where('is_active', 0)->get();
-            view()->share('shops', $shops);
-
-            //ShopAds Not Active
-            $shopads_not_active = ShopAds::where('is_active', 0)->count();
-            view()->share('shopadsNotActive', $shopads_not_active);
-
-            $shopadses = ShopAds::where('is_active', 0)->get();
-            view()->share('shopadses', $shopadses);
+            view()->share('shops_not', $shops);
 
             // Number of ads monthly
             $now = Carbon::now();

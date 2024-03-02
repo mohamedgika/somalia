@@ -69,15 +69,15 @@
                           </li>
                       </ul>
                       <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('subcategory.index') }}" class="nav-link">
-                                <ion-icon name="copy" class="nav-icon"></ion-icon>
-                                <p>
-                                    SubCategory
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
+                          <li class="nav-item">
+                              <a href="{{ route('subcategory.index') }}" class="nav-link">
+                                  <ion-icon name="copy" class="nav-icon"></ion-icon>
+                                  <p>
+                                      SubCategory
+                                  </p>
+                              </a>
+                          </li>
+                      </ul>
                   </li>
 
 
@@ -85,7 +85,16 @@
                       <a href="{{ route('ads.index') }}" class="nav-link">
                           <i class="nav-icon fas fa-edit"></i>
                           <p>
-                              Ads
+                              Ads Active
+                          </p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a href="{{ route('ads.index') }}" class="nav-link">
+                          <i class="nav-icon fas fa-edit"></i>
+                          <p>
+                              Ads Not Active
                           </p>
                       </a>
                   </li>
@@ -102,65 +111,65 @@
                           <li class="nav-item">
                               <a href="{{ route('shop.index') }}" class="nav-link">
                                   <ion-icon name="copy" class="nav-icon"></ion-icon>
-                                  <p>Shop</p>
+                                  <p>Shop Active</p>
                               </a>
                           </li>
                           <li class="nav-item">
-                              <a href="{{ route('shopAds.index') }}" class="nav-link">
+                              <a href="{{ route('shopnotactive.index') }}" class="nav-link">
                                   <ion-icon name="copy" class="nav-icon"></ion-icon>
-                                  <p>Shop Ads</p>
+                                  <p>Shop Not Active</p>
                               </a>
                           </li>
                       </ul>
                   </li>
 
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <ion-icon name="card" class="nav-icon"></ion-icon>
-                        <p>
-                            Package
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('package.index') }}" class="nav-link">
-                                <ion-icon name="card" class="nav-icon"></ion-icon>
-                                <p>Packages</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('shopAds.index') }}" class="nav-link">
-                                <ion-icon name="card" class="nav-icon"></ion-icon>
-                                <p>Subscription Clients</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                      <a href="#" class="nav-link">
+                          <ion-icon name="card" class="nav-icon"></ion-icon>
+                          <p>
+                              Package
+                              <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('package.index') }}" class="nav-link">
+                                  <ion-icon name="card" class="nav-icon"></ion-icon>
+                                  <p>Packages</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('shopAds.index') }}" class="nav-link">
+                                  <ion-icon name="card" class="nav-icon"></ion-icon>
+                                  <p>Subscription Clients</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
                   <li class="nav-item">
-                    <a href="{{ route('contact.index') }}" class="nav-link">
-                        <ion-icon name="call" class="nav-icon"></ion-icon>
-                        <p>
-                            Contact Us
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('slider.index') }}" class="nav-link">
-                        <ion-icon class="nav-icon" name="albums-sharp"></ion-icon>
-                        <p>
-                            Slider
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('blog.index') }}" class="nav-link">
-                        <ion-icon class="nav-icon" name="book-sharp"></ion-icon>
-                        <p>
-                            Blog
-                        </p>
-                    </a>
-                </li>
+                      <a href="{{ route('contact.index') }}" class="nav-link">
+                          <ion-icon name="call" class="nav-icon"></ion-icon>
+                          <p>
+                              Contact Us
+                          </p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('slider.index') }}" class="nav-link">
+                          <ion-icon class="nav-icon" name="albums-sharp"></ion-icon>
+                          <p>
+                              Slider
+                          </p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="{{ route('blog.index') }}" class="nav-link">
+                          <ion-icon class="nav-icon" name="book-sharp"></ion-icon>
+                          <p>
+                              Blog
+                          </p>
+                      </a>
+                  </li>
 
                   {{-- <li class="nav-item">
             <a href="#" class="nav-link">

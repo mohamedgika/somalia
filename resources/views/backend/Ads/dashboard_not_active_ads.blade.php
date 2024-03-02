@@ -1,7 +1,7 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Dashboard | Ads
+    Dashboard | Ads Not Active
 @endsection
 
 @section('css')
@@ -9,13 +9,13 @@
 @endsection
 
 @section('after_next')
-    Ads
+    Ads Not Active
     {{-- <a href="{{ route('post.create') }}"><input type="submit" class="ml-3 btn btn-success"
             value="{{ __('backend/dashboard_post.Add Posts') }}"></a> --}}
 @endsection
 
 @section('next')
-    Ads
+    Ads Not Active
 @endsection
 
 

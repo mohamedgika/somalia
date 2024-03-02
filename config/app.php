@@ -171,7 +171,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Laravel\Sanctum\SanctumServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        PayPalServiceProvider::class
+        PayPalServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
     ])->toArray(),
 

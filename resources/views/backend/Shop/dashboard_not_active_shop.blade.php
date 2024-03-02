@@ -1,26 +1,34 @@
 @extends('layouts.backend.index')
 
 @section('title')
-    Dashboard | Shop
+    Dashboard | Shop Not Active
 @endsection
 
 @section('css')
-@include('backend.Shop.dashboard_head_shop')
+    @include('backend.Shop.dashboard_head_shop')
 @endsection
 
 @section('after_next')
-    Shop
+    Shop Not Active
     @include('backend.Shop.dashboard_add_shop')
 @endsection
 
 @section('next')
-    Shop
+    Shop Not Active
 @endsection
 
 
 @section('content')
     <!-- Main content -->
     <section class="content">
+        <!--For Store User Successfully-->
+        @if (session()->has('ActiveShop'))
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>{{ session()->get('ActiveShop') }}</strong>
+            </div>
+        @endif
+
         @include('backend.Shop.dashboard_shop_massage')
         <!-- Default box -->
         <div class="card card-danger">
@@ -35,7 +43,6 @@
                             <th>Name</th>
                             <th>User</th>
                             <th>Image</th>
-                            <th>Category</th>
                             <th>Phone</th>
                             <th>Discription</th>
                             <th>Status</th>
@@ -53,7 +60,6 @@
                                         <img src="{{ $media->getUrl() }}" width="75px"><br />
                                     @endforeach
                                 </td>
-                                <td>{{ $s->categories->name }}</td>
                                 <td>{{ $s->phone }}</td>
                                 <td>
                                     <textarea id="" cols="20" rows="2" disabled>{{ $s->description }}</textarea>
@@ -65,7 +71,7 @@
                                 </td>
                                 <td>
                                     @if ($s->is_active == 1)
-                                        <form action="{{ route('shop.show', $s->id) }}">
+                                        <form action="{{ route('shop.show',$s->id) }}">
                                             @csrf
                                             <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
                                                 data-target="#EditCategory" disabled>
@@ -75,12 +81,11 @@
                                             <input type="hidden" name="active" value="0">
                                         </form>
                                     @elseif ($s->is_active == 0)
-                                        <form action="{{ route('shop.show', $s->id) }}">
+                                        <form action="{{ route('shop.show',$s->id) }}">
                                             @csrf
                                             <input type="submit" class="btn btn-info btn-sm" value="Active">
                                             <input type="hidden" name="active" value="1">
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#EditCategory" disabled>
+                                            <button type="button" class="btn btn-danger btn-sm" disabled>
                                                 Disactive
                                             </button>
                                         </form>
@@ -108,7 +113,6 @@
                             <th>Name</th>
                             <th>User</th>
                             <th>Image</th>
-                            <th>Category</th>
                             <th>Phone</th>
                             <th>Discription</th>
                             <th>Status</th>
