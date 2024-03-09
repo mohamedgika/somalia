@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Broadcast;
 
 
 Broadcast::channel('chat.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    $chat = Chat::find($id);
+    if($chat->isParticipant($user->id)){
+        return ['id' => $user->id, 'name' => $user->first_name];
+    }
 });
 
 
