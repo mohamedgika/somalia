@@ -69,7 +69,9 @@ class ChatController extends Controller
                 'user_id' => $request->user()->id,
                 'data' => json_encode(['seenBy' => [], 'status' => 'sent']) //sent, delivered,seen
             ]);
+
             $message =  new MassageResource($message);
+
             broadcast(new ChatMessageSent($message))->toOthers();
 
             $success = true;

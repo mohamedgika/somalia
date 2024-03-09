@@ -7,25 +7,21 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
-use App\Http\Resources\Api\Chat\MassageResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class ChatMessageSent implements ShouldBroadcastNow
+class PusherBroadcast  implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public string $message;
 
-    public $message;
-
-    public function __construct($message)
+    public function __construct(string $message)
     {
         $this->message = $message;
     }
-    public function broadcastWith()
-    {
-        return ['message' => $this->message];
-    }
+
     /**
      * Get the channels the event should broadcast on.
      *
@@ -34,12 +30,12 @@ class ChatMessageSent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('chat.' . $this->message->chat_id),
+            'public'
         ];
     }
 
-    public function broadcastAs()
+        public function broadcastAs(): string
     {
-        return 'message.posted';
+        return 'chat';
     }
 }

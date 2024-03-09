@@ -2,9 +2,7 @@
 
 use App\Models\Ads;
 use App\Charts\AdsChart;
-use App\Livewire\Post\ListPosts;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Category\ListCategories;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\AdsController;
 use App\Http\Controllers\Dashboard\BlogController;
@@ -19,6 +17,7 @@ use App\Http\Controllers\Dashboard\SubCategoryController;
 use App\Http\Controllers\Dashboard\AdsNotActiveController;
 use App\Http\Controllers\Dashboard\ShopNotActiveController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Dashboard\Chat\Chat\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,5 +143,13 @@ Route::middleware(['auth', 'CheckUser'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Route::get('/chat', function () {
+//     return view('chat');
+// });
+
+Route::get('/chat', [ChatController::class , 'index']);
+Route::post('/broadcast', [ChatController::class , 'broadcast']);
+Route::post('/receive', [ChatController::class , 'receive']);
 
 require __DIR__ . '/auth.php';

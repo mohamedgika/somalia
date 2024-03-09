@@ -30,3 +30,33 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+import Echo from 'laravel-echo'
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '8708e4c81a47b8e95072',
+    cluster: 'eu',
+    forceTLS: true
+});
+
+// var channel = Echo.channel('my-channel');
+// channel.listen('.my-event', function(data) {
+//   alert(JSON.stringify(data));
+// });
+
+// Echo.channel('chat')
+//     .listen('MessageSent', (e) => {
+//         console.log('Message received:', e.message);
+//         // Handle the received message
+//     });
+
+
+const chatId = 1; // Replace with your actual chat ID
+
+// Use the chat ID to subscribe to the channel dynamically
+Echo.channel(`chat.${chatId}`)
+    .listen('MessageSent', (e) => {
+        console.log('Message received:', e.message);
+        // Handle the received message
+    });
