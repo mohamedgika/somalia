@@ -41,6 +41,6 @@ class ChatMessageSent implements ShouldBroadcast
 
     public function broadcastAs()
     {
-        return 'message.posted';
+        return 'sendmessage';
     }
 }
