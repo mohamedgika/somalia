@@ -2,6 +2,7 @@
 
 use App\Models\Chat;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Broadcasting\PrivateChannel;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,9 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('chat.{id}', function ($user, $id) {
     $chat = Chat::find($id);
     // if($chat->isParticipant($user->id)){
-       $user = $chat->users;
-        return ['id' => $user->id, 'name' => $user->first_name];
+    //    $user = $chat->users;
+       return new PrivateChannel('chat.' . $id);
+        // return ['id' => $user->id, 'name' => $user->first_name];
     // }
 });
 
