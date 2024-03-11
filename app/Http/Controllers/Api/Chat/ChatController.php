@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Chat;
 
 use Carbon\Carbon;
+use Pusher\Pusher;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Message;
@@ -143,5 +144,26 @@ class ChatController extends Controller
         return response()->json([
             'users' => $users,
         ], 200);
+    }
+
+
+    public function authenticate(Request $request)
+    {
+        $socketId = $request->input('socket_id');
+        $channelName = $request->input('channel_name');
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => env('PUSHER_APP_CLUSTER'),
+                'useTLS' => true,
+            ]
+        );
+
+        $auth = $pusher->authorizeChannel($channelName, $socketId);
+
+        return response()->json($auth);
     }
 }

@@ -161,6 +161,7 @@ Route::middleware(['auth:api'])->controller(ChatController::class)->group(functi
     Route::post('/chat/send', 'sendTextMessage');
     Route::get('/chat/search/phone/{phone}', 'searchUsers');
     Route::post('/chat/messagestatus/{message}', 'messageStatus');
+    Route::post('/pusher/auth','authenticate');
 });
 
 //Paypal
