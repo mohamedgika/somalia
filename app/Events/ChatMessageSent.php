@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Broadcasting\ChatChannel;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -32,11 +33,14 @@ class ChatMessageSent implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('chat.'.$this->message->chat_id),
-        ];
+        // return [
+        //     // new PrivateChannel('chat.'.$this->message->chat_id),
+        //     new ChatChannel
+        // ];
+
+        return new ChatChannel('chat');
 
         // return ['public'];
     }
