@@ -34,8 +34,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 
 
 Broadcast::channel('chat.{id}', function ($user,$id) {
-    $chat = Chat::find($id);
-    if($chat->isParticipant($user->id)){
-        return ['id' => $user->id, 'name' => $user->first_name];
+    // $chat = Chat::find($id);
+    // if($chat->isParticipant($user->id)){
+    //     return ['id' => $user->id, 'name' => $user->first_name];
+    // }
+    if ($user) {
+        return true;
     }
 });
