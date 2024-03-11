@@ -34,9 +34,11 @@ class ChatMessageSent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [
-            new Channel('chat'.$this->message->chat_id),
-        ];
+        // return [
+        //     new Channel('chat'.$this->message->chat_id),
+        // ];
+
+        return ['public'];
     }
 
     public function broadcastAs()
