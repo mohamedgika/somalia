@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type',['shop','ads']);
             $table->string('message');
+            $table->boolean('status');
             $table->foreignId('ad_id')->nullable()->constrained('ads')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('shop_id')->nullable()->constrained('shops')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();

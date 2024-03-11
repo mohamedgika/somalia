@@ -58,6 +58,7 @@ class AdsController extends Controller
                 Notification::create([
                     'user_id' => $ad->user_id,
                     'type'=>'ads',
+                    'status'=> 1,
                     'message'=>'your ad '.$ad->name.' accepted',
                     'ad_id'=>$ad->id
                 ]);
@@ -65,6 +66,7 @@ class AdsController extends Controller
                 Notification::create([
                     'user_id' => $ad->user_id,
                     'type'=>'ads',
+                    'status'=> 0,
                     'message'=>'your ad '.$ad->name.' rejected',
                     'ad_id'=>$ad->id
                 ]);

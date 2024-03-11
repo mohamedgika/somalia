@@ -52,6 +52,7 @@ class ShopController extends Controller
                 Notification::create([
                     'user_id' => $shop->user_id,
                     'type'=>'shop',
+                    'status'=> 1,
                     'message'=>'your shop '.$shop->name.' accepted',
                     'shop_id'=>$shop->id
                 ]);
@@ -59,6 +60,7 @@ class ShopController extends Controller
                 Notification::create([
                     'user_id' => $shop->user_id,
                     'type'=>'shop',
+                    'status'=> 0,
                     'message'=>'your shop '.$shop->name.' rejected',
                     'shop_id'=>$shop->id
                 ]);

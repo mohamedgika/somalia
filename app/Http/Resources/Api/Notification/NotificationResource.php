@@ -20,6 +20,7 @@ class NotificationResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'message' => $this->message,
+            'status'=> $this->status,
             'shop' => $this->shop ? ShopResource::make($this->shop) : null,
             'ad' => $this->ad ? AdsResource::make($this->ad->load('subCategory')) : null,
             'created_at' => $this->created_at,
