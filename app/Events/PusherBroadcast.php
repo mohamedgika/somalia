@@ -29,9 +29,12 @@ class PusherBroadcast  implements ShouldBroadcastNow
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('chat'),
-        ];
+        // return [
+        //     new PrivateChannel('chat'),
+
+        // ];
+        return ['public'];
+
     }
 
         public function broadcastAs(): string
