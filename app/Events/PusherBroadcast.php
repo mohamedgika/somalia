@@ -30,7 +30,7 @@ class PusherBroadcast  implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat')
+            new PrivateChannel('chat'.$this->message),
         ];
     }
 
