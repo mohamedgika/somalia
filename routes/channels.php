@@ -30,12 +30,12 @@ use Illuminate\Broadcasting\PrivateChannel;
 // });
 
 
-Broadcast::channel('chat');
+Broadcast::channel('chat.{id}');
 
 
-// Broadcast::channel('chat', function ($user,$id) {
+// Broadcast::channel('chat.{id}', function ($user,$id) {
 
-//     // $chat = Chat::find($id);
+//     $chat = Chat::find($id);
 //     // if($chat->isParticipant($user->id)){
 //     //    $user = $chat->users;
 //     //    return new PrivateChannel('chat.' . $id);
