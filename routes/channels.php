@@ -20,13 +20,25 @@ use Illuminate\Broadcasting\PrivateChannel;
 // });
 
 
-Broadcast::channel('chat.{id}', function ($user, $id) {
-    $chat = Chat::find($id);
-    // if($chat->isParticipant($user->id)){
-    //    $user = $chat->users;
-       return new PrivateChannel('chat.' . $id);
-        // return ['id' => $user->id, 'name' => $user->first_name];
-    // }
-});
+// Broadcast::channel('chat.{id}', function ($id) {
+//     // $chat = Chat::find($id);
+//     // if($chat->isParticipant($user->id)){
+//     //    $user = $chat->users;
+//     //    return new PrivateChannel('chat.' . $id);
+//         // return ['id' => $user->id, 'name' => $user->first_name];
+//     // }
+// });
 
 
+Broadcast::channel('chat');
+
+
+// Broadcast::channel('chat', function ($user,$id) {
+
+//     // $chat = Chat::find($id);
+//     // if($chat->isParticipant($user->id)){
+//     //    $user = $chat->users;
+//     //    return new PrivateChannel('chat.' . $id);
+//         // return ['id' => $user->id, 'name' => $user->first_name];
+//     // }
+// });

@@ -74,6 +74,7 @@ class ChatController extends Controller
 
             broadcast(new ChatMessageSent($message))->toOthers();
 
+
             $success = true;
             // broadcast the message to all users
 

@@ -25,7 +25,7 @@ class ChatMessageSent implements ShouldBroadcast
     }
     public function broadcastWith()
     {
-        return ['message' => $this->message];
+        return ['message' => $this->message->message];
     }
     /**
      * Get the channels the event should broadcast on.
@@ -35,14 +35,14 @@ class ChatMessageSent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('chat.'.$this->message->chat_id),
+            new Channel('chat'),
         ];
 
         // return ['public'];
     }
 
-    public function broadcastAs()
-    {
-        return 'sendmessage';
-    }
+    // public function broadcastAs()
+    // {
+    //     return 'sendmessage';
+    // }
 }
