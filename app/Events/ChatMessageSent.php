@@ -10,8 +10,9 @@ use Illuminate\Foundation\Events\Dispatchable;
 use App\Http\Resources\Api\Chat\MassageResource;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ChatMessageSent implements ShouldBroadcastNow
+class ChatMessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
