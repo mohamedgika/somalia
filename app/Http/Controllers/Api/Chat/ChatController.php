@@ -11,6 +11,7 @@ use App\Models\ChatMessage;
 use Illuminate\Http\Request;
 use App\Events\ChatMessageSent;
 use App\Events\ChatMessageStatus;
+use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Chat\ChatResource;
 use App\Http\Resources\Api\Chat\ChatsResource;
@@ -73,6 +74,7 @@ class ChatController extends Controller
 
             $message =  new MassageResource($message);
 
+            broadcast(new SendMessage($message))->toOthers();
             broadcast(new ChatMessageSent($message))->toOthers();
 
 
