@@ -15,7 +15,7 @@ class SendMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public string $message;
 
     public function __construct($message)
     {
@@ -30,7 +30,7 @@ class SendMessage implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('chat.' . $this->message->chat_id),
+            new PrivateChannel('chat'),
         ];
     }
 
