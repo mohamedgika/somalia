@@ -21,6 +21,6 @@ class SendMessageListener
      */
     public function handle(SendMessage $event)
     {
-        return $event;
+        echo $event;
     }
 }
