@@ -21,6 +21,6 @@ class SendMessageListener
      */
     public function handle(SendMessage $event)
     {
-        echo $event;
+        $message = 'Event message: ' . $event->message;
     }
 }
