@@ -11,16 +11,16 @@ class SendMessageListener
     /**
      * Create the event listener.
      */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Handle the event.
      */
     public function handle(SendMessage $event)
     {
-        $message = 'Event message: ' . $event->message;
+        // Access properties or methods of the event object correctly
+        $message = $event->message->message; // Assuming `message` is a property of the `message` object
+
+        // Now you can use $message as needed, for example, log it
+        logger('Received message: ' . $message);
     }
 }
