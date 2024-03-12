@@ -30,7 +30,7 @@ class SendMessage implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('chat.{id}'),
+            new PrivateChannel('chat'),
         ];
     }
 
