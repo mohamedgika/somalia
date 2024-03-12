@@ -19,8 +19,8 @@ class SendMessageListener
     /**
      * Handle the event.
      */
-    public function handle(SendMessage $event): void
+    public function handle(SendMessage $event)
     {
-        
+        return $event;
     }
 }
