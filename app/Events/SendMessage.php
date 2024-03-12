@@ -17,7 +17,7 @@ class SendMessage implements ShouldBroadcast
 
     public $message;
 
-    public function __construct(MassageResource $message)
+    public function __construct($message)
     {
         $this->message = $message;
     }
@@ -32,11 +32,6 @@ class SendMessage implements ShouldBroadcast
         return [
             new PrivateChannel('chat.' . $this->message->chat_id),
         ];
-    }
-
-    public function broadcastWith()
-    {
-        return ['message' => $this->message];
     }
 
     public function broadcastAs()
