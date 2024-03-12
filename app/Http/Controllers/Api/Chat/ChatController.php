@@ -76,7 +76,7 @@ class ChatController extends Controller
 
             broadcast(new SendMessage($message));
             // broadcast(new SendMessage($message))->toOthers();
-            // broadcast(new ChatMessageSent($message))->toOthers();
+            broadcast(new ChatMessageSent($message))->toOthers();
 
 
             $success = true;
