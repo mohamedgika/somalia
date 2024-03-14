@@ -63,7 +63,7 @@ class PaymentController extends Controller
             $payment = Payment::create([
                 'type' => 'paypal',
                 'status' => 1,
-                'user_id' => auth()->user()->id,
+                'user_id' => $request->user_id,
                 'subscription_id' => $request->id,
                 'expire_at' => Carbon::now()->addMonths($request->month)
             ]);
