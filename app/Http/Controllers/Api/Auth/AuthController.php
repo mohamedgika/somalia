@@ -72,7 +72,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'انتهت صلاحية الجلسة'], 401);
         }
 
-        $tokenData =  ['token' =>  $token, 'expire_at' => auth()->guard('api')->factory()->getTTL() * 300];
+        $tokenData =  ['token' =>  $token, 'expire_at' => auth()->guard('api')->factory()->getTTL() * 9000];
         return responseSuccessData(LoginResource::make($tokenData), 'تم تسجيل الدخول بنجاح');
     }
 
