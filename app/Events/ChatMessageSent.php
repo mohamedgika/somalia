@@ -35,7 +35,6 @@ class ChatMessageSent implements ShouldBroadcast
             new PrivateChannel('chat.' . $this->message->chat_id),
         ];
 
-
         // return ['public'];
     }
 

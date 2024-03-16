@@ -50,6 +50,8 @@ Route::middleware(['auth', 'verified', 'CheckUser'])->group(function () {
         Route::delete('/dashboard/user/{user}', [UserController::class, 'del'])->name('user.delete');
     });
 
+
+
     //Category
     Route::middleware(['auth', 'verified', 'CheckUser'])->resource('/dashboard/category', CategoryController::class);
 
@@ -151,5 +153,10 @@ Route::middleware(['auth', 'CheckUser'])->group(function () {
 Route::get('/chat', [ChatController::class , 'index']);
 Route::post('/broadcast', [ChatController::class , 'broadcast']);
 Route::post('/receive', [ChatController::class , 'receive']);
+
+
+Route::get('pusher',function(){
+    return view('pusher');
+});
 
 require __DIR__ . '/auth.php';

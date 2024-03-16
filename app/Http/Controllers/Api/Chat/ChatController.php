@@ -161,7 +161,7 @@ class ChatController extends Controller
             env('PUSHER_APP_ID'),
             [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'useTLS' => true,
+                'useTLS' => false,
             ]
         );
 
