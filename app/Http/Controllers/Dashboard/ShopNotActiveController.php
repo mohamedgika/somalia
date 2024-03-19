@@ -14,7 +14,7 @@ class ShopNotActiveController extends Controller
     public function index()
     {
         $shops_not_active = Shop::where('is_active', 0)->get();
-        return view('backend.Shop.dashboard_not_active_shop', ['shops_not_active', $shops_not_active]);
+        return view('backend.Shop.dashboard_not_active_shop', ['shops_not_active'=> $shops_not_active]);
     }
 
     /**
