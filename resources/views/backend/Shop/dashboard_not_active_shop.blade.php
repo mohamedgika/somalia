@@ -51,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($shops as $s)
+                        @foreach ($shops_not_active as $s)
                             <tr>
                                 <td>{{ $s->name }}</td>
                                 <td>{{ $s->user->name }}</td>

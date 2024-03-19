@@ -13,8 +13,8 @@ class ShopNotActiveController extends Controller
      */
     public function index()
     {
-        $shops = Shop::where('is_active', 0)->get();
-        return view('backend.Shop.dashboard_not_active_shop', ['shops', $shops]);
+        $shops_not_active = Shop::where('is_active', 0)->get();
+        return view('backend.Shop.dashboard_not_active_shop', ['shops_not_active', $shops_not_active]);
     }
 
     /**
@@ -55,7 +55,7 @@ class ShopNotActiveController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+
     }
 
     /**
